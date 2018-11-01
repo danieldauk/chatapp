@@ -1,11 +1,8 @@
-const express = require('express');
 const winston = require('winston');
-const hashPassword = require('../utils/hashPassword');
-const { validateUser, User } = require('../model/users');
+const hashPassword = require('../../utils/hashPassword');
+const { validateUser, User } = require('../../model/users');
 
-const router = express.Router();
-
-router.post('/', async (req, res) => {
+module.exports = async (req, res) => {
   const validationResult = validateUser(req.body);
   if (validationResult.error) {
     res.status(400).json(validationResult.error.details);
@@ -26,6 +23,4 @@ router.post('/', async (req, res) => {
     winston.error(error);
     res.status(500).json(error);
   }
-});
-
-module.exports = router;
+};
