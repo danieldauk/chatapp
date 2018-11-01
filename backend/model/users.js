@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     require: true,
     unique: true,
   },
-  hash: {
+  password: {
     type: String,
     minlength: 6,
     require: true,
@@ -19,8 +19,8 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const apiUserSchema = {
-  userName: Joi.required().min(2).max(30).string(),
-  hash: Joi.required().min(6).string(),
+  userName: Joi.string().min(2).max(30).required(),
+  password: Joi.string().min(6).required(),
 };
 
 const validateUser = user => Joi.validate(user, apiUserSchema);
