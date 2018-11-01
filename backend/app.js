@@ -1,5 +1,9 @@
+require('dotenv-flow').config();
 const express = require('express');
 const helmet = require('helmet');
+
+// initialize app
+require('./startup/db')();
 
 const app = express();
 
