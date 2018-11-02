@@ -1,5 +1,5 @@
 const winston = require('winston');
-const hashPassword = require('../../utils/hashPassword');
+const hashPassword = require('../../utils/auth/hashPassword');
 const { validateUser, User } = require('../../model/users');
 
 module.exports = async (req, res) => {

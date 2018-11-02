@@ -4,6 +4,7 @@ const helmet = require('helmet');
 const winston = require('winston');
 // routes
 const users = require('./routes/users');
+const auth = require('./routes/auth');
 
 // initialize app
 require('./startup/winston')();
@@ -15,6 +16,7 @@ app.use(express.json());
 
 // add routes
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => winston.info(`Server is listening on port ${port}`));

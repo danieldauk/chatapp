@@ -7,5 +7,5 @@ module.exports = () => {
   mongoose
     .connect(URI)
     .then(() => winston.info('connected to database'))
-    .catch(error => winston.error('failed to connect to database\n', error));
+    .catch(error => winston.error(`failed to connect to database:\n ${error}`));
 };
