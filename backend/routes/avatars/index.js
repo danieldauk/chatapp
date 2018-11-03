@@ -1,9 +1,11 @@
 const express = require('express');
-const avatarUpload = require('../../middleware/avatarUpload');
+const avatarUploadMiddleware = require('../../middleware/avatarUpload');
+const authMiddleware = require('../../middleware/auth');
 const post = require('./post');
 
 const router = express.Router();
+router.use(authMiddleware);
 
-router.post('/', avatarUpload, post);
+router.post('/', avatarUploadMiddleware, post);
 
 module.exports = router;
