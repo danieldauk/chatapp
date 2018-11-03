@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     require: true,
   },
+  avatar: {
+    type: String,
+    default: 'defaultAvatar.png',
+  },
 });
 
 const User = mongoose.model('User', userSchema);
