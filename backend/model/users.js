@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 
 const userSchema = new mongoose.Schema({
-  userName: {
+  username: {
     type: String,
     minlength: 2,
     maxlength: 30,
@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
 const User = mongoose.model('User', userSchema);
 
 const apiUserSchema = {
-  userName: Joi.string().min(2).max(30).required(),
+  username: Joi.string().min(2).max(30).required(),
   password: Joi.string().min(6).required(),
 };
 

@@ -3,10 +3,11 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
-const { validateUser, User } = require('../../model/users');
+const { User } = require('../../model/users');
+const validateCredentials = require('../../utils/auth/validateCredentials');
 
 module.exports = async (req, res) => {
-  const validationResult = validateUser(req.body);
+  const validationResult = validateCredentials(req.body);
   if (validationResult.error) {
     res.status(400).json({
       error: validationResult.error.details[0].message,
@@ -14,10 +15,10 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { userName, password } = req.body;
+  const { username, password } = req.body;
   let user;
   try {
-    user = await User.findOne({ userName });
+    user = await User.findOne({ username });
   } catch (error) {
     // if error occurs during saving to db - return error
     winston.error(error);

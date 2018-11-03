@@ -11,16 +11,16 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { userName, password } = req.body;
+  const { username, password } = req.body;
   const hashedPassword = await hashPassword(password);
   const user = new User({
-    userName,
+    username,
     password: hashedPassword,
   });
 
   try {
     // check if user exists in database
-    const doesUserExist = !!await User.find({ userName }).count();
+    const doesUserExist = !!await User.find({ username }).count();
     if (doesUserExist) {
       res.status(400).json({
         error: 'Given username exists',
@@ -29,7 +29,10 @@ module.exports = async (req, res) => {
     }
     // if user does not exist - save in database
     const result = await user.save();
-    res.json(result);
+    res.json({
+      id: result._id,
+      username: result.username,
+    });
   } catch (error) {
     // if error occurs during saving to db - return error
     winston.error(error);
