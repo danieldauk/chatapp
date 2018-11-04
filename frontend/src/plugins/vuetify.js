@@ -3,13 +3,7 @@ import Vuetify from 'vuetify/lib';
 import 'vuetify/src/stylus/app.styl';
 
 import {
-  VApp,
-  VMenu,
-  VNavigationDrawer,
-  VBtn,
-  VForm,
-  VTextField,
-  VProgressCircular
+  VApp, VMenu, VNavigationDrawer, VBtn, VForm, VTextField, VProgressCircular
 } from 'vuetify';
 
 Vue.use(Vuetify, {
@@ -21,5 +15,14 @@ Vue.use(Vuetify, {
     VBtn,
     VForm,
     VProgressCircular
+  },
+  theme: {
+    primary: '#dbdcf6',
+    secondary: '#3b385d',
+    accent: '#dbdcf6',
+    error: '#f17271',
+    warning: '#fffc75',
+    info: '#dbdcf6',
+    success: '#73d4bd'
   }
 });
