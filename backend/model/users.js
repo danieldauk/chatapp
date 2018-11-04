@@ -7,24 +7,24 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
     require: true,
-    unique: true,
+    unique: true
   },
   password: {
     type: String,
     minlength: 6,
-    require: true,
+    require: true
   },
   avatar: {
     type: String,
-    default: 'defaultAvatar.png',
-  },
+    default: 'defaultAvatar.png'
+  }
 });
 
 const User = mongoose.model('User', userSchema);
 
 const apiUserSchema = {
   username: Joi.string().min(2).max(30).required(),
-  password: Joi.string().min(6).required(),
+  password: Joi.string().min(6).required()
 };
 
 const validateUser = user => Joi.validate(user, apiUserSchema);

@@ -1,9 +1,15 @@
-import Home from '../views/Home.vue';
+import Chat from '../views/Chat/Chat.vue';
+import Login from '../views/Login/Login.vue';
 
 export default [
   {
     path: '/',
-    name: 'home',
-    component: Home,
+    name: 'chat',
+    component: Chat
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  }
 ];

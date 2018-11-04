@@ -19,14 +19,14 @@ const filename = (req, file, cb) => {
 
 const storage = multer.diskStorage({
   destination: path.join(__dirname, '../uploads'),
-  filename,
+  filename
 });
 
 module.exports = multer({
   storage,
   limits: {
     // maximum file size in bytes
-    fileSize: 2097152,
+    fileSize: 2097152
   },
-  fileFilter,
+  fileFilter
 }).single('avatar');

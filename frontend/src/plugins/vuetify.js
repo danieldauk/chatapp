@@ -9,7 +9,7 @@ import {
   VBtn,
   VForm,
   VTextField,
-  VProgressCircular,
+  VProgressCircular
 } from 'vuetify';
 
 Vue.use(Vuetify, {
@@ -20,6 +20,6 @@ Vue.use(Vuetify, {
     VTextField,
     VBtn,
     VForm,
-    VProgressCircular,
-  },
+    VProgressCircular
+  }
 });

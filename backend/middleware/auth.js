@@ -6,7 +6,7 @@ const auth = (req, res, next) => {
   let token = req.header('authorization');
   if (!token) {
     res.status(401).json({
-      error: 'Access denied. No token provided.',
+      error: 'Access denied. No token provided.'
     });
     return;
   }
@@ -19,7 +19,7 @@ const auth = (req, res, next) => {
     next();
   } catch (error) {
     res.status(400).json({
-      error: error.message,
+      error: error.message
     });
   }
 };
