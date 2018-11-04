@@ -1,11 +1,19 @@
 <template>
-  <div>
-    login
-  </div>
+  <app-login>
+    <app-form slot="form" />
+  </app-login>
 </template>
 
 <script>
-export default {};
+import Login from "./Layout/Login.vue";
+import Form from "./Components/form/Form.vue";
+
+export default {
+  components: {
+    appLogin: Login,
+    appForm: Form
+  }
+};
 </script>
 
 <style lang="scss" scoped>
