@@ -14,6 +14,7 @@ require('./startup/db')();
 const app = express();
 app.use(helmet());
 app.use(express.json());
+app.use(express.static('uploads'));
 
 // add routes
 app.use('/api/users', users);
