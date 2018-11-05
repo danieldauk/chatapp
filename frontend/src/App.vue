@@ -25,11 +25,4 @@
   a {
     text-decoration: none;
   }
-
-  #app {
-    background-image: url('./assets/background.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-  }
 </style>

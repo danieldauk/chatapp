@@ -33,7 +33,10 @@ export default new AbstractStoreModule({
             error: error.message
           });
         } else {
-          await this.dispatch('loginForm/setErrors', error.response.data.error);
+          await this.dispatch('loginForm/setError', {
+            id: 'password',
+            message: error.response.data.error
+          });
         }
       }
       thisModule.dispatch('finishLoad');

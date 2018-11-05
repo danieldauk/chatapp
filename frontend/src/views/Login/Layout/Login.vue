@@ -13,5 +13,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    background-image: url('../../../assets/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 </style>

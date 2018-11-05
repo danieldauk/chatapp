@@ -1,11 +1,11 @@
-import Chat from '../views/Chat/Chat.vue';
+import Home from '../views/Home/Home.vue';
 import Login from '../views/Login/Login.vue';
 
 export default [
   {
     path: '/',
-    name: 'chat',
-    component: Chat
+    name: 'home',
+    component: Home
   },
   {
     path: '/login',
