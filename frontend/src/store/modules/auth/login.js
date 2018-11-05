@@ -21,7 +21,7 @@ export default new AbstractStoreModule({
       await thisModule.dispatch('startLoad');
       try {
         const response = await axios.post('/auth/login', payload);
-        const token = response.data.data.token;
+        const token = response.data.token;
         await thisModule.dispatch('setToken', token);
         localStorage.setItem('token', token);
         await router.replace('/');
