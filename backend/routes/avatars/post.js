@@ -10,7 +10,6 @@ module.exports = async (req, res) => {
     }
   });
 
-  // TODO: add avatar file name to user document
   try {
     const user = await User.findOne({ _id: req.user._id });
     if (!user) {

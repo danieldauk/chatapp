@@ -17,14 +17,25 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     default: 'defaultAvatar.png'
-  }
+  },
+  contacts: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }
+  ]
 });
 
 const User = mongoose.model('User', userSchema);
 
 const apiUserSchema = {
-  username: Joi.string().min(2).max(30).required(),
-  password: Joi.string().min(6).required()
+  username: Joi.string()
+    .min(2)
+    .max(30)
+    .required(),
+  password: Joi.string()
+    .min(6)
+    .required()
 };
 
 const validateUser = user => Joi.validate(user, apiUserSchema);
