@@ -21,7 +21,7 @@ module.exports = async (req, res) => {
       return;
     }
 
-    // TODO: check if user does not exist inside contacts array
+    // check if user does not exist inside contacts array
     const contact = await User.findOne({
       _id: req.user._id,
       contacts: newContact._id
