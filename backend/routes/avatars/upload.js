@@ -1,3 +1,4 @@
+const winston = require('winston');
 const { User } = require('../../model/users');
 const avatarUpload = require('../../middleware/avatarUpload');
 
@@ -19,6 +20,7 @@ module.exports = async (req, res) => {
     }
     await User.updateOne({ _id: req.user._id }, { $set: { avatar: req.file.filename } });
   } catch (error) {
+    winston.error(error);
     res.status(500).json({
       error: error.message
     });

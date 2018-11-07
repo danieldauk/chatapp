@@ -1,8 +1,16 @@
-const { User } = require('../../model/users');
-const validateUserId = require('../../utils/contacts/validateUserId');
+const winston = require('winston');
+const { User } = require('../../../model/users');
+const validateUserId = require('../../../utils/contacts/validateUserId');
+
 
 module.exports = async (req, res) => {
-  console.log(req.body);
+  // check if token's user id is the same as endpoint's id
+  if (req.user._id !== req.params.userId) {
+    res.status(403).json({
+      error: "Adding contacts to another user's account is not allowed"
+    });
+    return;
+  }
   const validationResult = validateUserId(req.body);
   if (validationResult.error) {
     res.status(400).json({
@@ -42,6 +50,7 @@ module.exports = async (req, res) => {
       message: 'User successfully added to contacts list'
     });
   } catch (error) {
+    winston.error(error);
     res.status(500).json({
       error: error.message
     });
