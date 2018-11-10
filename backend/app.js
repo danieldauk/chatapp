@@ -7,7 +7,7 @@ const cors = require('cors');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const avatars = require('./routes/avatars');
-const conversation = require('./routes/conversation');
+const conversations = require('./routes/conversations');
 
 
 // initialize app
@@ -25,7 +25,7 @@ app.options('*', cors());
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/avatars', avatars);
-app.use('/api/conversation', conversation);
+app.use('/api/conversations', conversations);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => winston.info(`Server is listening on port ${port}. Environment: ${process.env.NODE_ENV}`));

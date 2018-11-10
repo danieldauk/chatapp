@@ -14,7 +14,7 @@ const conversationSchema = new mongoose.Schema({
 const Conversation = mongoose.model('Conversation', conversationSchema);
 
 const apiConversationSchema = {
-  participants: Joi.array().required().items(Joi.objectId())
+  participants: Joi.array().min(1).required().items(Joi.objectId())
 };
 
 const validateConversation = conversation => Joi.validate(conversation, apiConversationSchema);

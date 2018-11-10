@@ -1,16 +1,17 @@
 const express = require('express');
 const authMiddleware = require('../../middleware/auth');
-const getOrCreate = require('./getOrCreate');
 const get = require('./get');
 const getAll = require('./getAll');
-// const create = require('./create');
+const create = require('./create');
 
 const router = express.Router();
 router.use(authMiddleware);
 
-router.get('/', getOrCreate);
-router.get('/all', getAll);
+router.get('/', getAll);
 router.get('/:conversationId', get);
+router.post('/', create);
+// router.post('/:conversationId/participants/:participantId', addParticipant);
+// router.delete('/:conversationId/participants/:participantId', removeParticipant);
 
 // TODO:
 // POST: '/' Data: participants array -> create conversation with given participants
