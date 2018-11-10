@@ -11,6 +11,13 @@ module.exports = {
         exports: 'never',
         functions: 'ignore'
       }
+    ],
+    'max-len': [
+      'error',
+      {
+        code: 100,
+        comments: 120
+      }
     ]
   }
 };
