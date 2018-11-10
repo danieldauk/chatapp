@@ -1,5 +1,5 @@
 const winston = require('winston');
-const { User } = require('../../model/users');
+const { User } = require('../../model/user');
 const avatarUpload = require('../../middleware/avatarUpload');
 
 module.exports = async (req, res) => {

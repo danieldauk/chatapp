@@ -1,13 +1,13 @@
 const express = require('express');
 const authMiddleware = require('../../middleware/auth');
-const add = require('./add');
+const create = require('./create');
 const edit = require('./edit');
 const remove = require('./remove');
 
 const router = express.Router();
 router.use(authMiddleware);
 
-router.post('/', add);
+router.post('/', create);
 router.put('/:id', edit);
 router.delete('/:id', remove);
 

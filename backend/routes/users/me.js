@@ -1,5 +1,5 @@
 const winston = require('winston');
-const { User } = require('../../model/users');
+const { User } = require('../../model/user');
 
 module.exports = async (req, res) => {
   let user;

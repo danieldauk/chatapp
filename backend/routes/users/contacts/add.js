@@ -1,6 +1,6 @@
 const winston = require('winston');
-const { User } = require('../../../model/users');
-const validateUserId = require('../../../utils/contacts/validateUserId');
+const { User } = require('../../../model/user');
+const validateObjectId = require('../../../utils/sharedJoiSchemas/validateObjectId');
 
 
 module.exports = async (req, res) => {
@@ -11,7 +11,7 @@ module.exports = async (req, res) => {
     });
     return;
   }
-  const validationResult = validateUserId(req.body);
+  const validationResult = validateObjectId(req.body);
   if (validationResult.error) {
     res.status(400).json({
       error: validationResult.error.details[0].message

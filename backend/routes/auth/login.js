@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 const fs = require('fs');
-const { User } = require('../../model/users');
+const { User } = require('../../model/user');
 const validateCredentials = require('../../utils/auth/validateCredentials');
 
 module.exports = async (req, res) => {
