@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   }
 
   // if participant id is present in query - check id validity
-  const validationResult = validateObjectId({ userId: req.query.participant });
+  const validationResult = validateObjectId(req.query.participant);
   if (validationResult.error) {
     res.status(400).json({
       error: validationResult.error.details[0].message
