@@ -24,6 +24,7 @@ export default new AbstractStoreModule({
         const token = response.data.token;
         await thisModule.dispatch('setToken', token);
         localStorage.setItem('token', token);
+        this.dispatch('user/init');
         await router.replace('/');
       } catch (error) {
         await thisModule.dispatch('clearToken');

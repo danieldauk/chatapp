@@ -16,6 +16,7 @@ export const redirectIfNotAuthenticated = async (to, from, next) => {
     if (token) {
       try {
         await store.dispatch('login/setToken', token);
+        store.dispatch('user/init');
         next('/');
       } catch (error) {
         // if token is invalid set clear token and set error
