@@ -1,19 +1,19 @@
 <template>
   <app-home>
-    <app-contacts slot="contacts" />
+    <app-menu slot="menu" />
     <app-chat slot="chat" />
   </app-home>
 </template>
 
 <script>
 import Home from "./Layout/Home.vue";
-import Contacts from "./Components/Contacts/Contacts.vue";
+import Menu from "./Components/Menu/Menu.vue";
 import Chat from "./Components/Chat/Chat.vue";
 
 export default {
   components: {
     appHome: Home,
-    appContacts: Contacts,
+    appMenu: Menu,
     appChat: Chat
   }
 }

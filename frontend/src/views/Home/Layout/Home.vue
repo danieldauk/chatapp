@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <div class="home__contacts">
-      <slot name="contacts" />
+    <div class="home__menu">
+      <slot name="menu" />
     </div>
     <div class="home__chat">
       <slot name="chat" />

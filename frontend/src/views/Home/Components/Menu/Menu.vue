@@ -1,7 +1,7 @@
 <template>
-  <div class="contacts">
+  <div class="menu">
     <v-navigation-drawer
-    class="contacts__drawer"
+    class="menu__drawer"
     permanent
     >
 
@@ -10,7 +10,7 @@
 </template>
 
 <style lang="scss" scoped>
-  .contacts {
+  .menu {
     height: 100%;
     width: max-content;
     &__drawer {
