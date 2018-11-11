@@ -4,6 +4,7 @@ const get = require('./get');
 const getAll = require('./getAll');
 const create = require('./create');
 const addParticipant = require('./participants/add');
+const removeParticipant = require('./participants/remove');
 
 const router = express.Router();
 router.use(authMiddleware);
@@ -13,11 +14,6 @@ router.get('/:conversationId', get);
 router.post('/', create);
 
 router.post('/:conversationId/participants', addParticipant);
-// router.delete('/:conversationId/participants', removeParticipant);
-
-// TODO:
-// POST: '/conversation/conversationId/participants/:participantId' -> add participant to conversation
-// DELETE:'/conversation/conversationId/participants/:participantId'-> remove participant from conversation
-
+router.delete('/:conversationId/participants', removeParticipant);
 
 module.exports = router;

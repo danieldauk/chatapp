@@ -36,7 +36,7 @@ module.exports = async (req, res) => {
     }
     // check if given conversation includes requesting user id
     let isUserFound = false;
-    conversation.participants.forEach(participant => {
+    conversation.participants.forEach((participant) => {
       if (participant.toString() === currentUserId) {
         isUserFound = true;
       }
