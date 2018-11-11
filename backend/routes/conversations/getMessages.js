@@ -1,5 +1,6 @@
 const winston = require('winston');
 const { Conversation } = require('../../model/conversation');
+const { Message } = require('../../model/message');
 const validateObjectId = require('../../utils/sharedJoiSchemas/validateObjectId');
 
 module.exports = async (req, res) => {
@@ -17,7 +18,7 @@ module.exports = async (req, res) => {
     // check if conversation with given id exists
     const conversation = await Conversation.findOne({
       _id: conversationId
-    }).populate('participants', 'username avatar');
+    });
 
     // if conversation does not exist - return error
     if (!conversation) {
@@ -29,7 +30,7 @@ module.exports = async (req, res) => {
     // check if requesting user is present in the conversation
     let isUserFound = false;
     conversation.participants.forEach((participant) => {
-      if (participant._id.toString() === req.user._id) {
+      if (participant.toString() === req.user._id) {
         isUserFound = true;
       }
     });
@@ -37,11 +38,15 @@ module.exports = async (req, res) => {
     if (!isUserFound) {
       res.status(403).json({
         error:
-          'Requesting conversations that do not include requesting user id is not allowed.'
+          'Requesting messages from conversation that do not include requesting user id is not allowed.'
       });
       return;
     }
-    res.json(conversation);
+    // if all checks are successful - return all messages linked to the conversation
+    const messages = await Message.find({ conversationId });
+    res.json({
+      messages
+    });
   } catch (error) {
     winston.error(error);
     res.status(500).json({
