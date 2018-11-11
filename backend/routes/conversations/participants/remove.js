@@ -1,7 +1,6 @@
 const winston = require('winston');
 const { Conversation } = require('../../../model/conversation');
 const validateObjectId = require('../../../utils/sharedJoiSchemas/validateObjectId');
-const { User } = require('../../../model/user');
 
 module.exports = async (req, res) => {
   // check data validity

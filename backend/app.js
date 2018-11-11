@@ -8,6 +8,7 @@ const users = require('./routes/users');
 const auth = require('./routes/auth');
 const avatars = require('./routes/avatars');
 const conversations = require('./routes/conversations');
+const messages = require('./routes/messages');
 
 
 // initialize app
@@ -26,6 +27,7 @@ app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/avatars', avatars);
 app.use('/api/conversations', conversations);
+app.use('/api/messages', messages);
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => winston.info(`Server is listening on port ${port}. Environment: ${process.env.NODE_ENV}`));
