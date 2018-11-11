@@ -19,7 +19,7 @@ module.exports = async (req, res) => {
     }
     res.json(user);
   } catch (error) {
-    // if error occurs during saving to db - return error
+    // if error occurs during db querying - return error
     winston.error(error);
     res.status(500).json({
       error: error.message

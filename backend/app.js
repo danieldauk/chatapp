@@ -23,6 +23,7 @@ app.use(cors());
 app.options('*', cors());
 
 // add routes
+// TODO: extract shared checking logic (requesting user in conversation, etc.) to separate functions for reusability
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/avatars', avatars);
