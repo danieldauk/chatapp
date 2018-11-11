@@ -12,13 +12,21 @@ module.exports = async (req, res) => {
   });
 
   try {
-    const user = await User.findOne({ _id: req.user._id });
+    const user = await User.findOne({
+      _id: req.user._id
+    });
     if (!user) {
       res.status(400).json({
         error: 'User does not exist'
       });
     }
-    await User.updateOne({ _id: req.user._id }, { $set: { avatar: req.file.filename } });
+    await User.updateOne({
+      _id: req.user._id
+    }, {
+      $set: {
+        avatar: req.file.filename
+      }
+    });
   } catch (error) {
     winston.error(error);
     res.status(500).json({

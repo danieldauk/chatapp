@@ -5,9 +5,17 @@ module.exports = async (req, res) => {
   let user;
   try {
     if (req.query.contacts === 'true') {
-      user = await User.findOne({ _id: req.user._id }, { password: 0 }).populate('contacts');
+      user = await User.findOne({
+        _id: req.user._id
+      }, {
+        password: 0
+      }).populate('contacts');
     } else {
-      user = await User.findOne({ _id: req.user._id }, { password: 0 });
+      user = await User.findOne({
+        _id: req.user._id
+      }, {
+        password: 0
+      });
     }
     res.json(user);
   } catch (error) {

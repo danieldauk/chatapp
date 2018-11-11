@@ -18,12 +18,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'defaultAvatar.png'
   },
-  contacts: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ]
+  contacts: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 });
 
 const User = mongoose.model('User', userSchema);

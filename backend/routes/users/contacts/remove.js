@@ -21,7 +21,9 @@ module.exports = async (req, res) => {
 
   try {
     // check if contact (user) with given id exists
-    const contactToBeRemoved = await User.findOne({ _id: req.body.userId });
+    const contactToBeRemoved = await User.findOne({
+      _id: req.body.userId
+    });
     if (!contactToBeRemoved) {
       res.status(404).json({
         error: 'User not found'
@@ -44,8 +46,14 @@ module.exports = async (req, res) => {
 
     // if user exists - remove user and return removed user
     await User.updateOne(
-      { _id: req.user._id },
-      { $pull: { contacts: contactToBeRemoved._id } }
+      {
+        _id: req.user._id
+      },
+      {
+        $pull: {
+          contacts: contactToBeRemoved._id
+        }
+      }
     );
     res.json({
       message: 'User successfully removed from contacts list'

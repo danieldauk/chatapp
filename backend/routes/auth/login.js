@@ -18,7 +18,9 @@ module.exports = async (req, res) => {
   const { username, password } = req.body;
   let user;
   try {
-    user = await User.findOne({ username });
+    user = await User.findOne({
+      username
+    });
   } catch (error) {
     // if error occurs during saving to db - return error
     winston.error(error);
@@ -45,7 +47,11 @@ module.exports = async (req, res) => {
   }
   const certPath = path.join(__dirname, '/../../id_rsa');
   const cert = fs.readFileSync(certPath);
-  const token = jwt.sign({ _id: user.id }, cert, { algorithm: 'RS256' });
+  const token = jwt.sign({
+    _id: user.id
+  }, cert, {
+    algorithm: 'RS256'
+  });
   res.json({
     token
   });

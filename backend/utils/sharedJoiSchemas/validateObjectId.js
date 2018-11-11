@@ -5,6 +5,8 @@ const apiObjectIdSchema = {
   objectId: Joi.objectId().required()
 };
 
-const validateObjectId = objectId => Joi.validate({ objectId }, apiObjectIdSchema);
+const validateObjectId = objectId => Joi.validate({
+  objectId
+}, apiObjectIdSchema);
 
 module.exports = validateObjectId;

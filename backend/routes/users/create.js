@@ -20,7 +20,9 @@ module.exports = async (req, res) => {
 
   try {
     // check if user exists in database
-    const doesUserExist = !!await User.find({ username }).count();
+    const doesUserExist = !!await User.find({
+      username
+    }).count();
     if (doesUserExist) {
       res.status(400).json({
         error: 'Given username exists'

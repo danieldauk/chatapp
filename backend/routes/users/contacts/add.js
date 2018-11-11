@@ -21,7 +21,9 @@ module.exports = async (req, res) => {
 
   try {
     // check if contact (user) with given id exists
-    const newContact = await User.findOne({ _id: req.body.userId });
+    const newContact = await User.findOne({
+      _id: req.body.userId
+    });
     if (!newContact) {
       res.status(404).json({
         error: 'User not found'
@@ -43,8 +45,14 @@ module.exports = async (req, res) => {
     }
     // if user does not exist - push contact to array
     await User.updateOne(
-      { _id: req.user._id },
-      { $push: { contacts: newContact._id } }
+      {
+        _id: req.user._id
+      },
+      {
+        $push: {
+          contacts: newContact._id
+        }
+      }
     );
     res.json({
       message: 'User successfully added to contacts list'

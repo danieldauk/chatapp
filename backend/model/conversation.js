@@ -3,12 +3,10 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 
 const conversationSchema = new mongoose.Schema({
-  participants: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
-    }
-  ]
+  participants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }]
 });
 
 const Conversation = mongoose.model('Conversation', conversationSchema);
