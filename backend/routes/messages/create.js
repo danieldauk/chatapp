@@ -12,7 +12,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const currentUserId = req.body._id;
+  const currentUserId = req.user._id;
 
   try {
     // check if conversation exists

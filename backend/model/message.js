@@ -21,6 +21,13 @@ const messageSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Conversation',
     required: true
+  },
+  isEdited: {
+    type: Boolean,
+    default: false
+  },
+  modifiedAt: {
+    type: Date
   }
 });
 

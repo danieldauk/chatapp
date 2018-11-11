@@ -1,6 +1,5 @@
 const winston = require('winston');
 const { Message } = require('../../model/message');
-const { Conversation } = require('../../model/conversation');
 const validateObjectId = require('../../utils/sharedJoiSchemas/validateObjectId');
 
 module.exports = async (req, res) => {
