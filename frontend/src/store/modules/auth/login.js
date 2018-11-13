@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import axios from '@/services/axios';
+import initSocket from '@/services/socket/socket';
 import AbstractStoreModule from '@/store/modules/AbstractStoreModule';
 import router from '../../../router/router';
 
@@ -24,6 +25,7 @@ export default new AbstractStoreModule({
         const token = response.data.token;
         await thisModule.dispatch('setToken', token);
         localStorage.setItem('token', token);
+        thisModule.dispatch('initSocket');
         this.dispatch('user/init');
         await router.replace('/');
       } catch (error) {
@@ -53,6 +55,9 @@ export default new AbstractStoreModule({
     clearToken(thisModule) {
       thisModule.commit('clearToken');
       localStorage.removeItem('token');
+    },
+    initSocket() {
+      initSocket();
     }
   }
 });
