@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const winston = require('winston');
 
 const URI = process.env.DB_URI;
+console.log(URI);
 
 module.exports = () => {
   mongoose
