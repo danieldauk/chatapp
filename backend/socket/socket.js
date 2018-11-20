@@ -1,20 +1,23 @@
-const socketioJwt = require('socketio-jwt');
-const fs = require('fs');
-const path = require('path');
+// auth handler
+const validateToken = require('./handlers/auth/validateToken');
+// user handlers
+const emitUserInfo = require('./handlers/users/emitUserInfo');
 
-const certPath = path.join(__dirname, '../id_rsa.pub');
-const cert = fs.readFileSync(certPath);
 
 module.exports = (io) => {
-  io.sockets
+  io
     .on(
-      'connection',
-      socketioJwt.authorize({
-        secret: cert,
-        timeout: 5000
-      })
+      'connect',
+      validateToken
     )
     .on('authenticated', (socket) => {
-      console.log(socket.decoded_token);
+      const userId = socket.decoded_token._id;
+      // user events
+      socket.on('REQUEST_USER_INFO', async () => {
+        socket.emit('RESPONSE_USER_INFO', await emitUserInfo(userId));
+      });
+      // message events
+
+      // conversation events
     });
 };

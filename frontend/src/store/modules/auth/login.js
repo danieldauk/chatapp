@@ -24,14 +24,14 @@ export default new AbstractStoreModule({
         const token = response.data.token;
         await thisModule.dispatch('setToken', token);
         localStorage.setItem('token', token);
-        initSocket(token);
+        await initSocket(token);
         this.dispatch('user/init');
         await router.replace('/');
       } catch (error) {
         await thisModule.dispatch('clearToken');
         // if token validation failed set error accordingly
         if (error.message === 'invalidToken') {
-          await this.dispatch('loginForm/setErrors', {
+          await thisModule.dispatch('setErrors', {
             error: error.message
           });
         } else {
