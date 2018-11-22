@@ -1,6 +1,9 @@
 const handler = enumName => ({
   get(object, propName) {
-    if (Object.prototype.hasOwnProperty.call(object, propName) || propName === 'getValues') {
+    if (
+      Object.prototype.hasOwnProperty.call(object, propName)
+      || propName === 'getValues'
+    ) {
       return object[propName];
     }
     throw new Error(`No such property (${propName}) in ${enumName}`);
@@ -22,12 +25,13 @@ class Enumerator {
   }
 }
 
-export const SocketEventsEnum = new Enumerator(
-  'SocketEventsEnum',
-  {
-    REQUEST_USER_INFO: 'REQUEST_USER_INFO',
-    RESPONSE_USER_INFO: 'RESPONSE_USER_INFO',
-    REQUEST_USER_CONTACTS: 'REQUEST_USER_CONTACTS',
-    RESPONSE_USER_CONTACTS: 'RESPONSE_USER_CONTACTS'
-  }
-);
+const SocketEventsEnum = new Enumerator('SocketEventsEnum', {
+  REQUEST_USER_INFO: 'REQUEST_USER_INFO',
+  RESPONSE_USER_INFO: 'RESPONSE_USER_INFO',
+  REQUEST_USER_CONTACTS: 'REQUEST_USER_CONTACTS',
+  RESPONSE_USER_CONTACTS: 'RESPONSE_USER_CONTACTS'
+});
+
+module.exports = {
+  SocketEventsEnum
+};

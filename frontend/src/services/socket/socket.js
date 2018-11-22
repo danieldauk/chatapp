@@ -13,7 +13,7 @@ export const initSocket = token => new Promise((resolve, reject) => {
           socketIO = socket;
           // get all necessary data for app init
           socket.emit(SocketEventsEnum.REQUEST_USER_INFO);
-          // socket.emit(SocketEventsEnum.REQUEST_USER_CONTACTS);
+          socket.emit(SocketEventsEnum.REQUEST_USER_CONTACTS);
           // socket.emit(SocketEventsEnum.REQUEST_CONVERSATIONS);
           // socket.emit(SocketEventsEnum.REQUEST_MESSAGES);
 
