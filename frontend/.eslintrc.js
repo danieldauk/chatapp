@@ -40,6 +40,7 @@ module.exports = {
         allowAllPropertiesOnSameLine: true
       }
     ],
+    'prefer-promise-reject-errors': 'off',
     'class-methods-use-this': 'off',
     'no-param-reassign': [
       2,
