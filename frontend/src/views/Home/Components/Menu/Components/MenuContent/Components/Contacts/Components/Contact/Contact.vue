@@ -1,5 +1,6 @@
 <template>
   <div 
+  @click='openChat'
   :style="contactStyle"
   class="contact">
     <div 
@@ -40,6 +41,11 @@ export default {
     avatarStyle() {
       return this.isMenuMinified ? {marginRight: '0px'} : {justifyContent: '15px'}
     }
+  },
+  methods: {
+    openChat() {
+      
+    }
   }
 };
 </script>
@@ -49,6 +55,10 @@ export default {
   display: flex;
   align-items: center;
   padding: 10px 15px;
+  cursor: pointer;
+  &:hover{
+    background: rgba(255,255,255, 0.05);
+  }
   &__name {
     color: $color-purple-light;
   }

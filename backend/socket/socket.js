@@ -7,6 +7,8 @@ const getUserInfo = require('./handlers/users/getUserInfo');
 const getContacts = require('./handlers/users/contacts/getContacts');
 const addContact = require('./handlers/users/contacts/addContact');
 const removeContact = require('./handlers/users/contacts/removeContact');
+// converrsation events handlers
+const createConversation = require('./handlers/conversations/createConversation');
 
 module.exports = (io) => {
   io
@@ -34,8 +36,10 @@ module.exports = (io) => {
       socket.on(SocketEventsEnum.REQUEST_REMOVE_CONTACT, async (contactId) => {
         socket.emit(SocketEventsEnum.RESPONSE_REMOVE_CONTACT, await removeContact(userId, contactId));
       });
+      // CONVERSATION events
+      socket.on(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, async (participants) => {
+        socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, await createConversation(userId, participants));
+      });
       // MESSAGES events
-
-      // conversation events
     });
 };
