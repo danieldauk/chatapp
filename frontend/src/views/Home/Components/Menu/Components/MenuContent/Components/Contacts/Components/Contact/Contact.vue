@@ -1,5 +1,5 @@
 <template>
-   <div class="contact">
+  <div class="contact">
     <div class="contact__avatar">
       <img
         class="contact__avatar__image"

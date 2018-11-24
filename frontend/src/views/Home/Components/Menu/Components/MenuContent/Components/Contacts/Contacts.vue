@@ -1,9 +1,9 @@
 <template>
   <div class="contacts">
-    <app-contact 
-    v-for="contact in contacts"
-    :key="contact._id"
-    :id="contact._id"
+    <app-contact
+      v-for="contact in contacts"
+      :id="contact._id"
+      :key="contact._id"
     />
   </div>
 </template>
@@ -20,5 +20,5 @@ export default {
       return this.$store.state.contact.all;
     }
   }
-}
+};
 </script>

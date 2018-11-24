@@ -1,8 +1,9 @@
 <template>
   <div class="menu-content">
-    <div 
-    :style="headerStyle"
-    class="menu-content__header">
+    <div
+      :style="headerStyle"
+      class="menu-content__header"
+    >
       <div class="menu-content__header__user-info">
         <slot name="user-info" />
       </div>
