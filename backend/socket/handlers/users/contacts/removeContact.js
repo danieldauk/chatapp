@@ -1,53 +1,44 @@
 const winston = require('winston');
-const { User } = require('../../../model/user');
-const validateObjectId = require('../../../utils/sharedJoiSchemas/validateObjectId');
+const { User } = require('../../../../model/user');
+const validateObjectId = require('../../../../utils/sharedJoiSchemas/validateObjectId');
 
 
-module.exports = async (req, res) => {
-  // check if token's user id is the same as endpoint's id
-  if (req.user._id !== req.params.userId) {
-    res.status(403).json({
-      error: "Removing contacts from another user's account is not allowed"
-    });
-    return;
-  }
-  const validationResult = validateObjectId(req.body.userId);
+module.exports = async (userId, contactId) => {
+  // TODO: add requesting user to contacts list of added user(contactId) and emit event to added user
+  const validationResult = validateObjectId(contactId);
   if (validationResult.error) {
-    res.status(400).json({
+    return {
       error: validationResult.error.details[0].message
-    });
-    return;
+    };
   }
 
   try {
     // check if contact (user) with given id exists
     const contactToBeRemoved = await User.findOne({
-      _id: req.body.userId
+      _id: contactId
     });
     if (!contactToBeRemoved) {
-      res.status(404).json({
+      return {
         error: 'User not found'
-      });
-      return;
+      };
     }
 
     // check if user does not exist inside contacts array
     const contact = await User.findOne({
-      _id: req.user._id,
+      _id: userId,
       contacts: contactToBeRemoved._id
     });
     // if user does not exist - return error
     if (!contact) {
-      res.status(400).json({
+      return {
         error: 'User does not exist in contacts list'
-      });
-      return;
+      };
     }
 
     // if user exists - remove user and return success message
     await User.updateOne(
       {
-        _id: req.user._id
+        _id: userId
       },
       {
         $pull: {
@@ -55,13 +46,13 @@ module.exports = async (req, res) => {
         }
       }
     );
-    res.json({
+    return {
       message: 'User successfully removed from contacts list'
-    });
+    };
   } catch (error) {
     winston.error(error);
-    res.status(500).json({
+    return {
       error: error.message
-    });
+    };
   }
 };

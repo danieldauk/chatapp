@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
-import axios from '@/utils/axios';
+import axios from '@/services/axios';
+import { initSocket } from '@/services/socket/socket';
 import AbstractStoreModule from '@/store/modules/AbstractStoreModule';
 import router from '../../../router/router';
-
 
 export default new AbstractStoreModule({
   state: {
@@ -20,17 +20,18 @@ export default new AbstractStoreModule({
     async init(thisModule, payload) {
       await thisModule.dispatch('startLoad');
       try {
-        const response = await axios.post('/auth/login', payload);
+        const response = await axios.post('/api/auth/login', payload);
         const token = response.data.token;
         await thisModule.dispatch('setToken', token);
         localStorage.setItem('token', token);
-        this.dispatch('user/init');
+        await initSocket(token);
         await router.replace('/');
       } catch (error) {
+        console.log(error);
         await thisModule.dispatch('clearToken');
         // if token validation failed set error accordingly
         if (error.message === 'invalidToken') {
-          await this.dispatch('loginForm/setErrors', {
+          await thisModule.dispatch('setErrors', {
             error: error.message
           });
         } else {

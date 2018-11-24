@@ -12,34 +12,34 @@
 </template>
 
 <script>
-  import { usernameRules } from '@/utils/validationRules';
+import { usernameRules } from '@/utils/validationRules';
 
-  export default {
-    data() {
-      return {
-        validationRules: usernameRules.all
-      };
+export default {
+  data() {
+    return {
+      validationRules: usernameRules.all
+    };
+  },
+  computed: {
+    error() {
+      return this.$store.getters['loginForm/getError']('username');
     },
-    computed: {
-      error() {
-        return this.$store.getters['loginForm/getError']('username');
-      },
-      username() {
-        return this.$store.state.loginForm.data.username;
-      }
-    },
-    methods: {
-      clearError() {
-        this.$store.dispatch('loginForm/clearError', 'username');
-      },
-      setFormElementValue(value) {
-        this.$store.dispatch('loginForm/setValue', {
-          value,
-          id: 'username'
-        });
-      }
+    username() {
+      return this.$store.state.loginForm.data.username;
     }
-  };
+  },
+  methods: {
+    clearError() {
+      this.$store.dispatch('loginForm/clearError', 'username');
+    },
+    setFormElementValue(value) {
+      this.$store.dispatch('loginForm/setValue', {
+        value,
+        id: 'username'
+      });
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

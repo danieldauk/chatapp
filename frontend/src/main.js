@@ -3,6 +3,8 @@ import './plugins/vuetify';
 import App from './App.vue';
 import router from './router/router';
 import store from './store/store';
+import '@/utils/filters';
+import '@mdi/font/css/materialdesignicons.min.css';
 
 Vue.config.productionTip = false;
 

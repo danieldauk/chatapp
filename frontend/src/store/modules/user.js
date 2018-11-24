@@ -1,17 +1,13 @@
-import axios from '@/utils/axios';
 import AbstractStoreModule from '@/store/modules/AbstractStoreModule';
+import socket from '@/services/socket/socket';
 
 export default new AbstractStoreModule({
-  actions: {
-    async init(thisModule) {
-      await thisModule.dispatch('startLoad');
-      try {
-        const response = await axios.get('/users/me');
-        await thisModule.dispatch('setCurrent', response.data);
-      } catch (error) {
-        await thisModule.dispatch('setErrors', error.response);
-      }
-      thisModule.dispatch('finishLoad');
+  getters: {
+    getImageLink(state) {
+      return state.current ? `${process.env.VUE_APP_BASE_URL}/${state.current.avatar}` : null;
+    },
+    getName(state) {
+      return state.current ? state.current.username : null;
     }
   }
 });

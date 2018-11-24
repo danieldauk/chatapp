@@ -1,4 +1,5 @@
 import store from '../store/store';
+import { initSocket } from '@/services/socket/socket';
 
 export const redirectIfNotAuthenticated = async (to, from, next) => {
   if (store.state.login.token && to.name !== 'login') {
@@ -16,13 +17,13 @@ export const redirectIfNotAuthenticated = async (to, from, next) => {
     if (token) {
       try {
         await store.dispatch('login/setToken', token);
-        store.dispatch('user/init');
+        await initSocket(token);
         next('/');
       } catch (error) {
         // if token is invalid set clear token and set error
         store.dispatch('login/clearToken');
         store.dispatch('login/setErrors', {
-          tokenInvalid: 'Token is Invalid'
+          error: 'Token is Invalid'
         });
       }
     }

@@ -6,9 +6,9 @@
 </template>
 
 <script>
-import Home from "./Layout/Home.vue";
-import Menu from "./Components/Menu/Menu.vue";
-import Chat from "./Components/Chat/Chat.vue";
+import Home from './Layout/Home.vue';
+import Menu from './Components/Menu/Menu.vue';
+import Chat from './Components/Chat/Chat.vue';
 
 export default {
   components: {
@@ -16,6 +16,5 @@ export default {
     appMenu: Menu,
     appChat: Chat
   }
-}
+};
 </script>
-

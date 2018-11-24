@@ -1,8 +1,10 @@
 require('dotenv-flow').config();
 const express = require('express');
+const socketIO = require('socket.io');
 const helmet = require('helmet');
 const winston = require('winston');
 const cors = require('cors');
+
 // routes
 const users = require('./routes/users');
 const auth = require('./routes/auth');
@@ -16,6 +18,7 @@ require('./startup/winston')();
 require('./startup/db')();
 
 const app = express();
+
 app.use(helmet());
 app.use(express.json());
 app.use(express.static('uploads'));
@@ -31,4 +34,8 @@ app.use('/api/conversations', conversations);
 app.use('/api/messages', messages);
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => winston.info(`Server is listening on port ${port}. Environment: ${process.env.NODE_ENV}`));
+const server = app.listen(port, () => winston.info(`Server is listening on port ${port}. Environment: ${process.env.NODE_ENV}`));
+
+// instantiate socket server
+const io = socketIO(server);
+require('./socket/socket')(io);
