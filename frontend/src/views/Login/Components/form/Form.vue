@@ -1,49 +1,50 @@
 <template>
-    <div class="form">
-      <div class="form__logo">
-        <img src="@/assets/logo.svg" />
-      </div>
-      <v-form
-      class="form__form"
+  <div class="form">
+    <div class="form__logo">
+      <img src="@/assets/logo.svg">
+    </div>
+    <v-form
       ref="form"
-      @submit.prevent="submitForm">
+      class="form__form"
+      @submit.prevent="submitForm"
+    >
       <app-username class="form__form__input" />
       <app-password class="form__form__input" />
-      <app-confirm class="form__form__button"/>
+      <app-confirm class="form__form__button" />
     </v-form>
-    </div>
-    
+  </div>
+
 </template>
 
 <script>
-  import Username from './Components/Username.vue';
-  import Password from './Components/Password.vue';
-  import Confirm from './Components/Confirm.vue';
+import Username from './Components/Username.vue';
+import Password from './Components/Password.vue';
+import Confirm from './Components/Confirm.vue';
 
-  export default {
-    components: {
-      appUsername: Username,
-      appPassword: Password,
-      appConfirm: Confirm
-    },
-    destroyed() {
-      this.$store.dispatch('loginForm/reset');
-    },
-    methods: {
-      async submitForm() {
-        if (!this.$refs.form.validate()) {
-          return;
-        }
-        // clear server error messages on submit in order to clear manual error state
-        await this.$store.dispatch('loginForm/clearErrors');
-        await this.$store.dispatch('login/init', {
-          username: this.$store.state.loginForm.data.username,
-          password: this.$store.state.loginForm.data.password
-        });
-        this.$router.replace('/');
+export default {
+  components: {
+    appUsername: Username,
+    appPassword: Password,
+    appConfirm: Confirm
+  },
+  destroyed() {
+    this.$store.dispatch('loginForm/reset');
+  },
+  methods: {
+    async submitForm() {
+      if (!this.$refs.form.validate()) {
+        return;
       }
+      // clear server error messages on submit in order to clear manual error state
+      await this.$store.dispatch('loginForm/clearErrors');
+      await this.$store.dispatch('login/init', {
+        username: this.$store.state.loginForm.data.username,
+        password: this.$store.state.loginForm.data.password
+      });
+      this.$router.replace('/');
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -97,6 +98,6 @@
     }
   }
   }
-  
+
 }
 </style>

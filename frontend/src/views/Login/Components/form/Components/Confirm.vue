@@ -11,13 +11,13 @@
 </template>
 
 <script>
-  export default {
-    computed: {
-      isLoading() {
-        return this.$store.state.login.isLoading;
-      }
+export default {
+  computed: {
+    isLoading() {
+      return this.$store.state.login.isLoading;
     }
-  };
+  }
+};
 </script>
 
 <style lang="scss" scoped>

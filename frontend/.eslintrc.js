@@ -11,6 +11,7 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-await-in-loop': 'off',
+    'no-underscore-dangle': 'off',
     'no-new': 'off',
     'import/prefer-default-export': 'off',
     'array-bracket-spacing': [

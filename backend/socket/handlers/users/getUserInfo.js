@@ -1,23 +1,23 @@
 const winston = require('winston');
-const { User } = require('../../../../model/user');
+const { User } = require('../../../model/user');
 
 module.exports = async (userId) => {
   try {
-    const contacts = await User.findOne(
+    const user = await User.findOne(
       {
         _id: userId
       },
       {
-        _id: 0,
-        contacts: 1
+        password: 0,
+        __v: 0
       }
-    ).populate('contacts');
-    return contacts;
+    );
+    return user;
   } catch (error) {
     // if error occurs during db querying - return error
     winston.error(error);
     return {
-      error: 'Internal server error'
+      error: error.message
     };
   }
 };

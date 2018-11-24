@@ -1,7 +1,7 @@
 <template>
   <div class="login">
     <div class="login__form">
-      <slot name='form'/>
+      <slot name="form" />
     </div>
   </div>
 </template>
