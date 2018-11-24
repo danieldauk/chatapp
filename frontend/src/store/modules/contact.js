@@ -3,7 +3,17 @@ import socket from '@/services/socket/socket';
 
 export default new AbstractStoreModule({
   getters: {
-    getImageLink: state => id => `${process.env.VUE_APP_BASE_URL}/${state.all.find(contact => contact._id === id).avatar}`,
-    getName: state => id => state.all.find(contact => contact._id === id).username
+    getImageLink: state => (id) => {
+      if (state.all.length === 0) {
+        return null;
+      }
+      return `${process.env.VUE_APP_BASE_URL}/${state.all.find(contact => contact._id === id).avatar}`;
+    },
+    getName: state => (id) => {
+      if (state.all.length === 0) {
+        return null;
+      }
+      return state.all.find(contact => contact._id === id).username;
+    }
   }
 });

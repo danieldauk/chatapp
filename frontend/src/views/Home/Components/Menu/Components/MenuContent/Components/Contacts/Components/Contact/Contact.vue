@@ -1,12 +1,18 @@
 <template>
-  <div class="contact">
-    <div class="contact__avatar">
+  <div 
+  :style="contactStyle"
+  class="contact">
+    <div 
+    :style="avatarStyle"
+    class="contact__avatar">
       <img
         class="contact__avatar__image"
         :src="imageLink"
       >
     </div>
-    <div class="contact__name">{{ name | truncateString(30) }}</div>
+    <div 
+    v-if="!isMenuMinified"
+    class="contact__name">{{ name | truncateString(30) }}</div>
   </div>
 </template>
 
@@ -24,6 +30,15 @@ export default {
     },
     name() {
       return this.$store.getters['contact/getName'](this.id);
+    },
+    isMenuMinified() {
+      return this.$store.state.UI.isMenuMinified;
+    },
+    contactStyle() {
+      return this.isMenuMinified ? {justifyContent: 'center'} : {justifyContent: 'flex-start'}
+    },
+    avatarStyle() {
+      return this.isMenuMinified ? {marginRight: '0px'} : {justifyContent: '15px'}
     }
   }
 };
@@ -38,9 +53,9 @@ export default {
     color: $color-purple-light;
   }
   &__avatar {
-    margin-right: 15px;
     display: flex;
     align-items: center;
+    margin-right: 15px;
     &__image {
       height: 35px;
       width: 35px;
