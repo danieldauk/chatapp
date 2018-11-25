@@ -2,9 +2,7 @@
   <div 
   :class="['message', {'message--own': isOwnMessage}]">
     <div class="message__info">
-      <div 
-      v-if='!isPreviousMessageOwn'
-      class="message__info__avatar">
+      <div class="message__info__avatar">
         <img :src='avatar' />
       </div>
       <div class="message__info__time">
