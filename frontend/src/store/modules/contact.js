@@ -3,7 +3,7 @@ import socket from '@/services/socket/socket';
 
 export default new AbstractStoreModule({
   getters: {
-    getImageLink: state => (id) => {
+    getAvatarLink: state => (id) => {
       if (state.all.length === 0) {
         return null;
       }

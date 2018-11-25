@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     imageLink() {
-      return this.$store.getters['contact/getImageLink'](this.id);
+      return this.$store.getters['contact/getAvatarLink'](this.id);
     },
     name() {
       return this.$store.getters['contact/getName'](this.id);

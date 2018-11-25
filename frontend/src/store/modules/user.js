@@ -3,7 +3,7 @@ import socket from '@/services/socket/socket';
 
 export default new AbstractStoreModule({
   getters: {
-    getImageLink(state) {
+    getAvatarLink(state) {
       return state.current ? `${process.env.VUE_APP_BASE_URL}/${state.current.avatar}` : null;
     },
     getName(state) {

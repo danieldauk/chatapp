@@ -14,7 +14,7 @@
 export default {
   computed: {
     imageLink() {
-      return this.$store.getters['user/getImageLink'];
+      return this.$store.getters['user/getAvatarLink'];
     },
     name() {
       return this.$store.getters['user/getName'];
