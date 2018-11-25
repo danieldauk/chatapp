@@ -10,4 +10,12 @@ export default (socket) => {
   socket.on(SocketEventsEnum.RESPONSE_CONTACTS, (data) => {
     store.dispatch('contact/setAll', data.contacts);
   });
+  socket.on(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, async (data) => {
+    await store.dispatch('conversation/setCurrent', data);
+    store.dispatch('conversation/loadMessages', store.getters['conversation/getCurrentId']);
+  });
+  socket.on(SocketEventsEnum.RESPONSE_MESSAGES, async (data) => {
+    await store.dispatch('conversation/setMessages', data);
+    store.dispatch('conversation/finishLoad');
+  });
 };

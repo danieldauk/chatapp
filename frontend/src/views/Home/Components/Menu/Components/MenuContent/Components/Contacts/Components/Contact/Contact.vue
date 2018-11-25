@@ -1,19 +1,22 @@
 <template>
-  <div 
-  @click='openChat'
-  :style="contactStyle"
-  class="contact">
-    <div 
-    :style="avatarStyle"
-    class="contact__avatar">
+  <div
+    :style="contactStyle"
+    class="contact"
+    @click="startConversation"
+  >
+    <div
+      :style="avatarStyle"
+      class="contact__avatar"
+    >
       <img
         class="contact__avatar__image"
         :src="imageLink"
       >
     </div>
-    <div 
-    v-if="!isMenuMinified"
-    class="contact__name">{{ name | truncateString(30) }}</div>
+    <div
+      v-if="!isMenuMinified"
+      class="contact__name"
+    >{{ name | truncateString(30) }}</div>
   </div>
 </template>
 
@@ -36,15 +39,28 @@ export default {
       return this.$store.state.UI.isMenuMinified;
     },
     contactStyle() {
-      return this.isMenuMinified ? {justifyContent: 'center'} : {justifyContent: 'flex-start'}
+      return this.isMenuMinified ? {
+        justifyContent: 'center'
+      } : {
+        justifyContent: 'flex-start'
+      };
     },
     avatarStyle() {
-      return this.isMenuMinified ? {marginRight: '0px'} : {justifyContent: '15px'}
+      return this.isMenuMinified ? {
+        marginRight: '0px'
+      } : {
+        justifyContent: '15px'
+      };
     }
   },
   methods: {
-    openChat() {
-      
+    startConversation() {
+      this.$store.dispatch('conversation/init', {
+        participants: [
+          this.id,
+          this.$store.state.user.current._id
+        ]
+      });
     }
   }
 };

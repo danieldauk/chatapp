@@ -10,9 +10,10 @@ module.exports = async (userId, participants) => {
       error: validationResult.error.details[0].message
     };
   }
-
+  const { participants: participantsArray } = participants;
+  console.log(participantsArray);
   // check if participants array includes requesting user id
-  if (!participants.includes(userId)) {
+  if (!participantsArray.includes(userId)) {
     return {
       error:
         'Creating conversations that do not include requesting user id is not allowed.'
@@ -22,7 +23,7 @@ module.exports = async (userId, participants) => {
     // check if all participants exist in the database
     const notFoundUsers = [];
     /* eslint-disable */
-    for (const participantId of participants) {
+    for (const participantId of participantsArray) {
       const result = await User.findOne({ _id: participantId });
       if (!result) {
         notFoundUsers.push(participantId);
@@ -40,12 +41,12 @@ module.exports = async (userId, participants) => {
       $and: [
         {
           participants: {
-            $size: participants.length
+            $size: participantsArray.length
           }
         },
         {
           participants: {
-            $all: participants
+            $all: participantsArray
           }
         }
       ]
@@ -55,9 +56,7 @@ module.exports = async (userId, participants) => {
       return conversation;
     }
     // if conversation does not exist - create and return conversation
-    const newConversation = new Conversation({
-      participants
-    });
+    const newConversation = new Conversation(participants);
 
     const result = await newConversation.save();
     return result;

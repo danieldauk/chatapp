@@ -32,7 +32,6 @@ export const initSocket = token => new Promise((resolve, reject) => {
           // setup event listeners
           listeners(socket);
           // resolve promise
-          console.log(socketIO);
           resolve();
         })
         .on('unauthorized', () => {

@@ -49,13 +49,6 @@ module.exports = {
         props: false
       }
     ],
-    'no-underscore-dangle': [
-      'error',
-      {
-        allowAfterThis: true,
-        allowAfterSuper: true
-      }
-    ],
     'no-return-assign': 'off',
     'no-plusplus': 'off',
     'max-len': [
