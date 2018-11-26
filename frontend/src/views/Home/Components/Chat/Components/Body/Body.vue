@@ -1,25 +1,27 @@
 <template>
   <div class="chat-body">
-    <app-message 
-    :message='message'
-    :key='message._id'
-    v-for='message in messages'/>
+    <app-date
+      v-for="date in history"
+      :key="date.date"
+      :date="date"
+    />
   </div>
 </template>
 
 <script>
-import Message from './Components/Message/Message.vue';
+import Date from './Components/Date/Date.vue';
 
 export default {
   components: {
-    appMessage: Message
+    appDate: Date
   },
   computed: {
-    messages() {
-      return this.$store.state.conversation.messages;
+    history() {
+      console.log(this.$store.state.conversation.history);
+      return this.$store.state.conversation.history;
     }
   }
-}
+};
 </script>
 
 

@@ -1,7 +1,5 @@
 <template>
-  <div class="chat-header">
-
-  </div>
+  <div class="chat-header" />
 </template>
 
 <style lang="scss" scoped>

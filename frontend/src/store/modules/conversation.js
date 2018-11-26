@@ -4,7 +4,7 @@ import { SocketEventsEnum } from '@/utils/enumerators';
 
 export default new AbstractStoreModule({
   state: {
-    messages: []
+    history: []
   },
   getters: {
     getCurrentId(state) {
@@ -12,8 +12,8 @@ export default new AbstractStoreModule({
     }
   },
   mutations: {
-    setMessages(state, messages) {
-      state.messages = messages;
+    setHistory(state, messages) {
+      state.history = messages;
     }
   },
   actions: {
@@ -21,10 +21,10 @@ export default new AbstractStoreModule({
       thisModule.dispatch('startLoad');
       socket.emit(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, participants);
     },
-    setMessages(thisModule, messages) {
-      thisModule.commit('setMessages', messages);
+    setHistory(thisModule, history) {
+      thisModule.commit('setHistory', history);
     },
-    loadMessages(thisModule, conversationdId) {
+    loadHistory(thisModule, conversationdId) {
       socket.emit(SocketEventsEnum.REQUEST_MESSAGES, conversationdId);
     }
   }

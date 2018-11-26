@@ -18,12 +18,12 @@ export default {
     appHeader: Header,
     appBody: Body,
     appFooter: Footer
-    
+
   }
-}
+};
 </script>
 
 
 <style lang="scss" scoped>
-  
+
 </style>

@@ -1,4 +1,5 @@
 import { SocketEventsEnum } from '@/utils/enumerators';
+import sortMessages from '@/utils/sortMessages';
 import store from '@/store/store';
 
 export default (socket) => {
@@ -12,10 +13,10 @@ export default (socket) => {
   });
   socket.on(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, async (data) => {
     await store.dispatch('conversation/setCurrent', data);
-    store.dispatch('conversation/loadMessages', store.getters['conversation/getCurrentId']);
+    store.dispatch('conversation/loadHistory', store.getters['conversation/getCurrentId']);
   });
   socket.on(SocketEventsEnum.RESPONSE_MESSAGES, async (data) => {
-    await store.dispatch('conversation/setMessages', data);
+    await store.dispatch('conversation/setHistory', sortMessages(data));
     store.dispatch('conversation/finishLoad');
   });
 };

@@ -1,16 +1,18 @@
 <template>
-  <div 
-  :class="['message', {'message--own': isOwnMessage}]">
+  <div
+    :class="['message', {'message--own': isOwnMessage}]"
+  >
     <div class="message__info">
       <div class="message__info__avatar">
-        <img :src='avatar' />
+        <img :src="avatar">
       </div>
       <div class="message__info__time">
-        {{time}}
+        {{ time }}
       </div>
     </div>
-    <div   
-    :class="['message__body', {'message__body--own': isOwnMessage}]">{{message.content}}</div>
+    <div
+      :class="['message__body', {'message__body--own': isOwnMessage}]"
+    >{{ message.content }}</div>
   </div>
 </template>
 
@@ -20,7 +22,7 @@ export default {
     message: {
       type: Object,
       required: true
-    },
+    }
   },
   computed: {
     isOwnMessage() {
@@ -36,7 +38,7 @@ export default {
       return this.$options.filters.formatDate(this.message.createdAt, 'HH:mm');
     }
   }
-}
+};
 </script>
 
 
