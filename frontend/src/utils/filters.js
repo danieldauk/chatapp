@@ -2,7 +2,21 @@ import Vue from 'vue';
 import moment from 'moment';
 import truncate from 'lodash/truncate';
 
-Vue.filter('formatDate', (value, format = 'YYYY MM DD') => moment(value).format(format));
+Vue.filter('formatDate', (value, format = 'YYYY MM DD', areLastSevendDaysRelative) => {
+  const givenTime = moment(value).format('x');
+  const sevenDaysAgo = moment()
+    .startOf('day')
+    .subtract(7, 'day')
+    .format('x');
+  if (givenTime > sevenDaysAgo && areLastSevendDaysRelative) {
+    return moment(value).calendar(null, {
+      lastDay: '[Yesterday]',
+      sameDay: '[Today]',
+      lastWeek: '[last] dddd'
+    });
+  }
+  return moment(value).format(format);
+});
 
 Vue.filter('truncateString', (value, limit) => {
   if (!value || typeof value !== 'string') {

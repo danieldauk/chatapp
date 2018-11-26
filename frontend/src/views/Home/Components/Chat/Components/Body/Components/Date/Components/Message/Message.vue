@@ -70,7 +70,7 @@ export default {
   }
 
   &__body {
-    font-size: 14px;
+    font-size: 13px;
     padding: 10px 15px;
     width: minmax(min-content, 90%);
     height: max-content;

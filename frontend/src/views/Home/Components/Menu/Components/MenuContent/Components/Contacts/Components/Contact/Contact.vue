@@ -55,6 +55,7 @@ export default {
   },
   methods: {
     startConversation() {
+      // TODO: block dispatching of action if current user's chat history is loaded.
       this.$store.dispatch('conversation/init', {
         participants: [
           this.id,

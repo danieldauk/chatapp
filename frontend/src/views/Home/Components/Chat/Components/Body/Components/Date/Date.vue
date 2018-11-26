@@ -1,7 +1,7 @@
 <template>
   <div class="date">
     <div class="date__date">
-      {{ date.date | formatDate('Do MMMM') }}
+      {{ date.date | formatDate('Do MMMM', true) }}
     </div>
     <div class="date__messages">
       <app-message
