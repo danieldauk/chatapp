@@ -40,7 +40,6 @@ module.exports = async (userId, conversationId) => {
     }
     // if all checks are successful - return all messages linked to the conversation
     const messages = await Message.find({ conversationId });
-    console.log(messages);
     return messages;
   } catch (error) {
     winston.error(error);

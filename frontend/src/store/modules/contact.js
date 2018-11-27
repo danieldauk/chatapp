@@ -14,6 +14,9 @@ export default new AbstractStoreModule({
         return null;
       }
       return state.all.find(contact => contact._id === id).username;
+    },
+    getCurrentId(state) {
+      return state.current ? state.current : null;
     }
   }
 });

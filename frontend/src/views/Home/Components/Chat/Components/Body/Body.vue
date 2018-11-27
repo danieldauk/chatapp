@@ -17,7 +17,6 @@ export default {
   },
   computed: {
     history() {
-      console.log(this.$store.state.conversation.history);
       return this.$store.state.conversation.history;
     }
   }

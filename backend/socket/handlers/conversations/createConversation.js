@@ -11,7 +11,6 @@ module.exports = async (userId, participants) => {
     };
   }
   const { participants: participantsArray } = participants;
-  console.log(participantsArray);
   // check if participants array includes requesting user id
   if (!participantsArray.includes(userId)) {
     return {

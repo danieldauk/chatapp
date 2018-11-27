@@ -54,8 +54,13 @@ export default {
     }
   },
   methods: {
-    startConversation() {
-      // TODO: block dispatching of action if current user's chat history is loaded.
+    async startConversation() {
+      console.log(this.$store.getters['contact/getCurrentId']);
+      console.log(this.id);
+      if(this.$store.getters['contact/getCurrentId'] === this.id) {
+        return;
+      }
+      await this.$store.dispatch('contact/setCurrent', this.id);
       this.$store.dispatch('conversation/init', {
         participants: [
           this.id,
