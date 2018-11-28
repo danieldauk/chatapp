@@ -55,8 +55,6 @@ export default {
   },
   methods: {
     async startConversation() {
-      console.log(this.$store.getters['contact/getCurrentId']);
-      console.log(this.id);
       if(this.$store.getters['contact/getCurrentId'] === this.id) {
         return;
       }

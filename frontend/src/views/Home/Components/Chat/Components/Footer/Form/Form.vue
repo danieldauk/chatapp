@@ -25,7 +25,7 @@ export default {
         return;
       }
       await this.$store.dispatch('message/init', {
-        message: this.message,
+        content: this.message,
         conversationId: this.$store.getters['conversation/getCurrentId']
         });
       this.$store.dispatch('messageForm/reset');

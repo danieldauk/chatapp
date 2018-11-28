@@ -19,4 +19,7 @@ export default (socket) => {
     await store.dispatch('conversation/setHistory', sortMessages(data));
     store.dispatch('conversation/finishLoad');
   });
+  socket.on(SocketEventsEnum.RECEIVE_MESSAGE, (data) => {
+    console.log(data);
+  });
 };

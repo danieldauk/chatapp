@@ -11,40 +11,66 @@ const removeContact = require('./handlers/users/contacts/removeContact');
 const createConversation = require('./handlers/conversations/createConversation');
 // messages events handlers
 const getMessages = require('./handlers/messages/getMessages');
+const sendMessage = require('./handlers/messages/sendMessage');
 
 module.exports = (io) => {
-  io
-    .on(
-      'connect',
-      validateToken
-    )
-    .on('authenticated', (socket) => {
-      const userId = socket.decoded_token._id;
-      // USER events
-      // USER: get user info
-      socket.on(SocketEventsEnum.REQUEST_USER_INFO, async () => {
-        socket.emit(SocketEventsEnum.RESPONSE_USER_INFO, await getUserInfo(userId));
-      });
-      // CONTACTS events
-      // CONTACTS: get all user contacts
-      socket.on(SocketEventsEnum.REQUEST_CONTACTS, async () => {
-        socket.emit(SocketEventsEnum.RESPONSE_CONTACTS, await getContacts(userId));
-      });
-      // CONTACTS: add contact to contacts list
-      socket.on(SocketEventsEnum.REQUEST_ADD_CONTACT, async (contactId) => {
-        socket.emit(SocketEventsEnum.RESPONSE_ADD_CONTACT, await addContact(userId, contactId));
-      });
-      // CONTACTS: remove contact from contacts list
-      socket.on(SocketEventsEnum.REQUEST_REMOVE_CONTACT, async (contactId) => {
-        socket.emit(SocketEventsEnum.RESPONSE_REMOVE_CONTACT, await removeContact(userId, contactId));
-      });
-      // CONVERSATION events
-      socket.on(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, async (participants) => {
-        socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, await createConversation(userId, participants));
-      });
-      // MESSAGES events
-      socket.on(SocketEventsEnum.REQUEST_MESSAGES, async (conversationId) => {
-        socket.emit(SocketEventsEnum.RESPONSE_MESSAGES, await getMessages(userId, conversationId));
-      });
+  // TODO: refactor event handlers to handle whole event
+  // TODO:(including emitting response and errors)
+  // assign custom socket id (same as user id)
+  io.engine.generateId = (req) => {
+    return req._query.userId;
+  };
+  io.on('connect', validateToken).on('authenticated', (socket) => {
+    const userId = socket.decoded_token._id;
+    // USER events
+    // USER: get user info
+    socket.on(SocketEventsEnum.REQUEST_USER_INFO, async () => {
+      socket.emit(
+        SocketEventsEnum.RESPONSE_USER_INFO,
+        await getUserInfo(userId)
+      );
     });
+    // CONTACTS events
+    // CONTACTS: get all user contacts
+    socket.on(SocketEventsEnum.REQUEST_CONTACTS, async () => {
+      socket.emit(
+        SocketEventsEnum.RESPONSE_CONTACTS,
+        await getContacts(userId)
+      );
+    });
+    // CONTACTS: add contact to contacts list
+    socket.on(SocketEventsEnum.REQUEST_ADD_CONTACT, async (contactId) => {
+      socket.emit(
+        SocketEventsEnum.RESPONSE_ADD_CONTACT,
+        await addContact(userId, contactId)
+      );
+    });
+    // CONTACTS: remove contact from contacts list
+    socket.on(SocketEventsEnum.REQUEST_REMOVE_CONTACT, async (contactId) => {
+      socket.emit(
+        SocketEventsEnum.RESPONSE_REMOVE_CONTACT,
+        await removeContact(userId, contactId)
+      );
+    });
+    // CONVERSATION events
+    socket.on(
+      SocketEventsEnum.REQUEST_CREATE_CONVERSATION,
+      async (participants) => {
+        socket.emit(
+          SocketEventsEnum.RESPONSE_CREATE_CONVERSATION,
+          await createConversation(userId, participants)
+        );
+      }
+    );
+    // MESSAGES events
+    socket.on(SocketEventsEnum.REQUEST_MESSAGES, async (conversationId) => {
+      socket.emit(
+        SocketEventsEnum.RESPONSE_MESSAGES,
+        await getMessages(userId, conversationId)
+      );
+    });
+    socket.on(SocketEventsEnum.SEND_MESSAGE, async (data) => {
+      sendMessage(userId, data, socket);
+    });
+  });
 };

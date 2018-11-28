@@ -16,9 +16,13 @@ const socketIO = new Proxy(
   }
 );
 
-export const initSocket = token => new Promise((resolve, reject) => {
+export const initSocket = (token, userId) => new Promise((resolve, reject) => {
   if (!socketIO.socket) {
-    const socket = io.connect(process.env.VUE_APP_BASE_URL);
+    const socket = io.connect(process.env.VUE_APP_BASE_URL, {
+      query: {
+        userId
+      }
+    });
     socket.on('connect', () => {
       socket
         .on('authenticated', () => {

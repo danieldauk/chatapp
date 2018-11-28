@@ -24,7 +24,10 @@ export default new AbstractStoreModule({
         const token = response.data.token;
         await thisModule.dispatch('setToken', token);
         localStorage.setItem('token', token);
-        await initSocket(token);
+        // extract user id to send it during socket initialization
+        // in order to create custom socketId
+        const { _id: userId } = jwt.verify(token, process.env.VUE_APP_TOKEN_PUBLIC_KEY);
+        await initSocket(token, userId);
         await router.replace('/');
       } catch (error) {
         console.log(error);

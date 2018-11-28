@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import store from '../store/store';
 import { initSocket } from '@/services/socket/socket';
 
@@ -17,7 +18,8 @@ export const redirectIfNotAuthenticated = async (to, from, next) => {
     if (token) {
       try {
         await store.dispatch('login/setToken', token);
-        await initSocket(token);
+        const { _id: userId } = jwt.verify(token, process.env.VUE_APP_TOKEN_PUBLIC_KEY);
+        await initSocket(token, userId);
         next('/');
       } catch (error) {
         // if token is invalid set clear token and set error
