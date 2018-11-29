@@ -2,7 +2,7 @@ import groupBy from 'lodash/groupBy';
 import orderBy from 'lodash/orderBy';
 import moment from 'moment';
 
-export default (messages) => {
+export const sortMessages = (messages) => {
   const groupedMessages = groupBy(messages, message => moment(message.createdAt)
     .startOf('day')
     .format());
@@ -18,3 +18,8 @@ export default (messages) => {
     return date;
   });
 };
+
+export const transformMessage = message => ({
+  date: moment(message.createdAt).startOf('day').format(),
+  message
+});

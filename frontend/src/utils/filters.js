@@ -9,6 +9,7 @@ Vue.filter('formatDate', (value, format = 'YYYY MM DD', areLastSevendDaysRelativ
     .subtract(7, 'day')
     .format('x');
   if (givenTime > sevenDaysAgo && areLastSevendDaysRelative) {
+    console.log(value);
     return moment(value).calendar(null, {
       lastDay: '[Yesterday]',
       sameDay: '[Today]',
