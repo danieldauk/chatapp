@@ -5,9 +5,10 @@
     </div>
     <div class="date__messages">
       <app-message
-        v-for="message in date.messages"
+        v-for="(message, index) in date.messages"
         :key="message._id"
         :message="message"
+        :isPreviousMessageOwn="index === 0 ? false : date.messages[index - 1].sender === message.sender"
       />
     </div>
   </div>

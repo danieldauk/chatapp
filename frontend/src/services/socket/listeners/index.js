@@ -19,7 +19,6 @@ export default (socket) => {
   });
   // MESSAGE EVENTS
   socket.on(SocketEventsEnum.RESPONSE_MESSAGES, async (data) => {
-    console.log(data);
     await store.dispatch('conversation/setHistory', sortMessages(data));
     store.dispatch('conversation/finishLoad');
   });

@@ -3,10 +3,14 @@
     :class="['message', {'message--own': isOwnMessage}]"
   >
     <div class="message__info">
-      <div class="message__info__avatar">
+      <div 
+      v-if="!isPreviousMessageOwn"
+      class="message__info__avatar">
         <img :src="avatar">
       </div>
-      <div class="message__info__time">
+      <div 
+      v-if="!isPreviousMessageOwn"
+      class="message__info__time">
         {{ time }}
       </div>
     </div>
@@ -21,6 +25,10 @@ export default {
   props: {
     message: {
       type: Object,
+      required: true
+    },
+    isPreviousMessageOwn: {
+      type: Boolean,
       required: true
     }
   },
@@ -54,7 +62,7 @@ export default {
     flex-direction: column;
     align-items: center;
     color: $color-silver;
-    margin: 0px 15px;
+    min-width: 50px;
     &__avatar {
       margin-bottom: 5px;
       img {
@@ -72,12 +80,12 @@ export default {
   &__body {
     font-size: 13px;
     padding: 10px 15px;
-    width: minmax(min-content, 90%);
-    height: max-content;
+    max-width: 50%;
     border-radius: 0px 3px 3px 3px;
     position: relative;
     background: $color-white;
     color: $color-purple-medium;
+    word-break: break-word;
     &:not(.message__body--own):after {
       content: '';
       position: absolute;

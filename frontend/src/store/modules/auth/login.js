@@ -30,7 +30,6 @@ export default new AbstractStoreModule({
         await initSocket(token, userId);
         await router.replace('/');
       } catch (error) {
-        console.log(error);
         await thisModule.dispatch('clearToken');
         // if token validation failed set error accordingly
         if (error.message === 'invalidToken') {
