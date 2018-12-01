@@ -1,7 +1,6 @@
 <template>
   <div class="menu">
     <v-navigation-drawer
-      :mini-variant="isMenuMinified"
       class="menu__drawer"
       permanent
     >
@@ -17,11 +16,6 @@ import MenuContent from './Components/MenuContent/MenuContent.vue';
 export default {
   components: {
     appMenuContent: MenuContent
-  },
-  computed: {
-    isMenuMinified() {
-      return this.$store.state.UI.isMenuMinified;
-    }
   }
 };
 </script>

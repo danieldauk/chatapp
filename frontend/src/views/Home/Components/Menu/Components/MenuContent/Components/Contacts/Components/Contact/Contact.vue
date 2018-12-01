@@ -1,11 +1,9 @@
 <template>
   <div
-    :style="contactStyle"
     class="contact"
     @click="startConversation"
   >
     <div
-      :style="avatarStyle"
       class="contact__avatar"
     >
       <img
@@ -14,7 +12,6 @@
       >
     </div>
     <div
-      v-if="!isMenuMinified"
       class="contact__name"
     >{{ name | truncateString(30) }}</div>
   </div>
@@ -35,23 +32,6 @@ export default {
     name() {
       return this.$store.getters['contact/getName'](this.id);
     },
-    isMenuMinified() {
-      return this.$store.state.UI.isMenuMinified;
-    },
-    contactStyle() {
-      return this.isMenuMinified ? {
-        justifyContent: 'center'
-      } : {
-        justifyContent: 'flex-start'
-      };
-    },
-    avatarStyle() {
-      return this.isMenuMinified ? {
-        marginRight: '0px'
-      } : {
-        justifyContent: '15px'
-      };
-    }
   },
   methods: {
     async startConversation() {

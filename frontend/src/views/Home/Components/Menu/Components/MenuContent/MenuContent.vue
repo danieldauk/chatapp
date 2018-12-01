@@ -1,31 +1,24 @@
 <template>
   <app-menu-content>
-    <app-user-info
-      v-if="!isMenuMinified"
-      slot="user-info"
-    />
-    <app-toggle-button slot="toggle" />
-    <app-contacts slot="contacts" />
+    <app-user-info slot="user-info"/>
+    <app-tabs slot="tabs"/>
+    <app-toggle-button slot="toggle"/>
+    <app-contacts slot="contacts"/>
   </app-menu-content>
 </template>
 
 <script>
-import MenuContent from './Layout/MenuContent.vue';
-import UserInfo from './Components/UserInfo/UserInfo.vue';
-import Contacts from './Components/Contacts/Contacts.vue';
-import ToggleButton from './Components/ToggleButton/ToggleButton.vue';
+import MenuContent from "./Layout/MenuContent.vue";
+import UserInfo from "./Components/UserInfo/UserInfo.vue";
+import Tabs from "./Components/Tabs/Tabs.vue";
+import Contacts from "./Components/Contacts/Contacts.vue";
 
 export default {
   components: {
     appMenuContent: MenuContent,
-    appToggleButton: ToggleButton,
     appUserInfo: UserInfo,
-    appContacts: Contacts
-  },
-  computed: {
-    isMenuMinified() {
-      return this.$store.state.UI.isMenuMinified;
-    }
+    appContacts: Contacts,
+    appTabs: Tabs
   }
 };
 </script>

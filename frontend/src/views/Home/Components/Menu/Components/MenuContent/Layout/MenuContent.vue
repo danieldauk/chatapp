@@ -1,41 +1,21 @@
 <template>
   <div class="menu-content">
-    <div
-      :style="headerStyle"
-      class="menu-content__header"
-    >
-      <div class="menu-content__header__user-info">
-        <slot name="user-info" />
-      </div>
-      <div class="menu-content__header__toggle">
-        <slot name="toggle" />
-      </div>
+    <div class="menu-content__header">
+      <slot name="user-info"/>
     </div>
     <div class="menu-content__search">
-      <slot name="search" />
+      <slot name="search"/>
+    </div>
+    <div class="menu-content__tabs">
+      <slot name="tabs"/>
     </div>
     <div class="menu-content__contacts">
-      <slot name="contacts" />
+      <slot name="contacts"/>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  computed: {
-    isMenuMinified() {
-      return this.$store.state.UI.isMenuMinified;
-    },
-    headerStyle() {
-      return this.isMenuMinified ? {
-        justifyContent: 'center'
-      } : {
-        justifyContent: 'space-between'
-      };
-    }
-  }
-
-};
 </script>
 
 
