@@ -1,22 +1,28 @@
 const winston = require('winston');
-const { Conversation, validateConversation } = require('../../../model/conversation');
+const {
+  Conversation,
+  validateConversation
+} = require('../../../model/conversation');
 const { User } = require('../../../model/user');
+const { SocketEventsEnum } = require('../../../utils/enumerators');
 
-module.exports = async (userId, participants) => {
+module.exports = async (socket, userId, participants) => {
   // check data validity
   const validationResult = validateConversation(participants);
   if (validationResult.error) {
-    return {
+    socket.emit(SocketEventsEnum.ERROR, {
       error: validationResult.error.details[0].message
-    };
+    });
+    return;
   }
   const { participants: participantsArray } = participants;
   // check if participants array includes requesting user id
   if (!participantsArray.includes(userId)) {
-    return {
+    socket.emit(SocketEventsEnum.ERROR, {
       error:
         'Creating conversations that do not include requesting user id is not allowed.'
-    };
+    });
+    return;
   }
   try {
     // check if all participants exist in the database
@@ -30,9 +36,10 @@ module.exports = async (userId, participants) => {
     }
     /* eslint-enable */
     if (notFoundUsers.length !== 0) {
-      return {
+      socket.emit(SocketEventsEnum.ERROR, {
         error: `Following users where not found in the database: ${notFoundUsers}`
-      };
+      });
+      return;
     }
 
     // check if conversation with given participant exist
@@ -52,17 +59,18 @@ module.exports = async (userId, participants) => {
     });
     // if conversation exist - return conversation
     if (conversation) {
-      return conversation;
+      socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, conversation);
+      return;
     }
     // if conversation does not exist - create and return conversation
     const newConversation = new Conversation(participants);
 
     const result = await newConversation.save();
-    return result;
+    socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, result);
   } catch (error) {
     winston.error(error);
-    return {
+    socket.emit(SocketEventsEnum.ERROR, {
       error: error.message
-    };
+    });
   }
 };

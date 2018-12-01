@@ -3,16 +3,17 @@ const { validateMessage, Message } = require('../../../model/message');
 const { Conversation } = require('../../../model/conversation');
 const { SocketEventsEnum } = require('../../../utils/enumerators');
 
-module.exports = async (userId, { conversationId, content }, socket) => {
+module.exports = async (socket, userId, { conversationId, content }) => {
   // validate data
   const validationResult = validateMessage({
     content,
     conversationId
   });
   if (validationResult.error) {
-    return {
+    socket.emit(SocketEventsEnum.ERROR, {
       error: validationResult.error.details[0].message
-    };
+    });
+    return;
   }
   try {
     // check if conversation exists
@@ -21,9 +22,10 @@ module.exports = async (userId, { conversationId, content }, socket) => {
     });
 
     if (!conversation) {
-      return {
+      socket.emit(SocketEventsEnum.ERROR, {
         error: 'Conversation not found'
-      };
+      });
+      return;
     }
     // check if requesting user is present in the conversation
     let isUserFound = false;
@@ -34,10 +36,11 @@ module.exports = async (userId, { conversationId, content }, socket) => {
     });
     // if conversation does not include requesting user id - return 403
     if (!isUserFound) {
-      return {
+      socket.emit(SocketEventsEnum.ERROR, {
         error:
           'Adding messages to conversations that do not include requesting user id is not allowed.'
-      };
+      });
+      return;
     }
     // if all checks are successfull - add message
     const message = new Message({
@@ -60,8 +63,8 @@ module.exports = async (userId, { conversationId, content }, socket) => {
   } catch (error) {
     // if error occurs during db querying - return error
     winston.error(error);
-    return {
+    socket.emit(SocketEventsEnum.ERROR, {
       error: error.message
-    };
+    });
   }
 };

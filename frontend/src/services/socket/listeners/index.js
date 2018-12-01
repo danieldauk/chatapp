@@ -25,4 +25,8 @@ export default (socket) => {
   socket.on(SocketEventsEnum.RECEIVE_MESSAGE, (data) => {
     store.dispatch('conversation/addMessageToHistory', transformMessage(data));
   });
+  // ERROR EVENT
+  socket.on(SocketEventsEnum.ERROR, (error) => {
+    console.error(error);
+  });
 };

@@ -17,60 +17,39 @@ module.exports = (io) => {
   // TODO: refactor event handlers to handle whole event
   // TODO:(including emitting response and errors)
   // assign custom socket id (same as user id)
-  io.engine.generateId = (req) => {
+  io.engine.generateId = (req) => {   // eslint-disable-line
     return req._query.userId;
   };
   io.on('connect', validateToken).on('authenticated', (socket) => {
     const userId = socket.decoded_token._id;
     // USER events
     // USER: get user info
-    socket.on(SocketEventsEnum.REQUEST_USER_INFO, async () => {
-      socket.emit(
-        SocketEventsEnum.RESPONSE_USER_INFO,
-        await getUserInfo(userId)
-      );
+    socket.on(SocketEventsEnum.REQUEST_USER_INFO, () => {
+      getUserInfo(socket, userId);
     });
     // CONTACTS events
     // CONTACTS: get all user contacts
-    socket.on(SocketEventsEnum.REQUEST_CONTACTS, async () => {
-      socket.emit(
-        SocketEventsEnum.RESPONSE_CONTACTS,
-        await getContacts(userId)
-      );
+    socket.on(SocketEventsEnum.REQUEST_CONTACTS, () => {
+      getContacts(socket, userId);
     });
     // CONTACTS: add contact to contacts list
     socket.on(SocketEventsEnum.REQUEST_ADD_CONTACT, async (contactId) => {
-      socket.emit(
-        SocketEventsEnum.RESPONSE_ADD_CONTACT,
-        await addContact(userId, contactId)
-      );
+      addContact(socket, userId, contactId);
     });
     // CONTACTS: remove contact from contacts list
-    socket.on(SocketEventsEnum.REQUEST_REMOVE_CONTACT, async (contactId) => {
-      socket.emit(
-        SocketEventsEnum.RESPONSE_REMOVE_CONTACT,
-        await removeContact(userId, contactId)
-      );
+    socket.on(SocketEventsEnum.REQUEST_REMOVE_CONTACT, (contactId) => {
+      removeContact(socket, userId, contactId);
     });
     // CONVERSATION events
-    socket.on(
-      SocketEventsEnum.REQUEST_CREATE_CONVERSATION,
-      async (participants) => {
-        socket.emit(
-          SocketEventsEnum.RESPONSE_CREATE_CONVERSATION,
-          await createConversation(userId, participants)
-        );
-      }
-    );
-    // MESSAGES events
-    socket.on(SocketEventsEnum.REQUEST_MESSAGES, async (conversationId) => {
-      socket.emit(
-        SocketEventsEnum.RESPONSE_MESSAGES,
-        await getMessages(userId, conversationId)
-      );
+    socket.on(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, (participants) => {
+      createConversation(socket, userId, participants);
     });
-    socket.on(SocketEventsEnum.SEND_MESSAGE, async (data) => {
-      sendMessage(userId, data, socket);
+    // MESSAGES events
+    socket.on(SocketEventsEnum.REQUEST_MESSAGES, (conversationId) => {
+      getMessages(socket, userId, conversationId);
+    });
+    socket.on(SocketEventsEnum.SEND_MESSAGE, (data) => {
+      sendMessage(socket, userId, data);
     });
   });
 };

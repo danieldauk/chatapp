@@ -1,7 +1,8 @@
 const winston = require('winston');
 const { User } = require('../../../../model/user');
+const { SocketEventsEnum } = require('../../../../utils/enumerators');
 
-module.exports = async (userId) => {
+module.exports = async (socket, userId) => {
   try {
     const contacts = await User.findOne(
       {
@@ -15,12 +16,12 @@ module.exports = async (userId) => {
       path: 'contacts',
       select: 'username avatar'
     });
-    return contacts;
+    socket.emit(SocketEventsEnum.RESPONSE_CONTACTS, contacts);
   } catch (error) {
     // if error occurs during db querying - return error
     winston.error(error);
-    return {
+    socket.emit(SocketEventsEnum.ERROR, {
       error: error.message
-    };
+    });
   }
 };

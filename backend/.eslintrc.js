@@ -2,6 +2,7 @@ module.exports = {
   extends: 'airbnb-base',
   rules: {
     'no-underscore-dangle': 'off',
+    'consistent-return': 'off',
     'comma-dangle': [
       'error',
       {

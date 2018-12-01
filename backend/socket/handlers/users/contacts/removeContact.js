@@ -1,15 +1,15 @@
 const winston = require('winston');
 const { User } = require('../../../../model/user');
 const validateObjectId = require('../../../../utils/sharedJoiSchemas/validateObjectId');
+const { SocketEventsEnum } = require('../../../../utils/enumerators');
 
-
-module.exports = async (userId, contactId) => {
-  // TODO: add requesting user to contacts list of added user(contactId) and emit event to added user
+module.exports = async (socket, userId, contactId) => {
   const validationResult = validateObjectId(contactId);
   if (validationResult.error) {
-    return {
+    socket.emit(SocketEventsEnum.ERROR, {
       error: validationResult.error.details[0].message
-    };
+    });
+    return;
   }
 
   try {
@@ -18,9 +18,10 @@ module.exports = async (userId, contactId) => {
       _id: contactId
     });
     if (!contactToBeRemoved) {
-      return {
+      socket.emit(SocketEventsEnum.ERROR, {
         error: 'User not found'
-      };
+      });
+      return;
     }
 
     // check if user does not exist inside contacts array
@@ -30,9 +31,10 @@ module.exports = async (userId, contactId) => {
     });
     // if user does not exist - return error
     if (!contact) {
-      return {
+      socket.emit(SocketEventsEnum.ERROR, {
         error: 'User does not exist in contacts list'
-      };
+      });
+      return;
     }
 
     // if user exists - remove user and return success message
@@ -46,13 +48,13 @@ module.exports = async (userId, contactId) => {
         }
       }
     );
-    return {
-      message: 'User successfully removed from contacts list'
-    };
+    socket.emit(SocketEventsEnum.RESPONSE_REMOVE_CONTACT, {
+      message: 'User was successfully removed from contacts list'
+    });
   } catch (error) {
     winston.error(error);
-    return {
+    socket.emit(SocketEventsEnum.ERROR, {
       error: error.message
-    };
+    });
   }
 };
