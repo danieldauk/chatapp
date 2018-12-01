@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import loginForm from './modules/forms/loginForm';
 import messageForm from './modules/forms/messageForm';
+import searchForm from './modules/forms/searchForm';
 import login from './modules/auth/login';
 import user from './modules/user';
 import contact from './modules/contact';
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   modules: {
     loginForm,
     messageForm,
+    searchForm,
     login,
     user,
     contact,

@@ -3,11 +3,11 @@
     <div class="menu-content__header">
       <slot name="user-info"/>
     </div>
-    <div class="menu-content__search">
-      <slot name="search"/>
-    </div>
     <div class="menu-content__tabs">
       <slot name="tabs"/>
+    </div>
+    <div class="menu-content__search">
+      <slot name="search"/>
     </div>
     <div class="menu-content__contacts">
       <slot name="contacts"/>
