@@ -63,6 +63,7 @@ export default {
       input {
         font-size: 15px;
         background: transparent;
+        color: $color-purple-light;
         &::placeholder {
           color: rgba($color-purple-light, 0.7);
         }
