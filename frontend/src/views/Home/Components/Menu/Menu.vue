@@ -3,6 +3,7 @@
     <v-navigation-drawer
       class="menu__drawer"
       permanent
+      fixed
     >
       <app-menu-content />
     </v-navigation-drawer>

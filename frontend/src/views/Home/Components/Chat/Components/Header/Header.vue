@@ -5,6 +5,6 @@
 <style lang="scss" scoped>
   .chat-header {
     height: 60px;
-    background: $color-purple-medium;
+    background: rgba($color-purple-medium,0.95 );
   }
 </style>
