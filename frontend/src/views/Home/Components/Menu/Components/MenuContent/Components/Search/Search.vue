@@ -4,13 +4,13 @@
       class="search-form__input"
       solo
       clearable
-      :clear-icon-cb="clearSearchTerm"
+      :clear-icon-cb="onClearHandler"
       prepend-icon="search"
       :value="term"
       hide-details
       height="60"
       placeholder="Search"
-      @input="inputHandler"
+      @input="onInputHandler"
     ></v-text-field>
   </v-form>
 </template>
@@ -33,7 +33,7 @@ export default {
     }
   },
   methods: {
-    async inputHandler(value) {
+    async onInputHandler(value) {
       this.setFormElementValue(value);
       // on input clear interval for debounced search
       clearTimeout(this.debouncedSearch);
@@ -51,8 +51,9 @@ export default {
         id: "term"
       });
     },
-    clearSearchTerm() {
+    onClearHandler() {
       this.setFormElementValue("");
+      this.$store.dispatch('people/clearAll');
     }
   }
 };

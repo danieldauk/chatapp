@@ -19,6 +19,9 @@ export default {
     people() {
       return this.$store.state.people.all;
     }
+  },
+  destroyed() {
+    this.$store.dispatch('people/clearAll');
   }
 };
 </script>

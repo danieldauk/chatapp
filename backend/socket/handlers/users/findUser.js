@@ -3,7 +3,8 @@ const { User } = require('../../../model/user');
 const { SocketEventsEnum } = require('../../../utils/enumerators');
 
 module.exports = async (socket, userId, username) => {
-  console.log(username);
+  // TODO: exclude people that are in pending friend request list
+  // TODO: exclude people that are in current contact list
   try {
     const users = await User.find(
       {
