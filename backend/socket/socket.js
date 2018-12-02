@@ -3,6 +3,7 @@ const { SocketEventsEnum } = require('../utils/enumerators');
 const validateToken = require('./handlers/auth/validateToken');
 // user events handlers
 const getUserInfo = require('./handlers/users/getUserInfo');
+const findUser = require('./handlers/users/findUser');
 // contacts events handlers
 const getContacts = require('./handlers/users/contacts/getContacts');
 const addContact = require('./handlers/users/contacts/addContact');
@@ -14,8 +15,6 @@ const getMessages = require('./handlers/messages/getMessages');
 const sendMessage = require('./handlers/messages/sendMessage');
 
 module.exports = (io) => {
-  // TODO: refactor event handlers to handle whole event
-  // TODO:(including emitting response and errors)
   // assign custom socket id (same as user id)
   io.engine.generateId = (req) => {   // eslint-disable-line
     return req._query.userId;
@@ -26,6 +25,10 @@ module.exports = (io) => {
     // USER: get user info
     socket.on(SocketEventsEnum.REQUEST_USER_INFO, () => {
       getUserInfo(socket, userId);
+    });
+    // USERS events
+    socket.on(SocketEventsEnum.REQUEST_FIND_PEOPLE, (username) => {
+      findUser(socket, userId, username);
     });
     // CONTACTS events
     // CONTACTS: get all user contacts

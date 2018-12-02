@@ -2,7 +2,7 @@
   <v-tabs 
   class="tabs"
   :value="activeMenuTab"
-  @change="setActiveTab($event)"
+  @change="changeHandler($event)"
   centered color="#3b385d" 
   height="60"
   icons-and-text >
@@ -45,6 +45,10 @@ export default {
     }
   },
   methods: {
+    changeHandler(tab) {
+      this.setActiveTab(tab);
+      this.$store.dispatch('searchForm/reset');
+    },
     setActiveTab(tab) {
       this.$store.dispatch('UI/setActiveTab', tab);
     }

@@ -1,4 +1,7 @@
+
 import AbstractStoreModule from '@/store/modules/AbstractStoreModule';
+import socket from '@/services/socket/socket';
+import { SocketEventsEnum } from '@/utils/enumerators';
 
 export default new AbstractStoreModule({
   getters: {
@@ -13,9 +16,11 @@ export default new AbstractStoreModule({
         return null;
       }
       return state.all.find(contact => contact._id === id).username;
-    },
-    getCurrentId(state) {
-      return state.current ? state.current : null;
+    }
+  },
+  actions: {
+    search(thisModule, username) {
+      socket.emit(SocketEventsEnum.REQUEST_FIND_PEOPLE, username);
     }
   }
 });

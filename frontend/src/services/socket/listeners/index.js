@@ -8,6 +8,9 @@ export default (socket) => {
     // TODO: validate response using JSON schema
     store.dispatch('user/setCurrent', data);
   });
+  socket.on(SocketEventsEnum.RESPONSE_FIND_PEOPLE, (data) => {
+    store.dispatch('people/setAll', data);
+  });
   // CONTACT EVENTS
   socket.on(SocketEventsEnum.RESPONSE_CONTACTS, (data) => {
     store.dispatch('contact/setAll', data.contacts);

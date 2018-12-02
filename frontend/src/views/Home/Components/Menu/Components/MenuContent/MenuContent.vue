@@ -7,6 +7,9 @@
     <app-contacts 
     v-if="areContactsTabShown"
     slot="activeTabItem"/>
+    <app-people
+    v-if="arePeopleTabShown"
+    slot="activeTabItem"/>
   </app-menu-content>
 </template>
 
@@ -17,11 +20,13 @@ import UserInfo from "./Components/UserInfo/UserInfo.vue";
 import Tabs from "./Components/Tabs/Tabs.vue";
 import Search from "./Components/Search/Search.vue";
 import Contacts from "./Components/Contacts/Contacts.vue";
+import People from "./Components/People/People.vue";
 
 export default {
   components: {
     appMenuContent: MenuContent,
     appUserInfo: UserInfo,
+    appPeople: People,
     appContacts: Contacts,
     appTabs: Tabs,
     appSearch: Search
