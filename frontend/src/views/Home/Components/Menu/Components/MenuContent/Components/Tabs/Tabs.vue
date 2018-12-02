@@ -1,6 +1,8 @@
 <template>
   <v-tabs 
   class="tabs"
+  :value="activeMenuTab"
+  @change="setActiveTab($event)"
   centered color="#3b385d" 
   height="60"
   icons-and-text >
@@ -34,6 +36,22 @@
     </v-tab>
   </v-tabs>
 </template>
+
+<script>
+export default {
+  computed: {
+    activeMenuTab() {
+      return this.$store.state.UI.activeMenuTab;
+    }
+  },
+  methods: {
+    setActiveTab(tab) {
+      this.$store.dispatch('UI/setActiveTab', tab);
+    }
+  }
+}
+</script>
+
 
 <style lang="scss" scoped>
   .tabs{

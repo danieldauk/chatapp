@@ -31,3 +31,10 @@ export const SocketEventsEnum = new Enumerator('SocketEventsEnum', {
   RECEIVE_MESSAGE: 'RECEIVE_MESSAGE',
   ERROR: 'ERROR'
 });
+
+export const ActiveTabEnum = new Enumerator('ActiveTabEnum', {
+  CONTACTS: 0,
+  CHATS: 1,
+  REQUESTS: 2,
+  PEOPLE: 3
+});

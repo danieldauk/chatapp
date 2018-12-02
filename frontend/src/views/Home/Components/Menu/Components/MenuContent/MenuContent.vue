@@ -2,13 +2,16 @@
   <app-menu-content>
     <app-user-info slot="user-info"/>
     <app-tabs slot="tabs"/>
-    <app-search slot="search" />
+    <app-search slot="search"/>
     <app-toggle-button slot="toggle"/>
-    <app-contacts slot="contacts"/>
+    <app-contacts 
+    v-if="areContactsTabShown"
+    slot="activeTabItem"/>
   </app-menu-content>
 </template>
 
 <script>
+import { ActiveTabEnum } from "@/utils/enumerators";
 import MenuContent from "./Layout/MenuContent.vue";
 import UserInfo from "./Components/UserInfo/UserInfo.vue";
 import Tabs from "./Components/Tabs/Tabs.vue";
@@ -22,6 +25,23 @@ export default {
     appContacts: Contacts,
     appTabs: Tabs,
     appSearch: Search
+  },
+  computed: {
+    activeMenuTab() {
+      return this.$store.state.UI.activeMenuTab;
+    },
+    areContactsTabShown() {
+      return this.activeMenuTab === ActiveTabEnum.CONTACTS;
+    },
+    areChatsTabShown() {
+      return this.activeMenuTab === ActiveTabEnum.CHATS;
+    },
+    areRequestsTabShown() {
+      return this.activeMenuTab === ActiveTabEnum.REQUESTS;
+    },
+    arePeopleTabShown() {
+      return this.activeMenuTab === ActiveTabEnum.PEOPLE;
+    }
   }
 };
 </script>

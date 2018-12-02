@@ -10,7 +10,7 @@
       <slot name="search"/>
     </div>
     <div class="menu-content__contacts">
-      <slot name="contacts"/>
+      <slot name="activeTabItem"/>
     </div>
   </div>
 </template>
