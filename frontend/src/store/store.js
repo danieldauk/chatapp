@@ -9,7 +9,7 @@ import user from './modules/user';
 import contact from './modules/contact';
 import conversation from './modules/conversation';
 import message from './modules/message';
-import people from './modules/people';
+import person from './modules/person';
 import UI from './modules/UI';
 
 Vue.use(Vuex);
@@ -24,7 +24,7 @@ export default new Vuex.Store({
     contact,
     conversation,
     message,
-    people,
+    person,
     UI
   }
 });

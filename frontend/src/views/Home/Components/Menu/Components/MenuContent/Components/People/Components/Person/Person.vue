@@ -10,17 +10,20 @@
 <script>
 export default {
   props: {
-    id: {
-      type: String,
+    person: {
+      type: Object,
       required: true
     }
   },
   computed: {
     imageLink() {
-      return this.$store.getters["people/getAvatarLink"](this.id);
+      return this.$store.getters["person/getAvatarLink"](this.person._id);
     },
     name() {
-      return this.$store.getters["people/getName"](this.id);
+      return this.$store.getters["person/getName"](this.person._id);
+    },
+    isFriend() {
+      return thos.person.isFriend;
     }
   },
   methods: {}

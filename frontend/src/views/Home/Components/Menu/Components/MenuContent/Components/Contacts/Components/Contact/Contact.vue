@@ -1,19 +1,12 @@
 <template>
-  <div
-    class="contact"
-    @click="startConversation"
-  >
-    <div
-      class="contact__avatar"
-    >
-      <img
-        class="contact__avatar__image"
-        :src="imageLink"
-      >
+  <div class="contact" @click="startConversation">
+    <div class="contact__avatar">
+      <img class="contact__avatar__image" :src="imageLink">
+      <div
+        :class="['contact__avatar__online-indicator', {'contact__avatar__online-indicator--is-online': isOnline}]"
+      ></div>
     </div>
-    <div
-      class="contact__name"
-    >{{ name | truncateString(30) }}</div>
+    <div class="contact__name">{{ name | truncateString(30) }}</div>
   </div>
 </template>
 
@@ -27,23 +20,23 @@ export default {
   },
   computed: {
     imageLink() {
-      return this.$store.getters['contact/getAvatarLink'](this.id);
+      return this.$store.getters["contact/getAvatarLink"](this.id);
     },
     name() {
-      return this.$store.getters['contact/getName'](this.id);
+      return this.$store.getters["contact/getName"](this.id);
     },
+    isOnline() {
+      return this.$store.getters["person/isOnline"](this.id);
+    }
   },
   methods: {
     async startConversation() {
-      if(this.$store.getters['contact/getCurrentId'] === this.id) {
+      if (this.$store.getters["contact/getCurrentId"] === this.id) {
         return;
       }
-      await this.$store.dispatch('contact/setCurrent', this.id);
-      this.$store.dispatch('conversation/init', {
-        participants: [
-          this.id,
-          this.$store.state.user.current._id
-        ]
+      await this.$store.dispatch("contact/setCurrent", this.id);
+      this.$store.dispatch("conversation/init", {
+        participants: [this.id, this.$store.state.user.current._id]
       });
     }
   }
@@ -56,8 +49,8 @@ export default {
   align-items: center;
   padding: 10px 15px;
   cursor: pointer;
-  &:hover{
-    background: rgba(255,255,255, 0.05);
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
   }
   &__name {
     color: $color-purple-light;
@@ -66,6 +59,20 @@ export default {
     display: flex;
     align-items: center;
     margin-right: 15px;
+    position: relative;
+    &__online-indicator {
+      position: absolute;
+      top: 3px;
+      right: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: 2px solid $color-purple-dark;
+      background: $color-red;
+      &--is-online{
+        background: $color-green;
+      }
+    }
     &__image {
       height: 35px;
       width: 35px;

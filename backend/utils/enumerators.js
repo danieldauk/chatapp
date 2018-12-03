@@ -1,4 +1,4 @@
-const handler = (enumName) => ({
+const handler = enumName => ({
   get(object, propName) {
     if (Object.prototype.hasOwnProperty.call(object, propName)) {
       return object[propName];
@@ -39,6 +39,7 @@ const SocketEventsEnum = new Enumerator('SocketEventsEnum', {
   RESPONSE_CREATE_CONVERSATION: 'RESPONSE_CREATE_CONVERSATION',
   SEND_MESSAGE: 'REQUEST_SEND_MESSAGE',
   RECEIVE_MESSAGE: 'RECEIVE_MESSAGE',
+  LIST_OF_ONLINE_USERS: 'LIST_OF_ONLINE_USERS',
   ERROR: 'ERROR'
 });
 

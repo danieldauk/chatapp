@@ -2,7 +2,7 @@
   <div class="contacts">
     <app-person
       v-for="person in people"
-      :id="person._id"
+      :person="person"
       :key="person._id"
     />
   </div>
@@ -17,11 +17,11 @@ export default {
   },
   computed: {
     people() {
-      return this.$store.state.people.all;
+      return this.$store.state.person.all;
     }
   },
   destroyed() {
-    this.$store.dispatch('people/clearAll');
+    this.$store.dispatch('person/clearAll');
   }
 };
 </script>

@@ -42,7 +42,7 @@ export default {
       }
       // add debounced search that will be fired after 500 ms since last input
       this.debouncedSearch = setTimeout(() => {
-        this.$store.dispatch("people/search", value);
+        this.$store.dispatch("person/search", value);
       }, 500);
     },
     setFormElementValue(value) {
@@ -53,7 +53,7 @@ export default {
     },
     onClearHandler() {
       this.setFormElementValue("");
-      this.$store.dispatch('people/clearAll');
+      this.$store.dispatch('person/clearAll');
     }
   }
 };

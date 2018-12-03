@@ -9,7 +9,7 @@ export default (socket) => {
     store.dispatch('user/setCurrent', data);
   });
   socket.on(SocketEventsEnum.RESPONSE_FIND_PEOPLE, (data) => {
-    store.dispatch('people/setAll', data);
+    store.dispatch('person/setAll', data);
   });
   // CONTACT EVENTS
   socket.on(SocketEventsEnum.RESPONSE_CONTACTS, (data) => {
@@ -27,6 +27,10 @@ export default (socket) => {
   });
   socket.on(SocketEventsEnum.RECEIVE_MESSAGE, (data) => {
     store.dispatch('conversation/addMessageToHistory', transformMessage(data));
+  });
+  // CURRENTLY ONLINE USERS BROADCAST
+  socket.on(SocketEventsEnum.LIST_OF_ONLINE_USERS, (list) => {
+    store.dispatch('person/setOnline', list);
   });
   // ERROR EVENT
   socket.on(SocketEventsEnum.ERROR, (error) => {

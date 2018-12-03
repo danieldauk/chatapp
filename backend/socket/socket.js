@@ -16,10 +16,21 @@ const sendMessage = require('./handlers/messages/sendMessage');
 
 module.exports = (io) => {
   // assign custom socket id (same as user id)
-  io.engine.generateId = (req) => {   // eslint-disable-line
+  io.engine.generateId = (req) => { // eslint-disable-line
     return req._query.userId;
   };
   io.on('connect', validateToken).on('authenticated', (socket) => {
+    // broadcast all connected users
+    io.emit(
+      SocketEventsEnum.LIST_OF_ONLINE_USERS,
+      Object.keys(io.sockets.sockets)
+    );
+    socket.on('disconnect', ()=>{
+      io.emit(
+        SocketEventsEnum.LIST_OF_ONLINE_USERS,
+        Object.keys(io.sockets.sockets)
+      );
+    });
     const userId = socket.decoded_token._id;
     // USER events
     // USER: get user info
