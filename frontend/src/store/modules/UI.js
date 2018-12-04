@@ -1,7 +1,9 @@
+import { ActiveTabEnum } from '@/utils/enumerators';
+
 export default {
   namespaced: true,
   state: {
-    activeMenuTab: 0
+    activeMenuTab: ActiveTabEnum.CONTACTS
   },
   mutations: {
     setActiveTab(state, tab) {

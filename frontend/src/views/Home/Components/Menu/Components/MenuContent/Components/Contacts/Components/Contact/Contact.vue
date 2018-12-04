@@ -68,7 +68,7 @@ export default {
       height: 10px;
       border-radius: 50%;
       border: 2px solid $color-purple-dark;
-      background: $color-red;
+      background: $color-purple-medium;
       &--is-online{
         background: $color-green;
       }

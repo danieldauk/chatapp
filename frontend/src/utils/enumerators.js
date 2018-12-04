@@ -36,8 +36,8 @@ export const SocketEventsEnum = new Enumerator('SocketEventsEnum', {
 });
 
 export const ActiveTabEnum = new Enumerator('ActiveTabEnum', {
-  CONTACTS: 0,
-  CHATS: 1,
-  REQUESTS: 2,
-  PEOPLE: 3
+  CONTACTS: 'CONTACTS',
+  CHATS: 'CHATS',
+  REQUESTS: 'REQUESTS',
+  PEOPLE: 'PEOPLE'
 });

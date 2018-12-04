@@ -1,88 +1,116 @@
 <template>
-  <v-tabs 
-  class="tabs"
-  :value="activeMenuTab"
-  @change="changeHandler($event)"
-  centered color="#3b385d" 
-  height="60"
-  icons-and-text >
-    <v-tabs-slider 
-    class="tabs__slider"
-    color="#a7a6be"></v-tabs-slider>
-    <v-tab 
-    :ripple="false"
-    class="tabs__tab"
+  <div class="tabs">
+    <div 
+    :style="{left: sliderPosition}"
+    class="tabs__slider"></div>
+    <div
+      @click="clickHandler(tabEnum.CONTACTS)"
+      :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.CONTACTS}]"
     >
-      <span class="tabs__tab__text">Contacts</span>
       <v-icon class="tabs__tab__icon">people</v-icon>
-    </v-tab>
-    <v-tab 
-    :ripple="false"
-    class="tabs__tab">
-      <span class="tabs__tab__text">Chats</span>
+      <span class="tabs__tab__text">Contacts</span>
+    </div>
+    <div
+      @click="clickHandler(tabEnum.CHATS)"
+      :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.CHATS}]"
+    >
       <v-icon class="tabs__tab__icon">chat_bubble</v-icon>
-    </v-tab>
-    <v-tab 
-    :ripple="false"
-    class="tabs__tab">
-      <span class="tabs__tab__text">Requests</span>
+      <span class="tabs__tab__text">Chats</span>
+    </div>
+    <div
+      @click="clickHandler(tabEnum.REQUESTS)"
+      :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.REQUESTS}]"
+    >
       <v-icon class="tabs__tab__icon">person_add</v-icon>
-    </v-tab>
-    <v-tab 
-    :ripple="false"
-    class="tabs__tab">
-      <span class="tabs__tab__text">People</span>
+      <span class="tabs__tab__text">Requests</span>
+    </div>
+    <div
+      @click="clickHandler(tabEnum.PEOPLE)"
+      :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.PEOPLE}]"
+    >
       <v-icon class="tabs__tab__icon">search</v-icon>
-    </v-tab>
-  </v-tabs>
+      <span class="tabs__tab__text">People</span>
+    </div>
+  </div>
 </template>
 
 <script>
+import { ActiveTabEnum } from "@/utils/enumerators";
+
 export default {
   computed: {
     activeMenuTab() {
       return this.$store.state.UI.activeMenuTab;
+    },
+    tabEnum() {
+      return ActiveTabEnum;
+    },
+    sliderPosition() {
+      switch (this.activeMenuTab) {
+        case this.tabEnum.CONTACTS:
+          return "0%";
+        case this.tabEnum.CHATS:
+          return "25%";
+        case this.tabEnum.REQUESTS:
+          return "50%";
+        case this.tabEnum.PEOPLE:
+          return "75%";
+        default:
+          return "0%";
+      }
     }
   },
   methods: {
-    changeHandler(tab) {
-      this.setActiveTab(tab);
-      this.$store.dispatch('searchForm/reset');
+    clickHandler(tab) {
+      if (tab !== this.activeMenuTab) {
+        this.setActiveTab(tab);
+        this.$store.dispatch("searchForm/reset");
+      }
     },
     setActiveTab(tab) {
-      this.$store.dispatch('UI/setActiveTab', tab);
+      this.$store.dispatch("UI/setActiveTab", tab);
     }
   }
-}
+};
 </script>
 
 
 <style lang="scss" scoped>
-  .tabs{
-    /deep/ .v-tabs__slider-wrapper {
-      bottom: -1px;
+.tabs {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  border-bottom: 1px solid rgba($color-silver, 0.3);
+  position: relative;
+  &__slider {
+    width: 25%;
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: 1px;
+    background: $color-purple-light;
+    transition: 0.3s;
+  }
+  &__tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 25%;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: 0.3s;
+    &--active {
+      opacity: 1;
     }
-    /deep/ .v-tabs__wrapper {
-      contain:initial;
-      overflow:initial;
+    &__icon {
+      color: $color-purple-light;
+      margin-bottom: 2px;
     }
-    /deep/ .v-tabs__item:not(.v-tabs__item--active) {
-      opacity: 0.4;
-    }
-    border-bottom: 1px solid rgba($color-silver, 0.3);
-    &__slider{
-      width: 100%;
-      height: 1px;
-    }
-    &__tab {
-      min-width: 25%;
-      &__icon {
-        color: $color-purple-light;
-      }
-      &__text {
-        color: $color-purple-light;
-        font-size: 10px;
-      }
+    &__text {
+      color: $color-purple-light;
+      font-size: 10px;
     }
   }
+}
 </style>
