@@ -37,7 +37,7 @@ module.exports = async (socket, userId, contactId) => {
       return;
     }
 
-    // if user exists - remove user and return success message
+    // if user exists - remove user from user's contacts array
     await User.updateOne(
       {
         _id: userId
@@ -48,9 +48,25 @@ module.exports = async (socket, userId, contactId) => {
         }
       }
     );
+    // remove current user from contacts's contacts array
+    await User.updateOne(
+      {
+        _id: contactToBeRemoved._id
+      },
+      {
+        $pull: {
+          contacts: userId
+        }
+      }
+    );
     socket.emit(SocketEventsEnum.RESPONSE_REMOVE_CONTACT, {
       message: 'User was successfully removed from contacts list'
     });
+    socket
+      .to(contactToBeRemoved._id)
+      .emit(SocketEventsEnum.RESPONSE_REMOVE_CONTACT, {
+        message: 'User was successfully removed from contacts list'
+      });
   } catch (error) {
     winston.error(error);
     socket.emit(SocketEventsEnum.ERROR, {

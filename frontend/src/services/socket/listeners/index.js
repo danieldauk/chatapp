@@ -18,6 +18,9 @@ export default (socket) => {
   socket.on(SocketEventsEnum.RESPONSE_ADD_CONTACT, () => {
     store.dispatch('contact/load');
   });
+  socket.on(SocketEventsEnum.RESPONSE_REMOVE_CONTACT, () => {
+    store.dispatch('contact/load');
+  });
   // CONVERSATION EVENTS
   socket.on(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, async (data) => {
     await store.dispatch('conversation/setCurrent', data);

@@ -14,10 +14,11 @@
       <span class="person__button__text">Add contact</span>
     </div>
     <div 
+    @click="removeContact"
     v-else 
     class="person__button person__button--friend">
-      <v-icon class="person__button__icon">check</v-icon>
-      <span class="person__button__text">Friend</span>
+      <v-icon class="person__button__icon">person_add_disabled</v-icon>
+      <span class="person__button__text">Remove contact</span>
     </div>
   </div>
 </template>
@@ -44,6 +45,9 @@ export default {
   methods: {
     addContact() {
       this.$store.dispatch('contact/add', this.person._id);
+    },
+    removeContact() {
+      this.$store.dispatch('contact/remove', this.person._id);
     }
   }
 };
@@ -83,11 +87,8 @@ export default {
     font-size: 12px;
     cursor: pointer;
     transition: 0.3s;
-    &:hover:not(&--friend) {
+    &:hover {
       opacity: 0.8;
-    }
-    &--friend {
-      cursor: initial;
     }
     &__icon {
       color: $color-purple-light;

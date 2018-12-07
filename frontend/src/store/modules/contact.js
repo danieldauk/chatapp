@@ -26,6 +26,9 @@ export default new AbstractStoreModule({
     add(thisModule, contactId) {
       socket.emit(SocketEventsEnum.REQUEST_ADD_CONTACT, contactId);
     },
+    remove(thisModule, contactId) {
+      socket.emit(SocketEventsEnum.REQUEST_REMOVE_CONTACT, contactId);
+    },
     load() {
       socket.emit(SocketEventsEnum.REQUEST_CONTACTS);
     }
