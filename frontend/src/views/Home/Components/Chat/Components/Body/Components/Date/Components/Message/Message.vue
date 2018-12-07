@@ -84,6 +84,8 @@ export default {
       position: relative;
       background: $color-white;
       color: $color-purple-medium;
+      white-space: pre-wrap;
+      word-break: break-all;
       word-break: break-word;
       &:not(.message__container__body--own):after {
         content: "";

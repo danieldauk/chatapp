@@ -9,7 +9,7 @@ export default new AbstractStoreModule({
     }
   },
   actions: {
-    init(thisModule, { content, conversationId }) {
+    send(thisModule, { content, conversationId }) {
       thisModule.dispatch('startLoad');
       socket.emit(SocketEventsEnum.SEND_MESSAGE, {
         content,

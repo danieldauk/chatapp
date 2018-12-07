@@ -28,5 +28,6 @@ export default {
   .chat-body {
     display: flex;
     flex-direction: column;
+    padding: 10px 0 20px;
   }
 </style>

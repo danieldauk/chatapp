@@ -26,7 +26,6 @@
   }
   &__body {
     height: calc(100vh - 120px);
-    padding: 10px 0 20px;
     overflow: auto;
     &::-webkit-scrollbar-track-piece {
       background: rgba(0, 0, 0, 0);

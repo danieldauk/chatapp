@@ -47,7 +47,21 @@ module.exports = async (socket, userId, contactId) => {
         }
       }
     );
+    // add requesting user to contact's contacts list
+    await User.updateOne(
+      {
+        _id: newContact._id
+      },
+      {
+        $push: {
+          contacts: userId
+        }
+      }
+    );
     socket.emit(SocketEventsEnum.RESPONSE_ADD_CONTACT, {
+      message: 'User was successfully added to contacts list'
+    });
+    socket.to(newContact._id).emit(SocketEventsEnum.RESPONSE_ADD_CONTACT, {
       message: 'User was successfully added to contacts list'
     });
   } catch (error) {

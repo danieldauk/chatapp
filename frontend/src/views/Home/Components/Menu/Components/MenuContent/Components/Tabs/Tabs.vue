@@ -18,13 +18,6 @@
       <span class="tabs__tab__text">Chats</span>
     </div>
     <div
-      @click="clickHandler(tabEnum.REQUESTS)"
-      :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.REQUESTS}]"
-    >
-      <v-icon class="tabs__tab__icon">person_add</v-icon>
-      <span class="tabs__tab__text">Requests</span>
-    </div>
-    <div
       @click="clickHandler(tabEnum.PEOPLE)"
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.PEOPLE}]"
     >
@@ -50,11 +43,9 @@ export default {
         case this.tabEnum.CONTACTS:
           return "0%";
         case this.tabEnum.CHATS:
-          return "25%";
-        case this.tabEnum.REQUESTS:
-          return "50%";
+          return "33.33%";
         case this.tabEnum.PEOPLE:
-          return "75%";
+          return "66.66%";
         default:
           return "0%";
       }
@@ -79,11 +70,12 @@ export default {
 .tabs {
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 60px;
   border-bottom: 1px solid rgba($color-silver, 0.3);
   position: relative;
   &__slider {
-    width: 25%;
+    width: 33.33%;
     position: absolute;
     bottom: -1px;
     left: 0;
@@ -96,7 +88,7 @@ export default {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 25%;
+    width: 33.33%;
     opacity: 0.7;
     cursor: pointer;
     transition: 0.3s;

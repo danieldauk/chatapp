@@ -1,4 +1,6 @@
 import AbstractStoreModule from '@/store/modules/AbstractStoreModule';
+import socket from '@/services/socket/socket';
+import { SocketEventsEnum } from '@/utils/enumerators';
 
 export default new AbstractStoreModule({
   getters: {
@@ -6,16 +8,26 @@ export default new AbstractStoreModule({
       if (state.all.length === 0) {
         return null;
       }
-      return `${process.env.VUE_APP_BASE_URL}/${state.all.find(contact => contact._id === id).avatar}`;
+      const foundContact = state.all.find(contact => contact._id === id);
+      return foundContact ? `${process.env.VUE_APP_BASE_URL}/${foundContact.avatar}` : null;
     },
     getName: state => (id) => {
       if (state.all.length === 0) {
         return null;
       }
-      return state.all.find(contact => contact._id === id).username;
+      const foundContact = state.all.find(contact => contact._id === id);
+      return foundContact ? foundContact.username : null;
     },
     getCurrentId(state) {
       return state.current ? state.current : null;
+    }
+  },
+  actions: {
+    add(thisModule, contactId) {
+      socket.emit(SocketEventsEnum.REQUEST_ADD_CONTACT, contactId);
+    },
+    load() {
+      socket.emit(SocketEventsEnum.REQUEST_CONTACTS);
     }
   }
 });

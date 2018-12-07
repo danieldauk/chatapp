@@ -1,4 +1,6 @@
 import AbstractStoreModule from '@/store/modules/AbstractStoreModule';
+import socket from '@/services/socket/socket';
+import { SocketEventsEnum } from '@/utils/enumerators';
 
 export default new AbstractStoreModule({
   getters: {
@@ -7,6 +9,11 @@ export default new AbstractStoreModule({
     },
     getName(state) {
       return state.current ? state.current.username : null;
+    }
+  },
+  actions: {
+    load() {
+      socket.emit(SocketEventsEnum.REQUEST_USER_INFO);
     }
   }
 });

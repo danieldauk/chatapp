@@ -12,13 +12,15 @@ export default new AbstractStoreModule({
       if (state.all.length === 0) {
         return null;
       }
-      return `${process.env.VUE_APP_BASE_URL}/${state.all.find(contact => contact._id === id).avatar}`;
+      const foundPerson = state.all.find(person => person._id === id);
+      return foundPerson ? `${process.env.VUE_APP_BASE_URL}/${foundPerson.avatar}` : null;
     },
     getName: state => (id) => {
       if (state.all.length === 0) {
         return null;
       }
-      return state.all.find(contact => contact._id === id).username;
+      const foundPerson = state.all.find(person => person._id === id);
+      return foundPerson ? foundPerson.username : null;
     },
     isOnline: state => (id) => {
       if (!state.online.includes(id)) {

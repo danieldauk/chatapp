@@ -24,7 +24,7 @@ export default {
       if(!this.message) {
         return;
       }
-      await this.$store.dispatch('message/init', {
+      await this.$store.dispatch('message/send', {
         content: this.message,
         conversationId: this.$store.getters['conversation/getCurrentId']
         });

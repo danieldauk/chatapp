@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import store from '@/store/store';
 import { SocketEventsEnum } from '@/utils/enumerators';
 import listeners from './listeners';
 
@@ -28,10 +29,8 @@ export const initSocket = (token, userId) => new Promise((resolve, reject) => {
         .on('authenticated', () => {
           socketIO.socket = socket;
           // get all necessary data for app init
-          socket.emit(SocketEventsEnum.REQUEST_USER_INFO);
-          socket.emit(SocketEventsEnum.REQUEST_CONTACTS);
-          // socket.emit(SocketEventsEnum.REQUEST_CONVERSATIONS);
-          // socket.emit(SocketEventsEnum.REQUEST_MESSAGES);
+          store.dispatch('user/load');
+          store.dispatch('contact/load');
 
           // setup event listeners
           listeners(socket);

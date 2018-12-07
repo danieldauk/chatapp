@@ -15,6 +15,9 @@ export default (socket) => {
   socket.on(SocketEventsEnum.RESPONSE_CONTACTS, (data) => {
     store.dispatch('contact/setAll', data.contacts);
   });
+  socket.on(SocketEventsEnum.RESPONSE_ADD_CONTACT, () => {
+    store.dispatch('contact/load');
+  });
   // CONVERSATION EVENTS
   socket.on(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, async (data) => {
     await store.dispatch('conversation/setCurrent', data);
