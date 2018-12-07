@@ -9,7 +9,7 @@
         :class="['message__container__time', {'message__container__time--own': isOwnMessage}]"
       >{{ time }}</div>
       <div
-        :class="['message__container__body', {'message__container__body--own': isOwnMessage}, {'message__container__body--subsequent': isPreviousMessageOwn}]"
+        :class="['message__container__body', {'message__container__body--own': isOwnMessage},{'message__container__body--other': !isOwnMessage}, {'message__container__body--subsequent': isPreviousMessageOwn}]"
       >{{ message.content }}</div>
     </div>
   </div>
@@ -87,18 +87,20 @@ export default {
       white-space: pre-wrap;
       word-break: break-all;
       word-break: break-word;
-      &:not(.message__container__body--own):after {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 0;
-        height: 0;
-        border: 5px solid transparent;
-        border-right-color: $color-white;
-        border-left: 0;
-        border-top: 0;
-        margin-left: -5px;
+      &--other {
+        &:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 0;
+          height: 0;
+          border: 5px solid transparent;
+          border-right-color: $color-white;
+          border-left: 0;
+          border-top: 0;
+          margin-left: -5px;
+        }
       }
       &--own {
         background: $color-blue-medium;
