@@ -9,6 +9,9 @@ export default new AbstractStoreModule({
     },
     getName(state) {
       return state.current ? state.current.username : null;
+    },
+    getCurrentId(state) {
+      return state.current ? state.current._id : null;
     }
   },
   actions: {

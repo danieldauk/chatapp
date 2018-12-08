@@ -37,7 +37,6 @@ export default {
       justify-content: center;
       color: $color-silver;
       font-size: 12px;
-      margin-top: 10px;
     }
   }
 </style>
