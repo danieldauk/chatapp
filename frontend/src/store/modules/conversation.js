@@ -29,6 +29,9 @@ export default new AbstractStoreModule({
       socket.emit(SocketEventsEnum.REQUEST_MESSAGES, conversationdId);
     },
     addMessageToHistory(thisModule, message) {
+      if (message.message.conversationId !== this.getters['conversation/getCurrentId']) {
+        return;
+      }
       const newHistory = cloneDeep(thisModule.state.history);
       let wasMessageAdded = false;
       newHistory.forEach((date) => {
