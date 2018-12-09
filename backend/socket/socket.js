@@ -10,6 +10,7 @@ const addContact = require('./handlers/users/contacts/addContact');
 const removeContact = require('./handlers/users/contacts/removeContact');
 // conversation events handlers
 const createConversation = require('./handlers/conversations/createConversation');
+const getConversations = require('./handlers/conversations/getConversations');
 // messages events handlers
 const getMessages = require('./handlers/messages/getMessages');
 const sendMessage = require('./handlers/messages/sendMessage');
@@ -25,7 +26,7 @@ module.exports = (io) => {
       SocketEventsEnum.LIST_OF_ONLINE_USERS,
       Object.keys(io.sockets.sockets)
     );
-    socket.on('disconnect', ()=>{
+    socket.on('disconnect', () => {
       io.emit(
         SocketEventsEnum.LIST_OF_ONLINE_USERS,
         Object.keys(io.sockets.sockets)
@@ -57,6 +58,9 @@ module.exports = (io) => {
     // CONVERSATION events
     socket.on(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, (participants) => {
       createConversation(socket, userId, participants);
+    });
+    socket.on(SocketEventsEnum.REQUEST_CONVERSATIONS, () => {
+      getConversations(socket, userId);
     });
     // MESSAGES events
     socket.on(SocketEventsEnum.REQUEST_MESSAGES, (conversationId) => {

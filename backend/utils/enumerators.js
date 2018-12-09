@@ -11,7 +11,7 @@ class Enumerator {
   constructor(name, object) {
     const enumName = name;
     const keys = Object.keys(object);
-    keys.forEach((key) => {
+    keys.forEach(key => {
       this[key] = object[key];
     });
     return new Proxy(Object.freeze(this), handler(enumName));
@@ -34,11 +34,14 @@ const SocketEventsEnum = new Enumerator('SocketEventsEnum', {
   // messages events
   REQUEST_MESSAGES: 'REQUEST_MESSAGES',
   RESPONSE_MESSAGES: 'RESPONSE_MESSAGES',
+  SEND_MESSAGE: 'REQUEST_SEND_MESSAGE',
+  RECEIVE_MESSAGE: 'RECEIVE_MESSAGE',
   // conversation events
   REQUEST_CREATE_CONVERSATION: 'REQUEST_CREATE_CONVERSATION',
   RESPONSE_CREATE_CONVERSATION: 'RESPONSE_CREATE_CONVERSATION',
-  SEND_MESSAGE: 'REQUEST_SEND_MESSAGE',
-  RECEIVE_MESSAGE: 'RECEIVE_MESSAGE',
+  REQUEST_CONVERSATIONS: 'REQUEST_CONVERSATIONS',
+  RESPONSE_CONVERSATIONS: 'RESPONSE_GET_CONVERSATIONS',
+  // general
   LIST_OF_ONLINE_USERS: 'LIST_OF_ONLINE_USERS',
   ERROR: 'ERROR'
 });

@@ -56,7 +56,7 @@ module.exports = async (socket, userId, participants) => {
           }
         }
       ]
-    });
+    }).populate('participants', 'username avatar');
     // if conversation exist - return conversation
     if (conversation) {
       socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, conversation);
@@ -64,8 +64,11 @@ module.exports = async (socket, userId, participants) => {
     }
     // if conversation does not exist - create and return conversation
     const newConversation = new Conversation(participants);
-
     const result = await newConversation.save();
+    await Conversation.populate(result, {
+      path: 'participants',
+      select: 'username avatar'
+    });
     socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, result);
   } catch (error) {
     winston.error(error);

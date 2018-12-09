@@ -4,7 +4,7 @@
       <div class="person__info__avatar">
         <img class="person__info__avatar__image" :src="imageLink">
       </div>
-      <div class="person__info__name">{{ name | truncateString(30) }}</div>
+      <div class="person__info__name">{{ name | truncateString(20) }}</div>
     </div>
     <div 
     @click="addContact"
@@ -63,7 +63,7 @@ export default {
     display: flex;
     align-items: center;
     &__name {
-      color: $color-purple-light;
+      color: rgba($color-purple-light, 0.7);
     }
     &__avatar {
       display: flex;

@@ -10,6 +10,21 @@ export default new AbstractStoreModule({
   getters: {
     getCurrentId(state) {
       return state.current ? state.current._id : null;
+    },
+    getParticipantAvatarLink: state => (id) => {
+      if (!state.current) {
+        return null;
+      }
+
+      const foundParticipant = state.current.participants.find(participant => participant._id === id);
+      return foundParticipant ? `${process.env.VUE_APP_BASE_URL}/${foundParticipant.avatar}` : null;
+    },
+    getParticipantName: state => (id) => {
+      if (!state.current) {
+        return null;
+      }
+      const foundParticipant = state.current.participants.find(participant => participant._id === id);
+      return foundParticipant ? foundParticipant.username : null;
     }
   },
   mutations: {
@@ -18,8 +33,10 @@ export default new AbstractStoreModule({
     }
   },
   actions: {
+    loadAll() {
+      socket.emit(SocketEventsEnum.REQUEST_CONVERSATIONS);
+    },
     init(thisModule, participants) {
-      thisModule.dispatch('startLoad');
       socket.emit(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, participants);
     },
     setHistory(thisModule, history) {

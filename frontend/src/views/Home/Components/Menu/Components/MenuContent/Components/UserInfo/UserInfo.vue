@@ -6,7 +6,7 @@
         :src="imageLink"
       >
     </div>
-    <div class="user-info__name">{{ name | truncateString(30) }}</div>
+    <div class="user-info__name">{{ name | truncateString(20) }}</div>
   </div>
 </template>
 

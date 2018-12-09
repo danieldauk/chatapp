@@ -25,6 +25,9 @@ export default {
       const currentTerm = this.$store.state.searchForm.data.term;
       return new RegExp(currentTerm, 'i');
     }
+  },
+  destroyed() {
+    this.$store.dispatch('contact/clearCurrent');
   }
 };
 </script>

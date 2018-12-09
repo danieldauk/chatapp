@@ -6,8 +6,11 @@
     <div class="message__container">
       <div
         v-if="!isPreviousMessageOwn"
-        :class="['message__container__time', {'message__container__time--own': isOwnMessage}]"
-      >{{ time }}</div>
+        :class="['message__container__info', {'message__container__info--own': isOwnMessage}]"
+      >
+      <span v-if="!isDialogue && !isOwnMessage" class="message__container__info--name">{{ participantName }}, </span>
+      <span class="message__container__info--time">{{ time }}</span>
+      </div>
       <div
         :class="['message__container__body', {'message__container__body--own': isOwnMessage},{'message__container__body--other': !isOwnMessage}, {'message__container__body--subsequent': isPreviousMessageOwn}]"
       >{{ message.content }}</div>
@@ -32,10 +35,13 @@ export default {
       return this.message.sender === this.$store.state.user.current._id;
     },
     avatar() {
-      if (this.isOwnMessage) {
-        return this.$store.getters["user/getAvatarLink"];
-      }
-      return this.$store.getters["contact/getAvatarLink"](this.message.sender);
+      return this.$store.getters["conversation/getParticipantAvatarLink"](this.message.sender);
+    },
+    isDialogue() {
+      return this.$store.state.conversation.current.participants.length === 2;
+    },
+    participantName() {
+      return this.$store.getters["conversation/getParticipantName"](this.message.sender);
     },
     time() {
       return this.$options.filters.formatDate(this.message.createdAt, "HH:mm");
@@ -68,7 +74,7 @@ export default {
     display: flex;
     flex-direction: column;
     max-width: 50%;
-    &__time {
+    &__info {
       font-size: 10px;
       color: $color-silver;
       &--own {

@@ -37,7 +37,7 @@ export default {
 
     // if user sent message
     // scroll to bottom of chat body
-    if (lastMessage.sender === this.$store.getters["user/getCurrentId"]) {
+    if (lastMessage && lastMessage.sender === this.$store.getters["user/getCurrentId"]) {
       this.scrollTo(scrollHeight);
       return;
     }

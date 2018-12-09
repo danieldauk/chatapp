@@ -6,7 +6,11 @@ const conversationSchema = new mongoose.Schema({
   participants: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }]
+  }],
+  title: {
+    type: String,
+    default: 'Dialogue'
+  }
 });
 
 const Conversation = mongoose.model('Conversation', conversationSchema);

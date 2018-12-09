@@ -1,6 +1,5 @@
 import io from 'socket.io-client';
 import store from '@/store/store';
-import { SocketEventsEnum } from '@/utils/enumerators';
 import listeners from './listeners';
 
 const socketIO = new Proxy(
@@ -31,6 +30,7 @@ export const initSocket = (token, userId) => new Promise((resolve, reject) => {
           // get all necessary data for app init
           store.dispatch('user/load');
           store.dispatch('contact/load');
+          store.dispatch('conversation/loadAll');
 
           // setup event listeners
           listeners(socket);

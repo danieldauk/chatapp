@@ -6,7 +6,7 @@
         :class="['contact__avatar__online-indicator', {'contact__avatar__online-indicator--is-online': isOnline}]"
       ></div>
     </div>
-    <div class="contact__name">{{ name | truncateString(30) }}</div>
+    <div class="contact__name">{{ name | truncateString(20) }}</div>
   </div>
 </template>
 
@@ -53,7 +53,7 @@ export default {
     background: rgba(255, 255, 255, 0.05);
   }
   &__name {
-    color: $color-purple-light;
+    color: rgba($color-purple-light, 0.7);
   }
   &__avatar {
     display: flex;

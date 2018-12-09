@@ -1,15 +1,18 @@
 <template>
   <app-menu-content>
-    <app-user-info slot="user-info"/>
-    <app-tabs slot="tabs"/>
-    <app-search slot="search"/>
-    <app-toggle-button slot="toggle"/>
+    <app-user-info slot="user-info" />
+    <app-tabs slot="tabs" />
+    <app-search slot="search" />
+    <app-toggle-button slot="toggle" />
     <app-contacts 
-    v-if="areContactsTabShown"
-    slot="activeTabItem"/>
+    v-if="isContactsTabShown"
+    slot="activeTabItem" />
     <app-people
-    v-if="arePeopleTabShown"
-    slot="activeTabItem"/>
+    v-if="isPeopleTabShown"
+    slot="activeTabItem" />
+    <app-chats
+    v-if="isChatsTabShown"
+    slot="activeTabItem" />
   </app-menu-content>
 </template>
 
@@ -21,6 +24,7 @@ import Tabs from "./Components/Tabs/Tabs.vue";
 import Search from "./Components/Search/Search.vue";
 import Contacts from "./Components/Contacts/Contacts.vue";
 import People from "./Components/People/People.vue";
+import Chats from "./Components/Chats/Chats.vue";
 
 export default {
   components: {
@@ -28,6 +32,7 @@ export default {
     appUserInfo: UserInfo,
     appPeople: People,
     appContacts: Contacts,
+    appChats: Chats,
     appTabs: Tabs,
     appSearch: Search
   },
@@ -35,16 +40,13 @@ export default {
     activeMenuTab() {
       return this.$store.state.UI.activeMenuTab;
     },
-    areContactsTabShown() {
+    isContactsTabShown() {
       return this.activeMenuTab === ActiveTabEnum.CONTACTS;
     },
-    areChatsTabShown() {
+    isChatsTabShown() {
       return this.activeMenuTab === ActiveTabEnum.CHATS;
     },
-    areRequestsTabShown() {
-      return this.activeMenuTab === ActiveTabEnum.REQUESTS;
-    },
-    arePeopleTabShown() {
+    isPeopleTabShown() {
       return this.activeMenuTab === ActiveTabEnum.PEOPLE;
     }
   }
