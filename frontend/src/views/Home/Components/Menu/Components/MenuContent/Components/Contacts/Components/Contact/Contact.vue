@@ -1,10 +1,16 @@
 <template>
-  <div class="contact" @click="startConversation">
+  <div
+    class="contact"
+    @click="startConversation"
+  >
     <div class="contact__avatar">
-      <img class="contact__avatar__image" :src="imageLink">
+      <img
+        class="contact__avatar__image"
+        :src="imageLink"
+      >
       <div
         :class="['contact__avatar__online-indicator', {'contact__avatar__online-indicator--is-online': isOnline}]"
-      ></div>
+      />
     </div>
     <div class="contact__name">{{ name | truncateString(20) }}</div>
   </div>
@@ -20,23 +26,26 @@ export default {
   },
   computed: {
     imageLink() {
-      return this.$store.getters["contact/getAvatarLink"](this.id);
+      return this.$store.getters['contact/getAvatarLink'](this.id);
     },
     name() {
-      return this.$store.getters["contact/getName"](this.id);
+      return this.$store.getters['contact/getName'](this.id);
     },
     isOnline() {
-      return this.$store.getters["person/isOnline"](this.id);
+      return this.$store.getters['person/isOnline'](this.id);
     }
   },
   methods: {
     async startConversation() {
-      if (this.$store.getters["contact/getCurrentId"] === this.id) {
+      if (this.$store.getters['contact/getCurrentId'] === this.id) {
         return;
       }
-      await this.$store.dispatch("contact/setCurrent", this.id);
-      this.$store.dispatch("conversation/init", {
-        participants: [this.id, this.$store.state.user.current._id]
+      await this.$store.dispatch('contact/setCurrent', this.id);
+      this.$store.dispatch('conversation/init', {
+        participants: [
+          this.id,
+          this.$store.state.user.current._id
+        ]
       });
     }
   }

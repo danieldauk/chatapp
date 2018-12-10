@@ -1,25 +1,26 @@
 <template>
   <div class="tabs">
-    <div 
-    :style="{left: sliderPosition}"
-    class="tabs__slider"></div>
     <div
-      @click="clickHandler(tabEnum.CONTACTS)"
+      :style="{left: sliderPosition}"
+      class="tabs__slider"
+    />
+    <div
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.CONTACTS}]"
+      @click="clickHandler(tabEnum.CONTACTS)"
     >
       <v-icon class="tabs__tab__icon">people</v-icon>
       <span class="tabs__tab__text">Contacts</span>
     </div>
     <div
-      @click="clickHandler(tabEnum.CHATS)"
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.CHATS}]"
+      @click="clickHandler(tabEnum.CHATS)"
     >
       <v-icon class="tabs__tab__icon">chat_bubble</v-icon>
       <span class="tabs__tab__text">Chats</span>
     </div>
     <div
-      @click="clickHandler(tabEnum.PEOPLE)"
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.PEOPLE}]"
+      @click="clickHandler(tabEnum.PEOPLE)"
     >
       <v-icon class="tabs__tab__icon">search</v-icon>
       <span class="tabs__tab__text">People</span>
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import { ActiveTabEnum } from "@/utils/enumerators";
+import { ActiveTabEnum } from '@/utils/enumerators';
 
 export default {
   computed: {
@@ -41,13 +42,13 @@ export default {
     sliderPosition() {
       switch (this.activeMenuTab) {
         case this.tabEnum.CONTACTS:
-          return "0%";
+          return '0%';
         case this.tabEnum.CHATS:
-          return "33.33%";
+          return '33.33%';
         case this.tabEnum.PEOPLE:
-          return "66.66%";
+          return '66.66%';
         default:
-          return "0%";
+          return '0%';
       }
     }
   },
@@ -55,11 +56,11 @@ export default {
     clickHandler(tab) {
       if (tab !== this.activeMenuTab) {
         this.setActiveTab(tab);
-        this.$store.dispatch("searchForm/reset");
+        this.$store.dispatch('searchForm/reset');
       }
     },
     setActiveTab(tab) {
-      this.$store.dispatch("UI/setActiveTab", tab);
+      this.$store.dispatch('UI/setActiveTab', tab);
     }
   }
 };

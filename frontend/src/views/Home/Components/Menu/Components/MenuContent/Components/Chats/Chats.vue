@@ -1,5 +1,6 @@
 <template>
   <div class="chats">
+    <app-dialog />
     <app-conversation
       v-for="conversation in conversations"
       :key="conversation._id"
@@ -9,11 +10,13 @@
 </template>
 
 <script>
-import Conversation from "./Components/Conversation/Conversation.vue";
+import Conversation from './Components/Conversation/Conversation.vue';
+import Dialog from './Components/Dialog/Dialog.vue';
 
 export default {
   components: {
-    appConversation: Conversation
+    appConversation: Conversation,
+    appDialog: Dialog
   },
   computed: {
     conversations() {
@@ -22,3 +25,11 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  .chats {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+</style>

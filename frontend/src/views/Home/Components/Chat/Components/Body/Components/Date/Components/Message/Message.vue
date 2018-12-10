@@ -1,15 +1,21 @@
 <template>
   <div :class="['message', {'message--own': isOwnMessage}]">
     <div class="message__avatar">
-      <img v-if="!isPreviousMessageOwn" :src="avatar">
+      <img
+        v-if="!isPreviousMessageOwn"
+        :src="avatar"
+      >
     </div>
     <div class="message__container">
       <div
         v-if="!isPreviousMessageOwn"
         :class="['message__container__info', {'message__container__info--own': isOwnMessage}]"
       >
-      <span v-if="!isDialogue && !isOwnMessage" class="message__container__info--name">{{ participantName }}, </span>
-      <span class="message__container__info--time">{{ time }}</span>
+        <span
+          v-if="!isDialogue && !isOwnMessage"
+          class="message__container__info--name"
+        >{{ participantName }}, </span>
+        <span class="message__container__info--time">{{ time }}</span>
       </div>
       <div
         :class="['message__container__body', {'message__container__body--own': isOwnMessage},{'message__container__body--other': !isOwnMessage}, {'message__container__body--subsequent': isPreviousMessageOwn}]"
@@ -35,16 +41,16 @@ export default {
       return this.message.sender === this.$store.state.user.current._id;
     },
     avatar() {
-      return this.$store.getters["conversation/getParticipantAvatarLink"](this.message.sender);
+      return this.$store.getters['conversation/getParticipantAvatarLink'](this.message.sender);
     },
     isDialogue() {
       return this.$store.state.conversation.current.participants.length === 2;
     },
     participantName() {
-      return this.$store.getters["conversation/getParticipantName"](this.message.sender);
+      return this.$store.getters['conversation/getParticipantName'](this.message.sender);
     },
     time() {
-      return this.$options.filters.formatDate(this.message.createdAt, "HH:mm");
+      return this.$options.filters.formatDate(this.message.createdAt, 'HH:mm');
     }
   }
 };

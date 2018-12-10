@@ -1,10 +1,13 @@
 <template>
   <div class="home">
     <div class="home__menu">
-      <slot class="home__menu__slot" name="menu"/>
+      <slot
+        class="home__menu__slot"
+        name="menu"
+      />
     </div>
     <div class="home__chat">
-      <slot name="chat"/>
+      <slot name="chat" />
     </div>
   </div>
 </template>

@@ -2,21 +2,26 @@
   <div class="person">
     <div class="person__info">
       <div class="person__info__avatar">
-        <img class="person__info__avatar__image" :src="imageLink">
+        <img
+          class="person__info__avatar__image"
+          :src="imageLink"
+        >
       </div>
       <div class="person__info__name">{{ name | truncateString(20) }}</div>
     </div>
-    <div 
-    @click="addContact"
-    v-if="!isFriend" 
-    class="person__button">
+    <div
+      v-if="!isFriend"
+      class="person__button"
+      @click="addContact"
+    >
       <v-icon class="person__button__icon">person_add</v-icon>
       <span class="person__button__text">Add contact</span>
     </div>
-    <div 
-    @click="removeContact"
-    v-else 
-    class="person__button person__button--friend">
+    <div
+      v-else
+      class="person__button person__button--friend"
+      @click="removeContact"
+    >
       <v-icon class="person__button__icon">person_add_disabled</v-icon>
       <span class="person__button__text">Remove contact</span>
     </div>
@@ -33,13 +38,13 @@ export default {
   },
   computed: {
     imageLink() {
-      return this.$store.getters["person/getAvatarLink"](this.person._id);
+      return this.$store.getters['person/getAvatarLink'](this.person._id);
     },
     name() {
-      return this.$store.getters["person/getName"](this.person._id);
+      return this.$store.getters['person/getName'](this.person._id);
     },
     isFriend() {
-      return !!this.$store.getters["contact/getName"](this.person._id);
+      return !!this.$store.getters['contact/getName'](this.person._id);
     }
   },
   methods: {

@@ -8,7 +8,7 @@
         v-for="(message, index) in date.messages"
         :key="message._id"
         :message="message"
-        :isPreviousMessageOwn="index === 0 ? false : date.messages[index - 1].sender === message.sender"
+        :is-previous-message-own="index === 0 ? false : date.messages[index - 1].sender === message.sender"
       />
     </div>
   </div>
@@ -40,4 +40,3 @@ export default {
     }
   }
 </style>
-

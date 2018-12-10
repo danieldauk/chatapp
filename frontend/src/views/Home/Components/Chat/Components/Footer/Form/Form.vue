@@ -1,5 +1,8 @@
 <template>
-  <v-form @submit.prevent="submitForm" class="message-form">
+  <v-form
+    class="message-form"
+    @submit.prevent="submitForm"
+  >
     <v-text-field
       class="message-form__input"
       solo
@@ -8,7 +11,7 @@
       height="60"
       placeholder="Type something to send..."
       @input="setFormElementValue"
-    ></v-text-field>
+    />
   </v-form>
 </template>
 
@@ -21,19 +24,19 @@ export default {
   },
   methods: {
     async submitForm() {
-      if(!this.message) {
+      if (!this.message) {
         return;
       }
       await this.$store.dispatch('message/send', {
         content: this.message,
         conversationId: this.$store.getters['conversation/getCurrentId']
-        });
+      });
       this.$store.dispatch('messageForm/reset');
     },
     setFormElementValue(value) {
-      this.$store.dispatch("messageForm/setValue", {
+      this.$store.dispatch('messageForm/setValue', {
         value,
-        id: "message"
+        id: 'message'
       });
     }
   }

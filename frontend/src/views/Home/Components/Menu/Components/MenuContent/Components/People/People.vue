@@ -2,8 +2,8 @@
   <div class="contacts">
     <app-person
       v-for="person in people"
-      :person="person"
       :key="person._id"
+      :person="person"
     />
   </div>
 </template>

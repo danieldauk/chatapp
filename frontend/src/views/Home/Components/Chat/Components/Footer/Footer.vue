@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import Form from "./Form/Form.vue";
+import Form from './Form/Form.vue';
 
 export default {
   components: {
     appForm: Form
   }
-}
+};
 </script>
 
 

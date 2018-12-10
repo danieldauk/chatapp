@@ -2,9 +2,9 @@
   <div class="contacts">
     <app-contact
       v-for="contact in contacts"
+      v-if="currentSearchTerm.test(contact.username)"
       :id="contact._id"
       :key="contact._id"
-      v-if="currentSearchTerm.test(contact.username)"
     />
   </div>
 </template>

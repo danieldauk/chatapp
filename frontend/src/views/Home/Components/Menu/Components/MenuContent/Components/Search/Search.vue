@@ -1,5 +1,8 @@
 <template>
-  <v-form @submit.prevent class="search-form">
+  <v-form
+    class="search-form"
+    @submit.prevent
+  >
     <v-text-field
       class="search-form__input"
       solo
@@ -11,12 +14,12 @@
       height="60"
       placeholder="Search"
       @input="onInputHandler"
-    ></v-text-field>
+    />
   </v-form>
 </template>
 
 <script>
-import { ActiveTabEnum } from "@/utils/enumerators";
+import { ActiveTabEnum } from '@/utils/enumerators';
 
 export default {
   date() {
@@ -42,17 +45,17 @@ export default {
       }
       // add debounced search that will be fired after 500 ms since last input
       this.debouncedSearch = setTimeout(() => {
-        this.$store.dispatch("person/search", value);
+        this.$store.dispatch('person/search', value);
       }, 500);
     },
     setFormElementValue(value) {
-      this.$store.dispatch("searchForm/setValue", {
+      this.$store.dispatch('searchForm/setValue', {
         value,
-        id: "term"
+        id: 'term'
       });
     },
     onClearHandler() {
-      this.setFormElementValue("");
+      this.setFormElementValue('');
       this.$store.dispatch('person/clearAll');
     }
   }
