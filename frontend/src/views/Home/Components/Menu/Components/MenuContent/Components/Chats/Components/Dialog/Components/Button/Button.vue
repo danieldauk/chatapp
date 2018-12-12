@@ -9,12 +9,12 @@
   .button {
     display: flex;
     align-items: center;
-    width: 100%;
-    height: 60px;
-    padding-left: 15px;
-    border-bottom: 1px solid rgba($color-purple-light, 0.2);
+    width: max-content;
+    padding: 5px 10px;
+    border: 1px solid rgba($color-purple-light, 0.2);
     cursor: pointer;
     transition: 0.3s;
+    margin: 15px 0;
     &:hover & {
       &__icon,
       &__text {

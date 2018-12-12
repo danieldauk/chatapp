@@ -2,9 +2,7 @@
   <app-menu-content>
     <app-user-info slot="user-info" />
     <app-tabs slot="tabs" />
-    <app-search 
-    v-if="!isChatsTabShown"
-    slot="search" />
+    <app-search slot="search" />
     <app-toggle-button slot="toggle" />
     <app-contacts
       v-if="isContactsTabShown"
