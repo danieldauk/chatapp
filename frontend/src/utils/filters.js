@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import escapeStringRegexp from 'escape-string-regexp';
 import moment from 'moment';
 import truncate from 'lodash/truncate';
 
@@ -30,4 +31,11 @@ Vue.filter('truncateString', (value, limit) => {
     omission: '...',
     separator: /((\b[^a-zA-z0-9]\s)|[^a-zA-z0-9])/
   });
+});
+
+Vue.filter('escapeRegexp', (value) => {
+  if (!value || typeof value !== 'string') {
+    return '';
+  }
+  return escapeStringRegexp(value);
 });

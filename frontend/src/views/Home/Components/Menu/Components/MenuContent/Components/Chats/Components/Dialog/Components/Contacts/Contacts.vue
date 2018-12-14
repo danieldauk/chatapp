@@ -49,7 +49,10 @@ export default {
       if (!this.searchTerm) {
         return new RegExp("", "i");
       }
-      return new RegExp(this.searchTerm.replace(/\\/gi, "\\\\"), 'i');
+      const escapedSearchTerm = this.$options.filters.escapeRegexp(
+        this.searchTerm
+      );
+      return new RegExp(escapedSearchTerm, "i");
     }
   },
   methods: {

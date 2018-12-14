@@ -25,9 +25,8 @@ export default {
     },
     currentSearchTerm() {
       // TODO: add fuzzysort: https://github.com/farzher/fuzzysort
-      const currentTerm = this.$store.state.searchForm.data.term;
-      // escape 'escape' characters in string
-      return new RegExp(currentTerm.replace(/\\/gi, "\\\\"), 'i');
+      const currentTerm = this.$options.filters.escapeRegexp(this.$store.state.searchForm.data.term);
+      return new RegExp(currentTerm, 'i');
     }
   }
 };
