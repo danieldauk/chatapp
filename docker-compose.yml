@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  frontend:
+    build: ./frontend
+    image: frontend
+    volumes:
+      - ./frontend:/node/home/app
+      - /node/home/app/node_modules/
+    ports:
+      - 80:8080
+    depends_on: 
+      - backend
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+  
+  backend:
+    build: ./backend
+    image: backend
+    volumes:
+      - ./backend:/node/home/app
+      - /node/home/app/node_modules/
+    ports:
+      - 3000:3000
+    depends_on: 
+      - mongo_db
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+  
+  mongo_db: 
+    image: mongo:3.2.21-jessie
+    volumes: 
+      - ./database:/docker-entrypoint-initdb.d
+    ports: 
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: chatApp
