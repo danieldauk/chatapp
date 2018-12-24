@@ -2,9 +2,11 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import loginForm from './modules/forms/loginForm';
+import signupForm from './modules/forms/signupForm';
 import messageForm from './modules/forms/messageForm';
 import searchForm from './modules/forms/searchForm';
 import login from './modules/auth/login';
+import signup from './modules/auth/signup';
 import user from './modules/user';
 import contact from './modules/contact';
 import conversation from './modules/conversation';
@@ -17,9 +19,11 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   modules: {
     loginForm,
+    signupForm,
     messageForm,
     searchForm,
     login,
+    signup,
     user,
     contact,
     conversation,

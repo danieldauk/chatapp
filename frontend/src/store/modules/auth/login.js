@@ -2,7 +2,6 @@ import jwt from 'jsonwebtoken';
 import axios from '@/services/axios';
 import { initSocket } from '@/services/socket/socket';
 import AbstractStoreModule from '@/store/modules/AbstractStoreModule';
-import router from '../../../router/router';
 
 export default new AbstractStoreModule({
   state: {
@@ -28,7 +27,6 @@ export default new AbstractStoreModule({
         // in order to create custom socketId
         const { _id: userId } = jwt.verify(token, process.env.VUE_APP_TOKEN_PUBLIC_KEY);
         await initSocket(token, userId);
-        await router.replace('/');
       } catch (error) {
         await thisModule.dispatch('clearToken');
         // if token validation failed set error accordingly
@@ -38,7 +36,7 @@ export default new AbstractStoreModule({
           });
         } else {
           await this.dispatch('loginForm/setError', {
-            id: 'password',
+            id: error.response.data.input || 'password',
             message: error.response.data.error
           });
         }

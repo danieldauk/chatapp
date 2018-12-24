@@ -3,7 +3,7 @@ import Vuetify from 'vuetify/lib';
 import 'vuetify/src/stylus/app.styl';
 
 import {
-  VApp, VMenu, VNavigationDrawer, VBtn, VForm, VTextField, VProgressCircular, Vdialog, VExpansionPanel
+  VApp, VMenu, VNavigationDrawer, VBtn, VForm, VTextField, VProgressCircular, Vdialog, VExpansionPanel, VStepper
 } from 'vuetify';
 
 Vue.use(Vuetify, {
@@ -16,7 +16,8 @@ Vue.use(Vuetify, {
     VForm,
     VProgressCircular,
     Vdialog,
-    VExpansionPanel
+    VExpansionPanel,
+    VStepper
   },
   theme: {
     primary: '#dbdcf6',

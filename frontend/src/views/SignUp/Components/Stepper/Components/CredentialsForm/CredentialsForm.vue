@@ -1,8 +1,4 @@
 <template>
-  <div class="form">
-    <div class="form__logo">
-      <img src="@/assets/logo.svg">
-    </div>
     <v-form
       ref="form"
       class="form__form"
@@ -12,7 +8,6 @@
       <app-password class="form__form__input" />
       <app-confirm class="form__form__button" />
     </v-form>
-  </div>
 </template>
 
 <script>
@@ -27,7 +22,7 @@ export default {
     appConfirm: Confirm
   },
   destroyed() {
-    this.$store.dispatch('loginForm/reset');
+    this.$store.dispatch('signupForm/reset');
   },
   methods: {
     async submitForm() {
@@ -35,14 +30,11 @@ export default {
         return;
       }
       // clear server error messages on submit in order to clear manual error state
-      await this.$store.dispatch('loginForm/clearErrors');
-      await this.$store.dispatch('login/init', {
-        username: this.$store.state.loginForm.data.username,
-        password: this.$store.state.loginForm.data.password
+      await this.$store.dispatch('signupForm/clearErrors');
+      await this.$store.dispatch('signup/init', {
+        username: this.$store.state.signupForm.data.username,
+        password: this.$store.state.signupForm.data.password
       });
-      if(this.$store.state.login.token) {
-        this.$router.replace('/');
-      }
     }
   }
 };
@@ -72,7 +64,6 @@ export default {
     position: relative;
     &__button {
       flex: 0 1 auto;
-      position: absolute;
       bottom: 0;
     }
     &__input {

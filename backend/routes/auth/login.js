@@ -10,6 +10,7 @@ module.exports = async (req, res) => {
   const validationResult = validateCredentials(req.body);
   if (validationResult.error) {
     res.status(400).json({
+      input: validationResult.error.details[0].path,
       error: validationResult.error.details[0].message
     });
     return;

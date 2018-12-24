@@ -6,6 +6,7 @@ module.exports = async (req, res) => {
   const validationResult = validateUser(req.body);
   if (validationResult.error) {
     res.status(400).json({
+      input: validationResult.error.details[0].path,
       error: validationResult.error.details[0].message
     });
     return;
@@ -25,7 +26,9 @@ module.exports = async (req, res) => {
     }).count();
     if (doesUserExist) {
       res.status(400).json({
-        error: 'Given username exists'
+        username: {
+          error: 'Given username exists'
+        }
       });
       return;
     }

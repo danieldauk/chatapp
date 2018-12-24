@@ -3,14 +3,6 @@ const { User } = require('../../model/user');
 const avatarUpload = require('../../middleware/avatarUpload');
 
 module.exports = async (req, res) => {
-  avatarUpload(req, res, (error) => {
-    if (error) {
-      res.status(500).json({
-        error: error.message
-      });
-    }
-  });
-
   try {
     const user = await User.findOne({
       _id: req.user._id
@@ -19,22 +11,41 @@ module.exports = async (req, res) => {
       res.status(400).json({
         error: 'User does not exist'
       });
+      return;
     }
-    await User.updateOne({
-      _id: req.user._id
-    }, {
-      $set: {
-        avatar: req.file.filename
-      }
-    });
   } catch (error) {
     winston.error(error);
     res.status(500).json({
       error: error.message
     });
+    return;
   }
-  // if everything went fine - send success message
-  res.json({
-    message: 'File uploaded successfully'
+
+  // catch multer errors
+  avatarUpload(req, res, async (uploadError) => {
+    if (uploadError) {
+      res.status(500).json({
+        error: uploadError.message
+      });
+      return;
+    }
+    try {
+      await User.updateOne({
+        _id: req.user._id
+      }, {
+        $set: {
+          avatar: req.file.filename
+        }
+      });
+      // if everything went fine - send success message
+      res.json({
+        message: 'File uploaded successfully'
+      });
+    } catch (error) {
+      winston.error(error);
+      res.status(500).json({
+        error: error.message
+      });
+    }
   });
 };

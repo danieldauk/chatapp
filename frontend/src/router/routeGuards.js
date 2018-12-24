@@ -3,15 +3,19 @@ import store from '../store/store';
 import { initSocket } from '@/services/socket/socket';
 
 export const redirectIfNotAuthenticated = async (to, from, next) => {
-  if (store.state.login.token && to.name !== 'login') {
+  const publicRoutes = [
+    'login',
+    'signup'
+  ];
+  if (store.state.login.token && !publicRoutes.includes(to.name)) {
     next();
     return;
   }
-  if (!store.state.login.token && to.name !== 'login') {
+  if (!store.state.login.token && !publicRoutes.includes(to.name)) {
     next('/login');
     return;
   }
-  if (!store.state.login.token && to.name === 'login') {
+  if (!store.state.login.token && publicRoutes.includes(to.name)) {
     // check if token is stored in localStorage
     // if token exists and is valid - init app and redirect to bank
     const token = localStorage.getItem('token');
