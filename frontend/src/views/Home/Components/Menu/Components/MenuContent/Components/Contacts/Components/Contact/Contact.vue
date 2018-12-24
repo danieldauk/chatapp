@@ -12,7 +12,9 @@
         :class="['contact__avatar__online-indicator', {'contact__avatar__online-indicator--is-online': isOnline}]"
       />
     </div>
-    <div class="contact__name">{{ name | truncateString(20) }}</div>
+    <div class="contact__name">
+      {{ name | truncateString(20) }}
+    </div>
   </div>
 </template>
 

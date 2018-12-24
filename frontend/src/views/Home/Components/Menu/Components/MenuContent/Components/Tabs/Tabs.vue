@@ -8,22 +8,34 @@
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.CONTACTS}]"
       @click="clickHandler(tabEnum.CONTACTS)"
     >
-      <v-icon class="tabs__tab__icon">people</v-icon>
-      <span class="tabs__tab__text">Contacts</span>
+      <v-icon class="tabs__tab__icon">
+        people
+      </v-icon>
+      <span class="tabs__tab__text">
+        Contacts
+      </span>
     </div>
     <div
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.CHATS}]"
       @click="clickHandler(tabEnum.CHATS)"
     >
-      <v-icon class="tabs__tab__icon">chat_bubble</v-icon>
-      <span class="tabs__tab__text">Chats</span>
+      <v-icon class="tabs__tab__icon">
+        chat_bubble
+      </v-icon>
+      <span class="tabs__tab__text">
+        Chats
+      </span>
     </div>
     <div
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.PEOPLE}]"
       @click="clickHandler(tabEnum.PEOPLE)"
     >
-      <v-icon class="tabs__tab__icon">search</v-icon>
-      <span class="tabs__tab__text">People</span>
+      <v-icon class="tabs__tab__icon">
+        search
+      </v-icon>
+      <span class="tabs__tab__text">
+        People
+      </span>
     </div>
   </div>
 </template>

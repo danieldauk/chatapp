@@ -15,9 +15,13 @@
         v-if="remainingParticipants > 0"
         :style="{left: `${maxAvatars * 20}px`}"
         class="conversation__avatars__remaining"
-      >+{{ remainingParticipants }}</div>
+      >
+        +{{ remainingParticipants }}
+      </div>
     </div>
-    <div class="conversation__title">{{ conversation.title | truncateString(20) }}</div>
+    <div class="conversation__title">
+      {{ conversation.title | truncateString(20) }}
+    </div>
   </div>
 </template>
 
@@ -39,7 +43,7 @@ export default {
       return this.conversation.participants.length - this.maxAvatars;
     },
     shownParticipants() {
-      return this.conversation.participants.slice(0, this.maxAvatars+1);
+      return this.conversation.participants.slice(0, this.maxAvatars + 1);
     }
   },
   methods: {

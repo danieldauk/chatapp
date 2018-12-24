@@ -1,7 +1,11 @@
 <template>
   <div class="button">
-    <v-icon class="button__icon">group_add</v-icon>
-    <span class="button__text">Create Conversation</span>
+    <v-icon class="button__icon">
+      group_add
+    </v-icon>
+    <span class="button__text">
+      Create Conversation
+    </span>
   </div>
 </template>
 

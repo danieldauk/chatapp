@@ -1,13 +1,15 @@
 <template>
   <div class="added-contacts">
-    <div class="added-contacts__header">Selected contacts:</div>
+    <div class="added-contacts__header">
+      Selected contacts:
+    </div>
     <div class="added-contacts__images">
-        <img
-          v-for="participant in conversationParticipants"
-          :key="participant"
-          class="added-contacts__images__image"
-          :src="imageLink(participant)"
-        >
+      <img
+        v-for="participant in conversationParticipants"
+        :key="participant"
+        class="added-contacts__images__image"
+        :src="imageLink(participant)"
+      >
     </div>
   </div>
 </template>
@@ -22,7 +24,7 @@ export default {
   },
   methods: {
     imageLink(id) {
-      return this.$store.getters["contact/getAvatarLink"](id);
+      return this.$store.getters['contact/getAvatarLink'](id);
     }
   }
 };

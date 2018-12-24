@@ -1,20 +1,18 @@
 <template>
-    <v-text-field
-      class="search"
-      solo
-      clearable
-      prepend-icon="search"
-      hide-details
-      height="60"
-      placeholder="Search"
-      @input="$emit('input', $event)"
-    />
+  <v-text-field
+    class="search"
+    solo
+    clearable
+    prepend-icon="search"
+    hide-details
+    height="60"
+    placeholder="Search"
+    @input="$emit('input', $event)"
+  />
 </template>
 
 <script>
-export default {
-
-};
+export default {};
 </script>
 
 

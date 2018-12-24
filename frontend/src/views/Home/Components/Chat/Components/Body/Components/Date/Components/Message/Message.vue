@@ -14,12 +14,18 @@
         <span
           v-if="!isDialogue && !isOwnMessage"
           class="message__container__info--name"
-        >{{ participantName }}, </span>
-        <span class="message__container__info--time">{{ time }}</span>
+        >
+          {{ participantName }},
+        </span>
+        <span class="message__container__info--time">
+          {{ time }}
+        </span>
       </div>
       <div
         :class="['message__container__body', {'message__container__body--own': isOwnMessage},{'message__container__body--other': !isOwnMessage}, {'message__container__body--subsequent': isPreviousMessageOwn}]"
-      >{{ message.content }}</div>
+      >
+        {{ message.content }}
+      </div>
     </div>
   </div>
 </template>

@@ -8,6 +8,10 @@ module.exports = {
     '@vue/airbnb'
   ],
   rules: {
+    'vue/component-name-in-template-casing': [
+      'error',
+      'kebab-case'
+    ],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-await-in-loop': 'off',

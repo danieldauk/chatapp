@@ -2,12 +2,17 @@
   <div class="contact">
     <div class="contact__info">
       <div class="contact__info__avatar">
-        <img class="contact__info__avatar__image" :src="imageLink">
+        <img
+          class="contact__info__avatar__image"
+          :src="imageLink"
+        >
         <div
           :class="['contact__info__avatar__online-indicator', {'contact__info__avatar__online-indicator--is-online': isOnline}]"
         />
       </div>
-      <div class="contact__info__name">{{ name | truncateString(20) }}</div>
+      <div class="contact__info__name">
+        {{ name | truncateString(20) }}
+      </div>
     </div>
     <div class="contact__checkbox">
       <v-checkbox
@@ -16,7 +21,7 @@
         hide-details
         :input-value="isChecked"
         @change="$emit('checkChange', $event)"
-      ></v-checkbox>
+      />
     </div>
   </div>
 </template>
@@ -35,13 +40,13 @@ export default {
   },
   computed: {
     imageLink() {
-      return this.$store.getters["contact/getAvatarLink"](this.id);
+      return this.$store.getters['contact/getAvatarLink'](this.id);
     },
     name() {
-      return this.$store.getters["contact/getName"](this.id);
+      return this.$store.getters['contact/getName'](this.id);
     },
     isOnline() {
-      return this.$store.getters["person/isOnline"](this.id);
+      return this.$store.getters['person/isOnline'](this.id);
     },
     isChecked() {
       return this.conversationParticipants.includes(this.id);

@@ -7,23 +7,33 @@
           :src="imageLink"
         >
       </div>
-      <div class="person__info__name">{{ name | truncateString(20) }}</div>
+      <div class="person__info__name">
+        {{ name | truncateString(20) }}
+      </div>
     </div>
     <div
       v-if="!isFriend"
       class="person__button"
       @click="addContact"
     >
-      <v-icon class="person__button__icon">person_add</v-icon>
-      <span class="person__button__text">Add contact</span>
+      <v-icon class="person__button__icon">
+        person_add
+      </v-icon>
+      <span class="person__button__text">
+        Add contact
+      </span>
     </div>
     <div
       v-else
       class="person__button person__button--friend"
       @click="removeContact"
     >
-      <v-icon class="person__button__icon">person_add_disabled</v-icon>
-      <span class="person__button__text">Remove contact</span>
+      <v-icon class="person__button__icon">
+        person_add_disabled
+      </v-icon>
+      <span class="person__button__text">
+        Remove contact
+      </span>
     </div>
   </div>
 </template>

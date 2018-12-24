@@ -13,7 +13,6 @@
       <app-confirm class="form__form__button" />
     </v-form>
   </div>
-
 </template>
 
 <script>
