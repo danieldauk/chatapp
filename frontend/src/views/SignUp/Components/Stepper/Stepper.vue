@@ -1,5 +1,8 @@
 <template>
-  <v-stepper class="stepper" value="1">
+<!-- TODO: set value to currentStep -->
+  <v-stepper class="stepper" 
+  :value="2"
+  >
     <v-stepper-header class="stepper__header">
       <v-stepper-step step="1"/>
       <v-divider />
@@ -11,7 +14,7 @@
       <app-credentials-form/>
     </v-stepper-content>
     <v-stepper-content class="stepper__content" step="2">
-      <!-- TODO: add avatar form -->
+      <app-avatar-form />
     </v-stepper-content>
     <v-stepper-content class="stepper__content" step="2">
       <!-- TODO: add success message and link to login page -->
@@ -21,10 +24,23 @@
 
 <script>
 import CredentialsForm from "./Components/CredentialsForm/CredentialsForm.vue";
+import AvatarForm from "./Components/AvatarForm/AvatarForm.vue";
 
 export default {
   components: {
-    appCredentialsForm: CredentialsForm
+    appCredentialsForm: CredentialsForm,
+    appAvatarForm: AvatarForm,
+  },
+  computed: {
+    currentStep() {
+      if (!this.$store.state.signup.current && !this.$store.state.login.token) {
+        return 1;
+      }
+      if (this.$store.state.signup.current && !this.$store.state.login.token) {
+        return 2;
+      }
+      return 3;
+    }
   }
 };
 </script>

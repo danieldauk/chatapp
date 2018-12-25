@@ -12,6 +12,9 @@ export default {
   components: {
     appSignUp: SignUp,
     appStepper: Stepper
+  },
+  destroyed() {
+    this.$store.dispatch('signup/reset');
   }
 };
 </script>
