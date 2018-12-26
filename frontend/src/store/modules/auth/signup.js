@@ -10,8 +10,6 @@ export default new AbstractStoreModule({
         const response = await axios.post('/api/auth/login', payload);
         const token = response.data.token;
         await thisModule.dispatch('setCurrent', {
-          username: payload.username,
-          password: payload.password,
           token
         });
       } catch (error) {
@@ -20,17 +18,38 @@ export default new AbstractStoreModule({
             id: error.response.data.input || 'password',
             message: error.response.data.error
           });
-          return;
+        } else {
+          await this.dispatch('signupForm/setError', {
+            id: 'password',
+            message: error.message
+          });
         }
-        await this.dispatch('signupForm/setError', {
-          id: 'password',
-          message: error.message
-        });
       }
       thisModule.dispatch('finishLoad');
     },
-    async setAvatar(thisModule) {
-      
+    async saveAvatar(thisModule, payload) {
+      await thisModule.dispatch('startLoad');
+      await thisModule.dispatch('clearErrors');
+      try {
+        const formData = new FormData();
+        formData.append('avatar', payload, 'avatar.png');
+        await axios.post('/api/avatars', formData, {
+          headers: {
+            Authorization: thisModule.state.current.token
+          }
+        });
+      } catch (error) {
+        if (error.response) {
+          await this.dispatch('signup/setErrors', {
+            error: error.response.data.error
+          });
+        } else {
+          await this.dispatch('signup/setErrors', {
+            error: error.message
+          });
+        }
+      }
+      thisModule.dispatch('finishLoad');
     }
   }
 });

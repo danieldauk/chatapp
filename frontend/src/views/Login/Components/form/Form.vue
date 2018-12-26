@@ -40,7 +40,7 @@ export default {
         username: this.$store.state.loginForm.data.username,
         password: this.$store.state.loginForm.data.password
       });
-      if(this.$store.state.login.token) {
+      if (this.$store.state.login.token) {
         this.$router.replace('/');
       }
     }

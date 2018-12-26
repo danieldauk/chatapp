@@ -1,13 +1,13 @@
 <template>
-    <v-form
-      ref="form"
-      class="form__form"
-      @submit.prevent="submitForm"
-    >
-      <app-username class="form__form__input" />
-      <app-password class="form__form__input" />
-      <app-confirm class="form__form__button" />
-    </v-form>
+  <v-form
+    ref="form"
+    class="form__form"
+    @submit.prevent="submitForm"
+  >
+    <app-username class="form__form__input" />
+    <app-password class="form__form__input" />
+    <app-confirm class="form__form__button" />
+  </v-form>
 </template>
 
 <script>
@@ -35,6 +35,9 @@ export default {
         username: this.$store.state.signupForm.data.username,
         password: this.$store.state.signupForm.data.password
       });
+      if (this.$store.state.signup.current) {
+        await this.$store.dispatch('UI/setCurrentSignUpStep', 2);
+      }
     }
   }
 };
