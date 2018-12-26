@@ -26,9 +26,8 @@ module.exports = async (req, res) => {
     }).count();
     if (doesUserExist) {
       res.status(400).json({
-        username: {
-          error: 'Given username exists'
-        }
+        input: 'username',
+        error: 'Given username exists'
       });
       return;
     }
