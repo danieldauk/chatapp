@@ -95,6 +95,7 @@ export default {
     }
     &__body {
       box-shadow: 0px 2px 5px 1px rgba($color-purple-ultra-dark, 0.2);
+      line-height: 1;
       font-size: 13px;
       padding: 5px 15px;
       height: max-content;
@@ -102,7 +103,6 @@ export default {
       position: relative;
       background: $color-white;
       color: $color-purple-medium;
-      white-space: pre-wrap;
       word-break: break-all;
       word-break: break-word;
       &--other {
