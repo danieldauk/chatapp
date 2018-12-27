@@ -6,7 +6,7 @@ module.exports = async (socket, userId, username) => {
   try {
     const users = await User.find(
       {
-        username: { $regex: username },
+        username: { $regex: username, $options: 'i' },
         // exclude result with requesting userId
         _id: { $ne: userId }
       },
