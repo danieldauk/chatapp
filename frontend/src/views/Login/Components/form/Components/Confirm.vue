@@ -26,5 +26,6 @@ export default {
     width: 100%;
     text-transform: capitalize;
     font-size: 16px;
+    margin: 0;
   }
 </style>

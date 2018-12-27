@@ -90,6 +90,7 @@ export default {
         height: 35px;
         width: 35px;
         border-radius: 50%;
+        object-fit: cover;
       }
     }
   }

@@ -15,6 +15,7 @@ export default {
   },
   destroyed() {
     this.$store.dispatch('signup/reset');
+    this.$store.dispatch("UI/setCurrentSignUpStep", 1);
   }
 };
 </script>

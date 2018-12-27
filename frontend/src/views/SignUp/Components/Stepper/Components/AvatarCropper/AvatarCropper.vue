@@ -33,16 +33,17 @@
     <div class="cropper__error-messages">{{error}}</div>
     <div class="cropper__buttons">
       <v-btn
-        @click='skipAvatarUpload'
+        @click="goToNextStep"
         class="cropper__buttons__button cropper__buttons__button--skip"
         depressed
       >Skip</v-btn>
-      <v-btn 
-      :loading="isLoading"
-      @click="saveAvatar"
-      class="cropper__buttons__button" 
-      depressed 
-      color="success">Save</v-btn>
+      <v-btn
+        :loading="isLoading"
+        @click="saveAvatar"
+        class="cropper__buttons__button"
+        depressed
+        color="success"
+      >Save</v-btn>
     </div>
   </div>
 </template>
@@ -56,7 +57,7 @@ export default {
     VueCropper
   },
   props: {
-    // step is used to load content only when 
+    // step is used to load content only when
     // step is equal to 2 (cropper rendering problem)
     step: {
       type: Number,
@@ -67,7 +68,7 @@ export default {
     return {
       imgSrc: Avatar,
       croppedImage: "",
-      maxFileSize: 2097152, // bytes
+      maxFileSize: 1048576, // bytes
       localError: null,
       wasImageUploaded: false
     };
@@ -82,13 +83,17 @@ export default {
   },
   methods: {
     setImage(e) {
+      this.$store.dispatch("signup/clearErrors");
       const file = e.target.files[0];
       if (!file.type.includes("image/")) {
         this.localError = "Please select an image file";
         return;
       }
-      if (!file.size >= this.maxFileSize) {
-        alert(`File is too large. Max size: ${this.maxFileSize} bytes`);
+      if (file.size >= this.maxFileSize) {
+        this.localError = `File is too large. Max size: ${(
+          this.maxFileSize /
+          (1024 * 1024)
+        ).toPrecision(1)} MB`;
         return;
       }
       if (typeof FileReader === "function") {
@@ -114,23 +119,28 @@ export default {
     },
     getAvatarBlob() {
       return new Promise((resolve, reject) => {
-        this.$refs.cropper.getCroppedCanvas().toBlob((blob)=>{
+        this.$refs.cropper.getCroppedCanvas().toBlob(blob => {
           resolve(blob);
-        }, {
-          type: 'image/jpeg'
-        });
+        }, "image/jpeg", 0.1);
       });
     },
     async saveAvatar() {
-      if (this.wasImageUploaded) {
-        await this.$store.dispatch('signup/saveAvatar', await this.getAvatarBlob());
+      if (!this.wasImageUploaded) {
+        this.localError = "Upload an avatar";
+        return;
       }
       if (!this.error) {
-       this.skipAvatarUpload();
+        await this.$store.dispatch(
+          "signup/saveAvatar",
+          await this.getAvatarBlob()
+        );
+        if (!this.error) {
+          this.goToNextStep();
+        }
       }
     },
-    skipAvatarUpload() {
-      this.$store.dispatch('UI/setCurrentSignUpStep', 3);
+    goToNextStep() {
+      this.$store.dispatch("UI/setCurrentSignUpStep", 3);
     }
   }
 };
@@ -143,9 +153,9 @@ export default {
   align-items: center;
   flex-grow: 1;
   &__cropbox {
-    height: 170px;
+    height: 160px;
     width: calc(100% - 40px);
-    margin: 20px 0px;
+    margin: 20px 0px 0px;
     /deep/ .cropper-line {
       background-color: transparent;
     }
@@ -163,18 +173,15 @@ export default {
     }
   }
   &__section {
-    border-top: 1px solid rgba($color-purple-light, 0.2);
     width: 100%;
     padding: 20px;
     padding-bottom: 0px;
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
     &__preview {
-      width: 70px;
-      height: 70px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       object-fit: cover;
     }
@@ -204,15 +211,17 @@ export default {
     color: $color-red;
     width: 100%;
     padding: 5px 20px;
+    flex-grow: 1;
   }
   &__buttons {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     display: flex;
     width: 100%;
     padding: 0 20px;
     &__button {
       margin: 0px;
       flex-grow: 1;
+      height: 40px;
       &--skip {
         background-color: rgba($color-purple-light, 0) !important;
         border: 1px solid rgba($color-purple-light, 0.2);

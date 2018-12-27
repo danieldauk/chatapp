@@ -79,6 +79,7 @@ export default {
       width: 30px;
       border-radius: 50%;
       display: block;
+      object-fit: cover;
     }
   }
 

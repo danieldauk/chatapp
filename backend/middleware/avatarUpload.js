@@ -26,7 +26,7 @@ module.exports = multer({
   storage,
   limits: {
     // maximum file size in bytes
-    fileSize: 2097152
+    fileSize: 1048576
   },
   fileFilter
 }).single('avatar');

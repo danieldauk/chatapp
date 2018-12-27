@@ -7,7 +7,7 @@ class Rules {
 
 export const passwordRules = new Rules({
   required: value => !!value || 'Password is required',
-  atLeastChars: value => value.length >= 6 || 'Password should contain at least 8 characters'
+  atLeastChars: value => value.length >= 6 || 'Password should contain at least 6 characters'
 });
 
 export const usernameRules = new Rules({

@@ -4,7 +4,8 @@ export default new AbstractFormModule({
   state: {
     data: {
       username: '',
-      password: ''
+      password: '',
+      repeatedPassword: ''
     }
   }
 });

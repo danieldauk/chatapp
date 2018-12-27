@@ -95,6 +95,7 @@ export default {
       position: absolute;
       width: 35px;
       border-radius: 50%;
+      object-fit: cover;
     }
     &__remaining {
       position: absolute;
