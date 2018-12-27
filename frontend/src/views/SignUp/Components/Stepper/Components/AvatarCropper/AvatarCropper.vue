@@ -156,6 +156,11 @@ export default {
     height: 160px;
     width: calc(100% - 40px);
     margin: 20px 0px 0px;
+    // center image before cropperjs init
+    text-align: center;
+    /deep/ img {
+      max-height: 100%;
+    }
     /deep/ .cropper-line {
       background-color: transparent;
     }
