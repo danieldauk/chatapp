@@ -12,6 +12,7 @@ import contact from './modules/contact';
 import conversation from './modules/conversation';
 import message from './modules/message';
 import person from './modules/person';
+import globalError from './modules/globalError';
 import UI from './modules/UI';
 
 Vue.use(Vuex);
@@ -29,6 +30,7 @@ export default new Vuex.Store({
     conversation,
     message,
     person,
+    globalError,
     UI
   }
 });

@@ -1,0 +1,42 @@
+<template>
+  <v-alert
+      class='global-error'
+      :value="globalError"
+      @input="clearGlobalError"
+      color="error"
+      icon="warning"
+      dismissible
+    >
+      {{globalError}}
+    </v-alert>
+</template>
+
+<script>
+export default {
+  computed: {
+    globalError() {
+      return this.$store.getters['globalError/getCurrent'];
+    }
+  },
+  methods: {
+    clearGlobalError(isErrorShown) {
+      if(!isErrorShown) {
+        this.$store.dispatch('globalError/clearCurrent');
+      }
+    }
+  }
+}
+</script>
+
+
+<style lang="scss" scoped>
+  .global-error {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    height: 60px;
+    box-sizing: border-box;
+    margin: 0;
+    top: calc(100vh - 60px);
+  }
+</style>

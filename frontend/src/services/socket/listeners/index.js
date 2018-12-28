@@ -21,6 +21,6 @@ export default (socket) => {
   });
   // ERROR EVENT
   socket.on(SocketEventsEnum.ERROR, (error) => {
-    console.error(error);
+    store.dispatch('globalError/setCurrent', error);
   });
 };
