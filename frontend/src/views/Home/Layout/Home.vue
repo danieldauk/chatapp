@@ -9,7 +9,6 @@
     <div class="home__chat">
       <slot name="chat" />
     </div>
-    <slot name="error" />
   </div>
 </template>
 

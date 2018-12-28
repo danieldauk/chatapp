@@ -56,8 +56,8 @@ module.exports = (io) => {
       removeContact(socket, userId, contactId);
     });
     // CONVERSATION events
-    socket.on(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, (participants) => {
-      createConversation(socket, userId, participants);
+    socket.on(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, (conversation) => {
+      createConversation(socket, userId, conversation);
     });
     socket.on(SocketEventsEnum.REQUEST_CONVERSATIONS, () => {
       getConversations(socket, userId);

@@ -30,14 +30,13 @@ export default {
     appSearch: Search
   },
   props: {
-    isDialogOpen: {
-      type: Boolean,
+    conversationParticipants: {
+      type: Array,
       required: true
     }
   },
   data() {
     return {
-      conversationParticipants: [],
       searchTerm: null
     };
   },
@@ -55,15 +54,7 @@ export default {
       return new RegExp(escapedSearchTerm, 'i');
     }
   },
-  watch: {
-    isDialogOpen(isDialogOpen) {
-      if (!isDialogOpen) {
-        this.conversationParticipants = [];
-      }
-    }
-  },
   methods: {
-    createConversation() {},
     onChangeHandler(isChecked, contactId) {
       if (!isChecked) {
         const contactIndex = this.conversationParticipants.indexOf(contactId);
@@ -83,10 +74,11 @@ export default {
 .contacts {
   display: flex;
   flex-direction: column;
+  width: 100%;
   &__panel {
     box-shadow: none;
   }
-  &__contact:not(:last-child) {
+  &__contact {
     border-bottom: 1px solid $color-purple-light;
   }
 }

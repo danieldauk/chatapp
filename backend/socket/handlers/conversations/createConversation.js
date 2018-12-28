@@ -6,16 +6,17 @@ const {
 const { User } = require('../../../model/user');
 const { SocketEventsEnum } = require('../../../utils/enumerators');
 
-module.exports = async (socket, userId, participants) => {
+module.exports = async (socket, userId, conversationData) => {
   // check data validity
-  const validationResult = validateConversation(participants);
+  const validationResult = validateConversation(conversationData);
   if (validationResult.error) {
+
     socket.emit(SocketEventsEnum.ERROR, {
       error: validationResult.error.details[0].message
     });
     return;
   }
-  const { participants: participantsArray } = participants;
+  const { participants: participantsArray } = conversationData;
   // check if participants array includes requesting user id
   if (!participantsArray.includes(userId)) {
     socket.emit(SocketEventsEnum.ERROR, {
@@ -54,6 +55,9 @@ module.exports = async (socket, userId, participants) => {
           participants: {
             $all: participantsArray
           }
+        },
+        {
+          title: conversationData.title
         }
       ]
     }).populate('participants', 'username avatar');
@@ -63,13 +67,15 @@ module.exports = async (socket, userId, participants) => {
       return;
     }
     // if conversation does not exist - create and return conversation
-    const newConversation = new Conversation(participants);
+    const newConversation = new Conversation(conversationData);
     const result = await newConversation.save();
     await Conversation.populate(result, {
       path: 'participants',
       select: 'username avatar'
     });
     socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, result);
+    // TODO: notify conversation participants about created chat
+    // different flows for dialogue and conversation
   } catch (error) {
     winston.error(error);
     socket.emit(SocketEventsEnum.ERROR, {

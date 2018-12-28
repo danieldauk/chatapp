@@ -1,10 +1,17 @@
 <template>
   <v-app>
     <router-view />
+    <app-global-error />
   </v-app>
 </template>
 
 <script>
+import GlobalError from '@/views/SharedComponents/GlobalError/GlobalError.vue';
+export default {
+  components: {
+    appGlobalError: GlobalError
+  }
+}
 </script>
 
 <style lang="scss">

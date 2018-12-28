@@ -38,5 +38,9 @@ export default {
     box-sizing: border-box;
     margin: 0;
     top: calc(100vh - 60px);
+    color: $color-white;
+    /deep/ .v-icon {
+      color: rgba($color-purple-dark, 0.5);
+    }
   }
 </style>

@@ -1,15 +1,17 @@
 <template>
   <div class="added-contacts">
-    <div class="added-contacts__header">
-      Selected contacts:
-    </div>
-    <div class="added-contacts__images">
-      <img
+    <div class="added-contacts__header">Selected contacts:</div>
+    <div class="added-contacts__contacts">
+      <div
+        class="added-contacts__contacts__contact"
         v-for="participant in conversationParticipants"
         :key="participant"
-        class="added-contacts__images__image"
-        :src="imageLink(participant)"
       >
+        <img class="added-contacts__contacts__contact__image" :src="imageLink(participant)">
+        <div
+          class="added-contacts__contacts__contact__name"
+        >{{name(participant) | truncateString(10)}}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -24,7 +26,10 @@ export default {
   },
   methods: {
     imageLink(id) {
-      return this.$store.getters['contact/getAvatarLink'](id);
+      return this.$store.getters["contact/getAvatarLink"](id);
+    },
+    name(id) {
+      return this.$store.getters["contact/getName"](id);
     }
   }
 };
@@ -34,14 +39,14 @@ export default {
 .added-contacts {
   display: flex;
   flex-direction: column;
-  padding: 0 10px;
+  
   &__header {
     color: $color-purple-dark;
     font-weight: 500;
     line-height: 1;
-    padding-top: 10px;
+    padding: 10px 10px 0px;   
   }
-  &__images {
+  &__contacts {
     display: flex;
     width: 100%;
     overflow-x: auto;
@@ -59,13 +64,25 @@ export default {
     &::-webkit-scrollbar-thumb {
       background: $color-purple-medium;
     }
-    &__image {
-      height: 35px;
-      width: 35px;
-      border-radius: 50%;
-      object-fit: cover;
+    &__contact {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      min-width: 50px;
+      width: 50px;
+      overflow: hidden;
       &:not(:last-child) {
         margin-right: 5px;
+      }
+      &__name {
+        font-size: 10px;
+      }
+      &__image {
+        height: 35px;
+        width: 35px;
+        border-radius: 50%;
+        object-fit: cover;
       }
     }
   }

@@ -4,6 +4,7 @@ import { SocketEventsEnum } from '@/utils/enumerators';
 export default (socket) => {
   socket.on(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, async (data) => {
     await store.dispatch('conversation/setCurrent', data);
+    await store.dispatch('conversation/loadAll');
     store.dispatch('conversation/loadHistory', store.getters['conversation/getCurrentId']);
   });
   socket.on(SocketEventsEnum.RESPONSE_CONVERSATIONS, (conversations) => {

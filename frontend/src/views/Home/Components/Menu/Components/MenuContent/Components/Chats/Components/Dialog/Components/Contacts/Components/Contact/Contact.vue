@@ -80,7 +80,7 @@ export default {
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        border: 2px solid $color-purple-dark;
+        border: 2px solid $color-white;
         background: $color-purple-medium;
         &--is-online {
           background: $color-green;
