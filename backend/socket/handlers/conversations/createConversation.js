@@ -10,7 +10,6 @@ module.exports = async (socket, userId, conversationData) => {
   // check data validity
   const validationResult = validateConversation(conversationData);
   if (validationResult.error) {
-
     socket.emit(SocketEventsEnum.ERROR, {
       error: validationResult.error.details[0].message
     });
@@ -63,6 +62,10 @@ module.exports = async (socket, userId, conversationData) => {
     }).populate('participants', 'username avatar');
     // if conversation exist - return conversation
     if (conversation) {
+      if (conversation.participants.length === 2) {
+        socket.emit(SocketEventsEnum.RESPONSE_CREATE_DIALOGUE, conversation);
+        return;
+      }
       socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, conversation);
       return;
     }
@@ -73,9 +76,16 @@ module.exports = async (socket, userId, conversationData) => {
       path: 'participants',
       select: 'username avatar'
     });
+    if (result.participants.length === 2) {
+      socket.emit(SocketEventsEnum.RESPONSE_CREATE_DIALOGUE, result);
+      return;
+    }
     socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, result);
-    // TODO: notify conversation participants about created chat
-    // different flows for dialogue and conversation
+    result.participants.forEach((participant) => {
+      socket
+        .to(participant._id)
+        .emit(SocketEventsEnum.ADDED_TO_CONVERSATION, conversation);
+    });
   } catch (error) {
     winston.error(error);
     socket.emit(SocketEventsEnum.ERROR, {

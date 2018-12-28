@@ -1,8 +1,12 @@
 <template>
   <app-chat>
-    <app-header slot="header" />
+    <app-header 
+    v-if="doesCurrentConversationExist"
+    slot="header" />
     <app-body slot="body" />
-    <app-footer slot="footer" />
+    <app-footer 
+    v-if="doesCurrentConversationExist"
+    slot="footer" />
   </app-chat>
 </template>
 
@@ -18,7 +22,11 @@ export default {
     appHeader: Header,
     appBody: Body,
     appFooter: Footer
-
+  },
+  computed: {
+    doesCurrentConversationExist() {
+      return !!this.$store.state.conversation.current;
+    }
   }
 };
 </script>

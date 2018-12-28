@@ -50,7 +50,7 @@ export default {
       return this.$store.getters['conversation/getParticipantAvatarLink'](this.message.sender);
     },
     isDialogue() {
-      return this.$store.state.conversation.current.participants.length === 2;
+      return this.$store.getters['conversation/isDialogue'];
     },
     participantName() {
       return this.$store.getters['conversation/getParticipantName'](this.message.sender);

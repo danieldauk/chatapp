@@ -1,23 +1,33 @@
 <template>
-  <v-form ref="form" class="form" @submit.prevent="submitForm">
-    <div class="form__header">Create your account</div>
-    <app-username class="form__input"/>
-    <app-password class="form__input"/>
+  <v-form
+    ref="form"
+    class="form"
+    @submit.prevent="submitForm"
+  >
+    <div class="form__header">
+      Create your account
+    </div>
+    <app-username class="form__input" />
+    <app-password class="form__input" />
     <app-repeated-password class="form__input" />
-    <app-confirm class="form__button"/>
-    <div class="form__login">Already have an account? 
-    <router-link 
-    class="form__login__link"
-    to='/login'>Login.</router-link>
+    <app-confirm class="form__button" />
+    <div class="form__login">
+      Already have an account?
+      <router-link
+        class="form__login__link"
+        to="/login"
+      >
+        Login.
+      </router-link>
     </div>
   </v-form>
 </template>
 
 <script>
-import Username from "./Components/Username.vue";
-import Password from "./Components/Password.vue";
-import RepeatedPassword from "./Components/RepeatedPassword.vue";
-import Confirm from "./Components/Confirm.vue";
+import Username from './Components/Username.vue';
+import Password from './Components/Password.vue';
+import RepeatedPassword from './Components/RepeatedPassword.vue';
+import Confirm from './Components/Confirm.vue';
 
 export default {
   components: {
@@ -27,7 +37,7 @@ export default {
     appConfirm: Confirm
   },
   destroyed() {
-    this.$store.dispatch("signupForm/reset");
+    this.$store.dispatch('signupForm/reset');
   },
   methods: {
     async submitForm() {
@@ -35,13 +45,13 @@ export default {
         return;
       }
       // clear server error messages on submit in order to clear manual error state
-      await this.$store.dispatch("signupForm/clearErrors");
-      await this.$store.dispatch("signup/init", {
+      await this.$store.dispatch('signupForm/clearErrors');
+      await this.$store.dispatch('signup/init', {
         username: this.$store.state.signupForm.data.username,
         password: this.$store.state.signupForm.data.password
       });
       if (this.$store.state.signup.current) {
-        await this.$store.dispatch("UI/setCurrentSignUpStep", 2);
+        await this.$store.dispatch('UI/setCurrentSignUpStep', 2);
       }
     }
   }
@@ -65,7 +75,7 @@ export default {
   &__button {
     flex: 0 1 auto;
     margin: 0;
-    margin-top: auto; 
+    margin-top: auto;
   }
   &__login {
     font-size: 13px;

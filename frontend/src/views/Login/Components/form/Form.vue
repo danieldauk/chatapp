@@ -3,23 +3,31 @@
     <div class="form__logo">
       <img src="@/assets/logo.svg">
     </div>
-    <v-form ref="form" class="form__form" @submit.prevent="submitForm">
-      <app-username class="form__form__input"/>
-      <app-password class="form__form__input"/>
-      <app-confirm class="form__form__button"/>
+    <v-form
+      ref="form"
+      class="form__form"
+      @submit.prevent="submitForm"
+    >
+      <app-username class="form__form__input" />
+      <app-password class="form__form__input" />
+      <app-confirm class="form__form__button" />
     </v-form>
-    <div class="form__signup">New to ChatApp? 
-    <router-link 
-    class="form__signup__link"
-    to='/signup'>Create an account.</router-link>
+    <div class="form__signup">
+      New to ChatApp?
+      <router-link
+        class="form__signup__link"
+        to="/signup"
+      >
+        Create an account.
+      </router-link>
     </div>
   </div>
 </template>
 
 <script>
-import Username from "./Components/Username.vue";
-import Password from "./Components/Password.vue";
-import Confirm from "./Components/Confirm.vue";
+import Username from './Components/Username.vue';
+import Password from './Components/Password.vue';
+import Confirm from './Components/Confirm.vue';
 
 export default {
   components: {
@@ -28,7 +36,7 @@ export default {
     appConfirm: Confirm
   },
   destroyed() {
-    this.$store.dispatch("loginForm/reset");
+    this.$store.dispatch('loginForm/reset');
   },
   methods: {
     async submitForm() {
@@ -36,13 +44,13 @@ export default {
         return;
       }
       // clear server error messages on submit in order to clear manual error state
-      await this.$store.dispatch("loginForm/clearErrors");
-      await this.$store.dispatch("login/init", {
+      await this.$store.dispatch('loginForm/clearErrors');
+      await this.$store.dispatch('login/init', {
         username: this.$store.state.loginForm.data.username,
         password: this.$store.state.loginForm.data.password
       });
       if (this.$store.state.login.token) {
-        this.$router.replace("/");
+        this.$router.replace('/');
       }
     }
   }

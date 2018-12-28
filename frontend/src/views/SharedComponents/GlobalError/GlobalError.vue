@@ -1,14 +1,14 @@
 <template>
   <v-alert
-      class='global-error'
-      :value="globalError"
-      @input="clearGlobalError"
-      color="error"
-      icon="warning"
-      dismissible
-    >
-      {{globalError}}
-    </v-alert>
+    class="global-error"
+    :value="globalError"
+    color="error"
+    icon="warning"
+    dismissible
+    @input="clearGlobalError"
+  >
+    {{ globalError }}
+  </v-alert>
 </template>
 
 <script>
@@ -20,12 +20,12 @@ export default {
   },
   methods: {
     clearGlobalError(isErrorShown) {
-      if(!isErrorShown) {
+      if (!isErrorShown) {
         this.$store.dispatch('globalError/clearCurrent');
       }
     }
   }
-}
+};
 </script>
 
 

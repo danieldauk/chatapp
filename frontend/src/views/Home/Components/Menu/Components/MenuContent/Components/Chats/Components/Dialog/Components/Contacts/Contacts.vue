@@ -2,10 +2,10 @@
   <div class="contacts">
     <v-expansion-panel class="contacts__panel">
       <v-expansion-panel-content :value="conversationParticipants.length !==0">
-        <app-added-contacts :conversation-participants="conversationParticipants"/>
+        <app-added-contacts :conversation-participants="conversationParticipants" />
       </v-expansion-panel-content>
     </v-expansion-panel>
-    <app-search @input="searchTerm = $event"/>
+    <app-search @input="searchTerm = $event" />
     <div class="contacts__contacts-container">
       <app-contact
         v-for="contact in contacts"
@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import Contact from "./Components/Contact/Contact.vue";
-import AddedContacts from "./Components/AddedContacts/AddedContacts.vue";
-import Search from "./Components/Search/Search.vue";
+import Contact from './Components/Contact/Contact.vue';
+import AddedContacts from './Components/AddedContacts/AddedContacts.vue';
+import Search from './Components/Search/Search.vue';
 
 export default {
   components: {
@@ -48,12 +48,12 @@ export default {
     },
     currentSearchTerm() {
       if (!this.searchTerm) {
-        return new RegExp("", "i");
+        return new RegExp('', 'i');
       }
       const escapedSearchTerm = this.$options.filters.escapeRegexp(
         this.searchTerm
       );
-      return new RegExp(escapedSearchTerm, "i");
+      return new RegExp(escapedSearchTerm, 'i');
     }
   },
   methods: {

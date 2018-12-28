@@ -9,7 +9,7 @@ const conversationSchema = new mongoose.Schema({
   }],
   title: {
     type: String,
-    default: 'Dialogue'
+    required: true
   }
 });
 
@@ -17,7 +17,7 @@ const Conversation = mongoose.model('Conversation', conversationSchema);
 
 const apiConversationSchema = {
   participants: Joi.array().min(1).required().items(Joi.objectId()),
-  title: Joi.string().min(1)
+  title: Joi.string().min(1).required()
 };
 
 const validateConversation = conversation => Joi.validate(conversation, apiConversationSchema);

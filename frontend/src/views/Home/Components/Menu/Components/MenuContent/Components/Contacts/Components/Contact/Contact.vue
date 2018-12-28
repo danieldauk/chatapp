@@ -39,15 +39,15 @@ export default {
   },
   methods: {
     async startConversation() {
-      if (this.$store.getters['contact/getCurrentId'] === this.id) {
+      if (this.$store.getters['conversation/isDialogue'] && this.$store.getters['conversation/doesParticipantExist'](this.id)) {
         return;
       }
-      await this.$store.dispatch('contact/setCurrent', this.id);
       this.$store.dispatch('conversation/init', {
         participants: [
           this.id,
           this.$store.state.user.current._id
-        ]
+        ],
+        title: 'dialogue'
       });
     }
   }

@@ -14,7 +14,7 @@ export default {
   components: {
     appHome: Home,
     appMenu: Menu,
-    appChat: Chat,
+    appChat: Chat
   }
 };
 </script>

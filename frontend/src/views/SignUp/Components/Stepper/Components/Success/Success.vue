@@ -1,8 +1,23 @@
 <template>
   <div class="signup-success">
-    <v-icon class="signup-success__icon" color="success">check_circle_outline</v-icon>
-    <div class="signup-success__text">Your account has been successfully created.</div>
-    <v-btn class="signup-success__button" depressed to="/login" block color="success">Login</v-btn>
+    <v-icon
+      class="signup-success__icon"
+      color="success"
+    >
+      check_circle_outline
+    </v-icon>
+    <div class="signup-success__text">
+      Your account has been successfully created.
+    </div>
+    <v-btn
+      class="signup-success__button"
+      depressed
+      to="/login"
+      block
+      color="success"
+    >
+      Login
+    </v-btn>
   </div>
 </template>
 

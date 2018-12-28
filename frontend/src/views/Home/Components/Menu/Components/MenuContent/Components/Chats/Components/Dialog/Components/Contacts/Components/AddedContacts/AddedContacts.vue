@@ -1,16 +1,23 @@
 <template>
   <div class="added-contacts">
-    <div class="added-contacts__header">Selected contacts:</div>
+    <div class="added-contacts__header">
+      Selected contacts:
+    </div>
     <div class="added-contacts__contacts">
       <div
-        class="added-contacts__contacts__contact"
         v-for="participant in conversationParticipants"
         :key="participant"
+        class="added-contacts__contacts__contact"
       >
-        <img class="added-contacts__contacts__contact__image" :src="imageLink(participant)">
+        <img
+          class="added-contacts__contacts__contact__image"
+          :src="imageLink(participant)"
+        >
         <div
           class="added-contacts__contacts__contact__name"
-        >{{name(participant) | truncateString(10)}}</div>
+        >
+          {{ name(participant) | truncateString(10) }}
+        </div>
       </div>
     </div>
   </div>
@@ -26,10 +33,10 @@ export default {
   },
   methods: {
     imageLink(id) {
-      return this.$store.getters["contact/getAvatarLink"](id);
+      return this.$store.getters['contact/getAvatarLink'](id);
     },
     name(id) {
-      return this.$store.getters["contact/getName"](id);
+      return this.$store.getters['contact/getName'](id);
     }
   }
 };
@@ -39,12 +46,12 @@ export default {
 .added-contacts {
   display: flex;
   flex-direction: column;
-  
+
   &__header {
     color: $color-purple-dark;
     font-weight: 500;
     line-height: 1;
-    padding: 10px 10px 0px;   
+    padding: 10px 10px 0px;
   }
   &__contacts {
     display: flex;

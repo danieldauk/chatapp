@@ -25,6 +25,16 @@ export default new AbstractStoreModule({
       }
       const foundParticipant = state.current.participants.find(participant => participant._id === id);
       return foundParticipant ? foundParticipant.username : null;
+    },
+    isDialogue(state) {
+      return state.current ? state.current.participants.length === 2 : false;
+    },
+    doesParticipantExist: state => (id) => {
+      if (!state.current) {
+        return false;
+      }
+      const foundParticipant = state.current.participants.find(participant => participant._id === id);
+      return !!foundParticipant;
     }
   },
   mutations: {

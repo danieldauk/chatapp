@@ -7,11 +7,12 @@
 
 <script>
 import GlobalError from '@/views/SharedComponents/GlobalError/GlobalError.vue';
+
 export default {
   components: {
     appGlobalError: GlobalError
   }
-}
+};
 </script>
 
 <style lang="scss">

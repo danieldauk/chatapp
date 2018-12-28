@@ -17,11 +17,8 @@
 export default {
   data() {
     return {
-      validationRules: [
-        value =>
-          value === this.$store.state.signupForm.data.password ||
-          "Repeated password doesn't match above entered password."
-      ],
+      validationRules: [ value => value === this.$store.state.signupForm.data.password
+          || "Repeated password doesn't match above entered password." ],
       isPasswordShown: false
     };
   },
@@ -32,9 +29,9 @@ export default {
   },
   methods: {
     setFormElementValue(value) {
-      this.$store.dispatch("signupForm/setValue", {
+      this.$store.dispatch('signupForm/setValue', {
         value,
-        id: "repeatedPassword"
+        id: 'repeatedPassword'
       });
     }
   }
