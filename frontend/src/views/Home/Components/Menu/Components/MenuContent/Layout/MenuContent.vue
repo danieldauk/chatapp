@@ -47,7 +47,7 @@
       display: none;
     }
     &::-webkit-scrollbar-thumb {
-      background: $color-blue-dark;
+      background: rgba($color-purple-light, 0.7);
     }
   }
 }

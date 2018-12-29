@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     contacts() {
-      return this.$store.state.contact.all;
+      return this.$store.state.contact.all.sort(contact => this.$store.getters['person/isOnline'](contact._id) ? -1 : 1);
     },
     currentSearchTerm() {
       // TODO: add fuzzysort: https://github.com/farzher/fuzzysort
