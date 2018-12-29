@@ -1,7 +1,7 @@
 <template>
   <div class="menu-content">
     <div class="menu-content__header">
-      <slot name="user-info"/>
+      <slot name="header"/>
     </div>
     <div class="menu-content__tabs">
       <slot name="tabs"/>
@@ -12,6 +12,9 @@
     <div class="menu-content__contacts">
       <slot name="activeTabItem"/>
     </div>
+    <div class="menu-content__footer">
+      <slot name='footer' />
+    </div>
   </div>
 </template>
 
@@ -21,8 +24,9 @@
 
 <style lang="scss" scoped>
 .menu-content {
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 60px 60px 60px minmax(300px, 1fr) 60px;
   &__header {
     display: flex;
     align-items: center;
@@ -32,8 +36,6 @@
     height: 60px;
   }
   &__contacts {
-    max-height: calc(100vh - 181px);
-    min-height: 300px;
     overflow-x: auto;
     &::-webkit-scrollbar-track-piece {
       background: $color-purple-dark;
@@ -45,7 +47,7 @@
       display: none;
     }
     &::-webkit-scrollbar-thumb {
-      background: $color-silver;
+      background: $color-blue-dark;
     }
   }
 }

@@ -47,9 +47,7 @@ export const initSocket = (token, userId) => new Promise((resolve, reject) => {
         });
     });
   } else {
-    reject({
-      error: 'Socket already initialized'
-    });
+    reject(new Error('Socket already initialized'));
   }
 });
 export default socketIO;

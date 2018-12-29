@@ -17,7 +17,7 @@ import UI from './modules/UI';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     loginForm,
     signupForm,
@@ -34,3 +34,11 @@ export default new Vuex.Store({
     UI
   }
 });
+
+export default store;
+
+const initialStateCopy = JSON.parse(JSON.stringify(store.state));
+
+export const resetAppState = () => {
+  store.replaceState(JSON.parse(JSON.stringify(initialStateCopy)));
+};

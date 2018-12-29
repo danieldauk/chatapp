@@ -1,7 +1,6 @@
 <template>
   <div class="chat-header">
     <div class="chat-header__title">{{conversationName}}</div>
-    <div v-if="!isDialogue" class="chat-header__participants"></div>
     <div v-if="isDialogue" class="chat-header__contact-status">
       <div
         :class="['chat-header__contact-status__online-indicator', {'chat-header__contact-status__online-indicator--is-online': isContactOnline }]"

@@ -30,9 +30,10 @@ export default new AbstractStoreModule({
       } catch (error) {
         await thisModule.dispatch('clearToken');
         // if token validation failed set error accordingly
-        if (error.message === 'invalidToken') {
-          await thisModule.dispatch('setErrors', {
-            error: error.message
+        if (!error.response) {
+          await this.dispatch('loginForm/setError', {
+            id: 'password',
+            message: error.message
           });
         } else {
           await this.dispatch('loginForm/setError', {
