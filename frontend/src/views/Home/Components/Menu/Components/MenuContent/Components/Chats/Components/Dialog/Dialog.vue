@@ -1,5 +1,6 @@
 <template>
   <v-dialog
+    @keydown.enter="createConversation"
     max-width="300px"
     content-class="dialog"
     :value="isDialogOpen"

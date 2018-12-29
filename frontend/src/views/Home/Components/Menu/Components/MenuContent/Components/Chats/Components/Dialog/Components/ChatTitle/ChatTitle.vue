@@ -2,6 +2,7 @@
   <v-text-field
     class="chat-title"
     solo
+    autofocus
     :value="chatTitle"
     maxlength="30"
     hide-details

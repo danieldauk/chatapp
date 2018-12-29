@@ -2,20 +2,23 @@ const mongoose = require('mongoose');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 
-const conversationSchema = new mongoose.Schema({
-  participants: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  removedParticipants: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
-  }],
-  title: {
-    type: String,
-    required: true
-  }
-});
+const conversationSchema = new mongoose.Schema(
+  {
+    participants: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }],
+    removedParticipants: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }],
+    title: {
+      type: String,
+      required: true
+    }
+  },
+  { timestamps: true }
+);
 
 const Conversation = mongoose.model('Conversation', conversationSchema);
 

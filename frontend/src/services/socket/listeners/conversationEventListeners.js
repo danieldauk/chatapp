@@ -1,5 +1,6 @@
 import store from '@/store/store';
 import { SocketEventsEnum } from '@/utils/enumerators';
+import { sortConversations } from '@/utils/conversations';
 
 export default (socket) => {
   socket.on(SocketEventsEnum.RESPONSE_CREATE_DIALOGUE, async (data) => {
@@ -24,6 +25,6 @@ export default (socket) => {
     await store.dispatch('conversation/loadAll');
   });
   socket.on(SocketEventsEnum.RESPONSE_CONVERSATIONS, (conversations) => {
-    store.dispatch('conversation/setAll', conversations);
+    store.dispatch('conversation/setAll', sortConversations(conversations));
   });
 };

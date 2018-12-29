@@ -1,5 +1,4 @@
 const winston = require('winston');
-const mongoose = require('mongoose');
 const { Conversation } = require('../../../model/conversation');
 const { SocketEventsEnum } = require('../../../utils/enumerators');
 const { User } = require('../../../model/user');
