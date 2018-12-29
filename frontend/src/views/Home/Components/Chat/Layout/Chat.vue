@@ -17,24 +17,18 @@
 
 <style lang="scss" scoped>
 .chat {
-  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
   background: $color-purple-light;
   height: 100%;
-  position: relative;
   &__header {
-    position: fixed;
-    width: 100%;
-    top: 0px;
-    z-index: 1;
+    
   }
   &__body {
     height: calc(100vh - 120px);
   }
   &__footer {
-    position: fixed;
-    width: 100%;
-    bottom: 0px;
-    z-index: 1;
+    
   }
 }
 </style>

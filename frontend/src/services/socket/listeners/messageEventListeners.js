@@ -7,6 +7,7 @@ export default (socket) => {
     await store.dispatch('conversation/setHistory', sortMessages(data));
   });
   socket.on(SocketEventsEnum.RECEIVE_MESSAGE, (data) => {
+    console.log(data);
     store.dispatch('conversation/addMessageToHistory', transformMessage(data));
   });
 };

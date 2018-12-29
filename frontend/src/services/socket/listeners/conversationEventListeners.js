@@ -12,7 +12,15 @@ export default (socket) => {
     await store.dispatch('conversation/loadAll');
     store.dispatch('UI/closeConversationCreationDialog');
   });
-  socket.on(SocketEventsEnum.ADDED_TO_CONVERSATION, async () => {
+  socket.on(SocketEventsEnum.RESPONSE_LEAVE_CONVERSATION, async () => {
+    await store.dispatch('conversation/clearCurrent');
+    await store.dispatch('conversation/clearHistory');
+    await store.dispatch('conversation/loadAll');
+  });
+  socket.on(SocketEventsEnum.PARTICIPANT_LEFT_CONVERSATION, async () => {
+    await store.dispatch('conversation/loadAll');
+  });
+  socket.on(SocketEventsEnum.USER_ADDED_TO_CONVERSATION, async () => {
     await store.dispatch('conversation/loadAll');
   });
   socket.on(SocketEventsEnum.RESPONSE_CONVERSATIONS, (conversations) => {

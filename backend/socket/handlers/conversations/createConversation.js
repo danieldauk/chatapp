@@ -59,7 +59,16 @@ module.exports = async (socket, userId, conversationData) => {
           title: conversationData.title
         }
       ]
-    }).populate('participants', 'username avatar');
+    }).populate([
+      {
+        path: 'participants',
+        select: 'username avatar'
+      },
+      {
+        path: 'removedParticipants',
+        select: 'username avatar'
+      }
+    ]);
     // if conversation exist - return conversation
     if (conversation) {
       if (conversation.participants.length === 2) {
@@ -72,10 +81,16 @@ module.exports = async (socket, userId, conversationData) => {
     // if conversation does not exist - create and return conversation
     const newConversation = new Conversation(conversationData);
     const result = await newConversation.save();
-    await Conversation.populate(result, {
-      path: 'participants',
-      select: 'username avatar'
-    });
+    await Conversation.populate(result, [
+      {
+        path: 'participants',
+        select: 'username avatar'
+      },
+      {
+        path: 'removedParticipants',
+        select: 'username avatar'
+      }
+    ]);
     if (result.participants.length === 2) {
       socket.emit(SocketEventsEnum.RESPONSE_CREATE_DIALOGUE, result);
       return;
@@ -84,7 +99,7 @@ module.exports = async (socket, userId, conversationData) => {
     result.participants.forEach((participant) => {
       socket
         .to(participant._id)
-        .emit(SocketEventsEnum.ADDED_TO_CONVERSATION, conversation);
+        .emit(SocketEventsEnum.USER_ADDED_TO_CONVERSATION, conversation);
     });
   } catch (error) {
     winston.error(error);

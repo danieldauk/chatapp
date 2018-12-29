@@ -114,7 +114,7 @@ html {
 }
 
 #app {
-  min-height: 400px;
+  min-height: 500px;
   min-width: 320px;
 }
 </style>

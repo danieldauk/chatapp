@@ -16,18 +16,27 @@ export default new AbstractStoreModule({
         return null;
       }
 
-      const foundParticipant = state.current.participants.find(participant => participant._id === id);
+      let foundParticipant = state.current.participants.find(participant => participant._id === id);
+      if (!foundParticipant) {
+        foundParticipant = state.current.removedParticipants.find(participant => participant._id === id);
+      }
       return foundParticipant ? `${process.env.VUE_APP_BASE_URL}/${foundParticipant.avatar}` : null;
     },
     getParticipantName: state => (id) => {
       if (!state.current) {
         return null;
       }
-      const foundParticipant = state.current.participants.find(participant => participant._id === id);
+      let foundParticipant = state.current.participants.find(participant => participant._id === id);
+      if (!foundParticipant) {
+        foundParticipant = state.current.removedParticipants.find(participant => participant._id === id);
+      }
       return foundParticipant ? foundParticipant.username : null;
     },
     isDialogue(state) {
-      return state.current ? state.current.participants.length === 2 : false;
+      if (state.current) {
+        return (state.current.participants.length === 2) && (state.current.removedParticipants.length === 0);
+      }
+      return false;
     },
     doesParticipantExist: state => (id) => {
       if (!state.current) {
@@ -40,6 +49,9 @@ export default new AbstractStoreModule({
   mutations: {
     setHistory(state, messages) {
       state.history = messages;
+    },
+    clearHistory(state) {
+      state.history = [];
     }
   },
   actions: {
@@ -54,6 +66,9 @@ export default new AbstractStoreModule({
     },
     loadHistory(thisModule, conversationdId) {
       socket.emit(SocketEventsEnum.REQUEST_MESSAGES, conversationdId);
+    },
+    clearHistory(thisModule) {
+      thisModule.commit('clearHistory');
     },
     addMessageToHistory(thisModule, message) {
       if (message.message.conversationId !== this.getters['conversation/getCurrentId']) {
@@ -74,6 +89,9 @@ export default new AbstractStoreModule({
         });
       }
       thisModule.dispatch('setHistory', newHistory);
+    },
+    leave(thisModule, conversationId) {
+      socket.emit(SocketEventsEnum.REQUEST_LEAVE_CONVERSATION, conversationId);
     }
   }
 });
