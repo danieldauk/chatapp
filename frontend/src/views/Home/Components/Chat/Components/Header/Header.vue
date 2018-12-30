@@ -1,18 +1,28 @@
 <template>
   <div class="chat-header">
-    <div class="chat-header__title">{{conversationName | truncateString(30)}}</div>
-    <div v-if="isDialogue" class="chat-header__contact-status">
+    <div class="chat-header__title">
+      {{ conversationName | truncateString(30) }}
+    </div>
+    <div
+      v-if="isDialogue"
+      class="chat-header__contact-status"
+    >
       <div
         :class="['chat-header__contact-status__online-indicator', {'chat-header__contact-status__online-indicator--is-online': isContactOnline }]"
       />
-      <div class="chat-header__contact-status__text">{{contactStatusText}}</div>
+      <div class="chat-header__contact-status__text">
+        {{ contactStatusText }}
+      </div>
     </div>
-    <app-dropdown class="chat-header__dropdown" v-if="!isDialogue" />
+    <app-dropdown
+      v-if="!isDialogue"
+      class="chat-header__dropdown"
+    />
   </div>
 </template>
 
 <script>
-import Dropdown from "./Components/Dropdown/Dropdown.vue";
+import Dropdown from './Components/Dropdown/Dropdown.vue';
 
 export default {
   components: {
@@ -23,13 +33,12 @@ export default {
       return this.$store.state.conversation.current;
     },
     isDialogue() {
-      return this.$store.getters["conversation/isDialogue"];
+      return this.$store.getters['conversation/isDialogue'];
     },
     currentContactId() {
       if (this.isDialogue) {
         const foundContact = this.currentConversation.participants.find(
-          participant =>
-            participant._id !== this.$store.getters["user/getCurrentId"]
+          participant => participant._id !== this.$store.getters['user/getCurrentId']
         );
         if (foundContact) {
           return foundContact._id;
@@ -38,7 +47,7 @@ export default {
       return null;
     },
     currentContactName() {
-      return this.$store.getters["conversation/getParticipantName"](
+      return this.$store.getters['conversation/getParticipantName'](
         this.currentContactId
       );
     },
@@ -48,10 +57,10 @@ export default {
         : this.currentConversation.title;
     },
     isContactOnline() {
-      return this.$store.getters["person/isOnline"](this.currentContactId);
+      return this.$store.getters['person/isOnline'](this.currentContactId);
     },
     contactStatusText() {
-      return this.isContactOnline ? "online" : "offline";
+      return this.isContactOnline ? 'online' : 'offline';
     }
   },
   methods: {

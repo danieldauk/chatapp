@@ -1,23 +1,24 @@
 <template>
   <v-dialog
     :value="value"
-    @input="$emit('input', false)"
     max-width="300px"
     content-class="participant-list"
+    @input="$emit('input', false)"
   >
     <div class="participant-list__list">
       <app-participant
-        class="participant-list__list__participant"
         v-for="participant in currentConversation.participants"
         :key="participant._id"
-        :participantId="participant._id"
+        class="participant-list__list__participant"
+        :participant-id="participant._id"
       />
     </div>
   </v-dialog>
 </template>
 
 <script>
-import Participant from "./Components/Participant.vue";
+import Participant from './Components/Participant.vue';
+
 export default {
   components: {
     appParticipant: Participant

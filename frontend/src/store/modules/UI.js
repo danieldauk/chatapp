@@ -5,7 +5,8 @@ export default {
   state: {
     activeMenuTab: ActiveTabEnum.CONTACTS,
     currentSignUpStep: 1,
-    isConversationCreationDialogOpen: false
+    isConversationCreationDialogOpen: false,
+    isAddParticipantDialogOpen: false
   },
   mutations: {
     setActiveTab(state, tab) {
@@ -19,6 +20,12 @@ export default {
     },
     closeConversationCreationDialog(state) {
       state.isConversationCreationDialogOpen = false;
+    },
+    openAddParticipantDialog(state) {
+      state.isAddParticipantDialogOpen = true;
+    },
+    closeAddParticipantDialog(state) {
+      state.isAddParticipantDialogOpen = false;
     }
   },
   actions: {
@@ -33,6 +40,12 @@ export default {
     },
     closeConversationCreationDialog(thisModule) {
       thisModule.commit('closeConversationCreationDialog');
+    },
+    openAddParticipantDialog(thisModule) {
+      thisModule.commit('openAddParticipantDialog');
+    },
+    closeAddParticipantDialog(thisModule) {
+      thisModule.commit('closeAddParticipantDialog');
     }
   }
 };

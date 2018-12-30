@@ -1,5 +1,7 @@
 <template>
-  <div class="entry">{{entry}}</div>
+  <div class="entry">
+    {{ entry }}
+  </div>
 </template>
 
 <script>
@@ -10,7 +12,7 @@ export default {
       required: true
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

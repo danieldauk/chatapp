@@ -3,15 +3,10 @@
     max-width="300px"
     content-class="dialog"
     :value="isDialogOpen"
-    @keydown.enter="createConversation"
+    @keydown.enter="addParticipants"
     @input="onInputHandler"
   >
-    <app-button slot="activator" />
     <div class="dialog__content">
-      <app-chat-title
-        :chat-title="chatTitle"
-        @input="chatTitle = $event"
-      />
       <app-contacts :conversation-participants="conversationParticipants" />
       <div class="dialog__content__error-message">
         {{ error }}
@@ -21,30 +16,25 @@
         block
         color="success"
         class="dialog__content__button"
-        @click="createConversation"
+        @click="addParticipants"
       >
-        Create
+        Add participants
       </v-btn>
     </div>
   </v-dialog>
 </template>
 
 <script>
-import Button from './Components/Button/Button.vue';
 import Contacts from './Components/Contacts/Contacts.vue';
-import ChatTitle from './Components/ChatTitle/ChatTitle.vue';
 
 export default {
   components: {
-    appButton: Button,
-    appContacts: Contacts,
-    appChatTitle: ChatTitle
+    appContacts: Contacts
   },
   data() {
     return {
       conversationParticipants: [],
-      localError: null,
-      chatTitle: ''
+      localError: null
     };
   },
   computed: {
@@ -52,49 +42,39 @@ export default {
       return this.$store.state.conversation.errors.error || this.localError;
     },
     isDialogOpen() {
-      return this.$store.state.UI.isConversationCreationDialogOpen;
+      return this.$store.state.UI.isAddParticipantDialogOpen;
+    },
+    currentConversation() {
+      return this.$store.state.conversation.current;
     }
   },
   watch: {
     isDialogOpen(isDialogOpen) {
       if (!isDialogOpen) {
         this.conversationParticipants = [];
-        this.chatTitle = '';
         this.clearErrors();
       }
     }
   },
   methods: {
     onInputHandler(isDialogOpen) {
-      if (isDialogOpen) {
-        this.$store.dispatch('UI/openConversationCreationDialog');
-        return;
+      if (!isDialogOpen) {
+        this.$store.dispatch('UI/closeAddParticipantDialog');
       }
-      this.$store.dispatch('UI/closeConversationCreationDialog');
     },
     clearErrors() {
       this.$store.dispatch('conversation/clearErrors');
       this.localError = '';
     },
-    createConversation() {
+    addParticipants() {
       this.clearErrors();
-      if (this.conversationParticipants.length < 2) {
-        this.localError = 'Conversation should contain at least 2 participants';
+      if (this.conversationParticipants.length < 1) {
+        this.localError = 'You should add at least 1 participant';
         return;
       }
-
-      if (!/\w/gi.test(this.chatTitle)) {
-        this.localError = this.chatTitle === ''
-          ? 'Conversation title is required'
-          : 'Convarsation title should contain alphanumerical values ([a-zA-Z0-9])';
-        return;
-      }
-      this.$store.dispatch('conversation/init', {
-        participants: [
-          ...this.conversationParticipants,
-          this.$store.getters['user/getCurrentId']
-        ],
-        title: this.chatTitle
+      this.$store.dispatch('conversation/addParticipants', {
+        participants: this.conversationParticipants,
+        conversationId: this.currentConversation._id
       });
     }
   }

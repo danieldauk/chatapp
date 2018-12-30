@@ -4,18 +4,21 @@
       {{ date.date | formatDate('Do MMMM', true) }}
     </div>
     <div class="date__messages">
-      <div 
-       v-for="(message, index) in date.messages"
-      :key="message._id"
-      class="date__messages__message-container">
+      <div
+        v-for="(message, index) in date.messages"
+        :key="message._id"
+        class="date__messages__message-container"
+      >
         <app-message
-        v-if="message.sender"
-        :message="message"
-        :is-previous-message-own="index === 0 ? false : date.messages[index - 1].sender === message.sender"
-      />
-        <app-conversation-entry v-else :entry="message.content"/>
+          v-if="message.sender"
+          :message="message"
+          :is-previous-message-own="index === 0 ? false : date.messages[index - 1].sender === message.sender"
+        />
+        <app-conversation-entry
+          v-else
+          :entry="message.content"
+        />
       </div>
-      
     </div>
   </div>
 </template>

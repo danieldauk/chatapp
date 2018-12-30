@@ -46,7 +46,18 @@ module.exports = async (socket, userId, conversationId) => {
         $push: { removedParticipants: userId }
       }
     );
-    // create entrie in conversation history
+    // populate updatedConversation
+    const updatedConversation = await Conversation.findOne({ _id: conversationId }).populate([
+      {
+        path: 'participants',
+        select: 'username avatar'
+      },
+      {
+        path: 'removedParticipants',
+        select: 'username avatar'
+      }
+    ]);
+    // create entry in conversation history
     const user = await User.findOne(
       {
         _id: userId
@@ -67,7 +78,7 @@ module.exports = async (socket, userId, conversationId) => {
     // notify conversation participants about removed user
     conversation.participants.forEach((participantId) => {
       if (participantId.toString() !== userId) {
-        socket.to(participantId).emit(SocketEventsEnum.PARTICIPANT_LEFT_CONVERSATION);
+        socket.to(participantId).emit(SocketEventsEnum.PARTICIPANT_LEFT_CONVERSATION, updatedConversation);
         socket.to(participantId).emit(SocketEventsEnum.RECEIVE_MESSAGE, message);
       }
     });

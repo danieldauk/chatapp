@@ -1,12 +1,17 @@
 <template>
   <div class="participant">
     <div class="participant__avatar">
-      <img class="participant__avatar__image" :src="imageLink">
+      <img
+        class="participant__avatar__image"
+        :src="imageLink"
+      >
       <div
         :class="['participant__avatar__online-indicator', {'participant__avatar__online-indicator--is-online': isOnline}]"
       />
     </div>
-    <div class="participant__name">{{ name | truncateString(20) }}</div>
+    <div class="participant__name">
+      {{ name | truncateString(20) }}
+    </div>
   </div>
 </template>
 
@@ -20,13 +25,13 @@ export default {
   },
   computed: {
     imageLink() {
-      return this.$store.getters["conversation/getParticipantAvatarLink"](this.participantId);
+      return this.$store.getters['conversation/getParticipantAvatarLink'](this.participantId);
     },
     name() {
-      return this.$store.getters["conversation/getParticipantName"](this.participantId);
+      return this.$store.getters['conversation/getParticipantName'](this.participantId);
     },
     isOnline() {
-      return this.$store.getters["person/isOnline"](this.participantId);
+      return this.$store.getters['person/isOnline'](this.participantId);
     }
   }
 };

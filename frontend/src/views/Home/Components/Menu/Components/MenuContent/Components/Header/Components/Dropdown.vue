@@ -1,23 +1,38 @@
 <template>
-  <v-menu transition="slide-y-transition" left offset-y content-class="dropdown">
-    <v-icon class="dropdown__icon" slot="activator">more_horiz</v-icon>
+  <v-menu
+    transition="slide-y-transition"
+    left
+    offset-y
+    content-class="dropdown"
+  >
+    <v-icon
+      slot="activator"
+      class="dropdown__icon"
+    >
+      more_horiz
+    </v-icon>
     <div class="dropdown__content">
-      <span @click="logout" class="dropdown__content__button">Log out</span>
+      <span
+        class="dropdown__content__button"
+        @click="logout"
+      >
+        Log out
+      </span>
     </div>
   </v-menu>
 </template>
 
 <script>
-import { resetAppState } from "@/store/store";
-import socket from "@/services/socket/socket";
+import { resetAppState } from '@/store/store';
+import socket from '@/services/socket/socket';
 
 export default {
   methods: {
     async logout() {
-      await this.$store.dispatch("login/clearToken");
+      await this.$store.dispatch('login/clearToken');
       socket.close();
       socket.socket = null;
-      await this.$router.replace("/login");
+      await this.$router.replace('/login');
       resetAppState();
     }
   }
@@ -49,4 +64,3 @@ export default {
   }
 }
 </style>
-

@@ -22,13 +22,13 @@
   background: $color-purple-light;
   height: 100%;
   &__header {
-    
+
   }
   &__body {
     height: calc(100vh - 120px);
   }
   &__footer {
-    
+
   }
 }
 </style>

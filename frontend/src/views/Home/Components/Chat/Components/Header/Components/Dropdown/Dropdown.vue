@@ -1,29 +1,54 @@
 <template>
-  <v-menu transition="slide-y-transition" left offset-y content-class="dropdown">
-    <v-icon class="dropdown__icon" slot="activator">more_horiz</v-icon>
+  <v-menu
+    transition="slide-y-transition"
+    left
+    offset-y
+    content-class="dropdown"
+  >
+    <v-icon
+      slot="activator"
+      class="dropdown__icon"
+    >
+      more_horiz
+    </v-icon>
     <div class="dropdown__content">
-      <span 
-      class="dropdown__content__button">Add participants</span>
-      <span 
-      @click="isParticipantListShown = true"
-      class="dropdown__content__button">Show participants</span>
-      <span @click="leaveConversation" class="dropdown__content__button">Leave conversation</span>
+      <span
+        class="dropdown__content__button"
+        @click="openAddParticipantDialog"
+      >
+        Add participants
+      </span>
+      <span
+        class="dropdown__content__button"
+        @click="isParticipantListShown = true"
+      >
+        Show participants
+      </span>
+      <span
+        class="dropdown__content__button"
+        @click="leaveConversation"
+      >
+        Leave conversation
+      </span>
     </div>
-    <app-participant-list v-model="isParticipantListShown"/>
+    <app-participant-list v-model="isParticipantListShown" />
+    <app-add-participants />
   </v-menu>
 </template>
 
 <script>
-import ParticipantList from "./Components/ParticipantList/ParticipantList.vue";
+import ParticipantList from './Components/ParticipantList/ParticipantList.vue';
+import AddParticipants from './Components/AddParticipants/AddParticipants.vue';
 
 export default {
   components: {
-    appParticipantList: ParticipantList
+    appParticipantList: ParticipantList,
+    appAddParticipants: AddParticipants
   },
-  data(){
+  data() {
     return {
       isParticipantListShown: false
-    }
+    };
   },
   computed: {
     currentConversation() {
@@ -32,7 +57,10 @@ export default {
   },
   methods: {
     leaveConversation() {
-      this.$store.dispatch("conversation/leave", this.currentConversation._id);
+      this.$store.dispatch('conversation/leave', this.currentConversation._id);
+    },
+    openAddParticipantDialog() {
+      this.$store.dispatch('UI/openAddParticipantDialog');
     }
   }
 };
@@ -64,4 +92,3 @@ export default {
   }
 }
 </style>
-

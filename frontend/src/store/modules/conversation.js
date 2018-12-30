@@ -61,6 +61,9 @@ export default new AbstractStoreModule({
     init(thisModule, participants) {
       socket.emit(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, participants);
     },
+    addParticipants(thisModule, conversationData) {
+      socket.emit(SocketEventsEnum.REQUEST_ADD_PARTICIPANTS, conversationData);
+    },
     setHistory(thisModule, history) {
       thisModule.commit('setHistory', history);
     },

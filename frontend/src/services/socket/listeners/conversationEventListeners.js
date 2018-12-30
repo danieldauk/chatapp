@@ -7,8 +7,8 @@ export default (socket) => {
     await store.dispatch('conversation/setCurrent', data);
     store.dispatch('conversation/loadHistory', store.getters['conversation/getCurrentId']);
   });
-  socket.on(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, async (data) => {
-    await store.dispatch('conversation/setCurrent', data);
+  socket.on(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, async (conversation) => {
+    await store.dispatch('conversation/setCurrent', conversation);
     await store.dispatch('conversation/loadHistory', store.getters['conversation/getCurrentId']);
     await store.dispatch('conversation/loadAll');
     store.dispatch('UI/closeConversationCreationDialog');
@@ -18,8 +18,24 @@ export default (socket) => {
     await store.dispatch('conversation/clearHistory');
     await store.dispatch('conversation/loadAll');
   });
-  socket.on(SocketEventsEnum.PARTICIPANT_LEFT_CONVERSATION, async () => {
+  socket.on(SocketEventsEnum.RESPONSE_ADD_PARTICIPANTS, async (updatedConversation) => {
+    await store.dispatch('conversation/setCurrent', updatedConversation);
     await store.dispatch('conversation/loadAll');
+    store.dispatch('UI/closeAddParticipantDialog');
+  });
+  socket.on(SocketEventsEnum.PARTICIPANT_LEFT_CONVERSATION, async (updatedConversation) => {
+    await store.dispatch('conversation/loadAll');
+    console.log(updatedConversation._id);
+    console.log(store.getters['conversation/getCurrentId']);
+    if (store.getters['conversation/getCurrentId'] === updatedConversation._id) {
+      await store.dispatch('conversation/setCurrent', updatedConversation);
+    }
+  });
+  socket.on(SocketEventsEnum.PARTICIPANT_ADDED_TO_CONVERSAITON, async (updatedConversation) => {
+    await store.dispatch('conversation/loadAll');
+    if (store.getters['conversation/getCurrentId'] === updatedConversation._id) {
+      await store.dispatch('conversation/setCurrent', updatedConversation);
+    }
   });
   socket.on(SocketEventsEnum.USER_ADDED_TO_CONVERSATION, async () => {
     await store.dispatch('conversation/loadAll');

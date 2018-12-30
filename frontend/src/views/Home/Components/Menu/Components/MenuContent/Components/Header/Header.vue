@@ -1,8 +1,13 @@
 <template>
   <div class="header">
     <div class="header__user-info">
-      <img class="header__user-info__avatar" :src="imageLink">
-      <div class="header__user-info__name">{{ name | truncateString(20) }}</div>
+      <img
+        class="header__user-info__avatar"
+        :src="imageLink"
+      >
+      <div class="header__user-info__name">
+        {{ name | truncateString(20) }}
+      </div>
     </div>
     <app-dropdown class="header__dropdown" />
   </div>
@@ -17,10 +22,10 @@ export default {
   },
   computed: {
     imageLink() {
-      return this.$store.getters["user/getAvatarLink"];
+      return this.$store.getters['user/getAvatarLink'];
     },
     name() {
-      return this.$store.getters["user/getName"];
+      return this.$store.getters['user/getName'];
     }
   }
 };

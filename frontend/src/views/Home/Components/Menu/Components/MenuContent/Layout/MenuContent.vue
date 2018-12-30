@@ -1,16 +1,16 @@
 <template>
   <div class="menu-content">
     <div class="menu-content__header">
-      <slot name="header"/>
+      <slot name="header" />
     </div>
     <div class="menu-content__tabs">
-      <slot name="tabs"/>
+      <slot name="tabs" />
     </div>
     <div class="menu-content__search">
-      <slot name="search"/>
+      <slot name="search" />
     </div>
     <div class="menu-content__contacts">
-      <slot name="activeTabItem"/>
+      <slot name="activeTabItem" />
     </div>
   </div>
 </template>
