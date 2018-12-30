@@ -1,6 +1,6 @@
 <template>
   <app-menu-content>
-    <app-user-info slot="header" />
+    <app-header slot="header" />
     <app-tabs slot="tabs" />
     <app-search slot="search" />
     <app-toggle-button slot="toggle" />
@@ -16,15 +16,13 @@
       v-if="isChatsTabShown"
       slot="activeTabItem"
     />
-    <app-footer slot="footer" />
   </app-menu-content>
 </template>
 
 <script>
 import { ActiveTabEnum } from '@/utils/enumerators';
 import MenuContent from './Layout/MenuContent.vue';
-import UserInfo from './Components/UserInfo/UserInfo.vue';
-import Footer from './Components/Footer/Footer.vue';
+import Header from './Components/Header/Header.vue';
 import Tabs from './Components/Tabs/Tabs.vue';
 import Search from './Components/Search/Search.vue';
 import Contacts from './Components/Contacts/Contacts.vue';
@@ -34,13 +32,12 @@ import Chats from './Components/Chats/Chats.vue';
 export default {
   components: {
     appMenuContent: MenuContent,
-    appUserInfo: UserInfo,
+    appHeader: Header,
     appPeople: People,
     appContacts: Contacts,
     appChats: Chats,
     appTabs: Tabs,
-    appSearch: Search,
-    appFooter: Footer
+    appSearch: Search
   },
   computed: {
     activeMenuTab() {

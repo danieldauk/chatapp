@@ -7,15 +7,17 @@
       />
       <div class="chat-header__contact-status__text">{{contactStatusText}}</div>
     </div>
-    <div @click="leaveConversation" class="chat-header__button" v-if="!isDialogue">
-      <v-icon class="chat-header__button__icon">logout</v-icon>
-      <span class="chat-header__button__text">Leave conversation</span>
-    </div>
+    <app-dropdown class="chat-header__dropdown" v-if="!isDialogue" />
   </div>
 </template>
 
 <script>
+import Dropdown from "./Components/Dropdown/Dropdown.vue";
+
 export default {
+  components: {
+    appDropdown: Dropdown
+  },
   computed: {
     currentConversation() {
       return this.$store.state.conversation.current;
@@ -73,32 +75,8 @@ export default {
     color: rgba($color-purple-light, 0.7);
     margin-right: 10px;
   }
-  &__button {
-    display: flex;
-    align-items: center;
-    width: max-content;
-    padding: 5px 10px;
-    border: 1px solid rgba($color-purple-light, 0.2);
-    cursor: pointer;
-    transition: 0.3s;
-    margin: 15px 0;
+  &__dropdown {
     margin-left: auto;
-    &:hover & {
-      &__icon,
-      &__text {
-        color: rgba($color-purple-light, 0.9);
-      }
-    }
-    &__icon {
-      color: rgba($color-purple-light, 0.7);
-      margin-right: 10px;
-      font-size: 18px;
-    }
-
-    &__text {
-      color: rgba($color-purple-light, 0.7);
-      font-size: 12px;
-    }
   }
   &__contact-status {
     display: flex;
