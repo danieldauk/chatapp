@@ -68,13 +68,18 @@ export default {
 .chat-body {
   display: flex;
   height: 100%;
-  overflow: auto;
+  overflow-y: auto;
   flex-direction: column;
-  padding: 20px 0;
-  overflow: auto;
+  padding: 0;
   &__date {
     &:not(:first-child) {
       margin-top: 10px;
+    }
+    &:first-child{
+      padding-top: 20px;
+    }
+    &:last-child {
+      padding-bottom: 20px;
     }
   }
   &::-webkit-scrollbar-track-piece {

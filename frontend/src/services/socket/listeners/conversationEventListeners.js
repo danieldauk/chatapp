@@ -25,8 +25,6 @@ export default (socket) => {
   });
   socket.on(SocketEventsEnum.PARTICIPANT_LEFT_CONVERSATION, async (updatedConversation) => {
     await store.dispatch('conversation/loadAll');
-    console.log(updatedConversation._id);
-    console.log(store.getters['conversation/getCurrentId']);
     if (store.getters['conversation/getCurrentId'] === updatedConversation._id) {
       await store.dispatch('conversation/setCurrent', updatedConversation);
     }
