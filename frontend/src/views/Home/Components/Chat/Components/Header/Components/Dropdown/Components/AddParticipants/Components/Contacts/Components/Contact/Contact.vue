@@ -33,7 +33,7 @@ export default {
       type: String,
       required: true
     },
-    conversationParticipants: {
+    addedConversationParticipants: {
       type: Array,
       required: true
     }
@@ -49,7 +49,7 @@ export default {
       return this.$store.getters['person/isOnline'](this.id);
     },
     isChecked() {
-      return this.conversationParticipants.includes(this.id);
+      return this.addedConversationParticipants.includes(this.id);
     }
   }
 };

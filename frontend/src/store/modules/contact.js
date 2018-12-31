@@ -8,18 +8,15 @@ export default new AbstractStoreModule({
       if (state.all.length === 0) {
         return null;
       }
-      const foundContact = state.all.find(contact => contact._id === id);
-      return foundContact ? `${process.env.VUE_APP_BASE_URL}/${foundContact.avatar}` : null;
+      const foundContactInfo = state.all.find(contactInfo => contactInfo.contact._id === id);
+      return foundContactInfo ? `${process.env.VUE_APP_BASE_URL}/${foundContactInfo.contact.avatar}` : null;
     },
     getName: state => (id) => {
       if (state.all.length === 0) {
         return null;
       }
-      const foundContact = state.all.find(contact => contact._id === id);
-      return foundContact ? foundContact.username : null;
-    },
-    getCurrentId(state) {
-      return state.current ? state.current : null;
+      const foundContactInfo = state.all.find(contactInfo => contactInfo.contact._id === id);
+      return foundContactInfo ? foundContactInfo.contact.username : null;
     }
   },
   actions: {

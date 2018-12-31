@@ -1,5 +1,5 @@
 <template>
-  <div class="contacts">
+  <div>
     <app-person
       v-for="person in people"
       :key="person._id"

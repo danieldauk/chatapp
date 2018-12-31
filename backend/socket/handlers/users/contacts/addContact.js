@@ -1,5 +1,6 @@
 const winston = require('winston');
 const { User } = require('../../../../model/user');
+const { Conversation } = require('../../../../model/conversation');
 const validateObjectId = require('../../../../utils/sharedJoiSchemas/validateObjectId');
 const { SocketEventsEnum } = require('../../../../utils/enumerators');
 
@@ -27,7 +28,7 @@ module.exports = async (socket, userId, contactId) => {
     // check if user does not exist inside contacts array
     const contact = await User.findOne({
       _id: userId,
-      contacts: newContact._id
+      'contacts.contact': newContact._id
     });
     // if user exists - return error
     if (contact) {
@@ -36,6 +37,32 @@ module.exports = async (socket, userId, contactId) => {
       });
       return;
     }
+
+    // check if conversation with given participants exist
+    let conversation = await Conversation.findOne({
+      $and: [
+        {
+          participants: {
+            $size: 2
+          }
+        },
+        {
+          participants: {
+            $all: [userId, contactId]
+          }
+        },
+        {
+          title: { $exists: false }
+        }
+      ]
+    });
+    // if it doesn't exist - create conversation (dialogue) with new contact
+    if (!conversation) {
+      conversation = new Conversation({
+        participants: [userId, contactId]
+      });
+      await conversation.save();
+    }
     // if user does not exist - push contact to array
     await User.updateOne(
       {
@@ -43,7 +70,10 @@ module.exports = async (socket, userId, contactId) => {
       },
       {
         $push: {
-          contacts: newContact._id
+          contacts: {
+            contact: newContact._id,
+            conversationId: conversation._id
+          }
         }
       }
     );
@@ -54,10 +84,14 @@ module.exports = async (socket, userId, contactId) => {
       },
       {
         $push: {
-          contacts: userId
+          contacts: {
+            contact: userId,
+            conversationId: conversation._id
+          }
         }
       }
     );
+
     socket.emit(SocketEventsEnum.RESPONSE_ADD_CONTACT, {
       message: 'User was successfully added to contacts list'
     });

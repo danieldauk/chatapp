@@ -42,64 +42,17 @@ module.exports = async (socket, userId, conversationData) => {
       return;
     }
 
-    // check if conversation with given participant exist
-    const conversation = await Conversation.findOne({
-      $and: [
-        {
-          participants: {
-            $size: participantsArray.length
-          }
-        },
-        {
-          participants: {
-            $all: participantsArray
-          }
-        },
-        {
-          title: conversationData.title
-        }
-      ]
-    }).populate([
-      {
-        path: 'participants',
-        select: 'username avatar'
-      },
-      {
-        path: 'removedParticipants',
-        select: 'username avatar'
-      }
-    ]);
-    // if conversation exist - return conversation
-    if (conversation) {
-      if (conversation.participants.length === 2) {
-        socket.emit(SocketEventsEnum.RESPONSE_CREATE_DIALOGUE, conversation);
-        return;
-      }
-      socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, conversation);
-      return;
-    }
-    // if conversation does not exist - create and return conversation
     const newConversation = new Conversation(conversationData);
     const result = await newConversation.save();
-    await Conversation.populate(result, [
-      {
-        path: 'participants',
-        select: 'username avatar'
-      },
-      {
-        path: 'removedParticipants',
-        select: 'username avatar'
-      }
-    ]);
-    if (result.participants.length === 2) {
-      socket.emit(SocketEventsEnum.RESPONSE_CREATE_DIALOGUE, result);
-      return;
-    }
+    await Conversation.populate(result, {
+      path: 'participants',
+      select: 'username avatar'
+    });
     socket.emit(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, result);
     result.participants.forEach((participant) => {
       socket
         .to(participant._id)
-        .emit(SocketEventsEnum.USER_ADDED_TO_CONVERSATION, conversation);
+        .emit(SocketEventsEnum.USER_ADDED_TO_CONVERSATION, newConversation);
     });
   } catch (error) {
     winston.error(error);

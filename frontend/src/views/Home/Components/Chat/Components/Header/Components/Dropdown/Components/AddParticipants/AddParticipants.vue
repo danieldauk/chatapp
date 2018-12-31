@@ -7,7 +7,7 @@
     @input="onInputHandler"
   >
     <div class="dialog__content">
-      <app-contacts :conversation-participants="conversationParticipants" />
+      <app-contacts :addedConversationParticipants="addedConversationParticipants" />
       <div class="dialog__content__error-message">
         {{ error }}
       </div>
@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      conversationParticipants: [],
+      addedConversationParticipants: [],
       localError: null
     };
   },
@@ -51,7 +51,7 @@ export default {
   watch: {
     isDialogOpen(isDialogOpen) {
       if (!isDialogOpen) {
-        this.conversationParticipants = [];
+        this.addedConversationParticipants = [];
         this.clearErrors();
       }
     }
@@ -68,12 +68,12 @@ export default {
     },
     addParticipants() {
       this.clearErrors();
-      if (this.conversationParticipants.length < 1) {
+      if (this.addedConversationParticipants.length < 1) {
         this.localError = 'You should add at least 1 participant';
         return;
       }
       this.$store.dispatch('conversation/addParticipants', {
-        participants: this.conversationParticipants,
+        participants: this.addedConversationParticipants,
         conversationId: this.currentConversation._id
       });
     }

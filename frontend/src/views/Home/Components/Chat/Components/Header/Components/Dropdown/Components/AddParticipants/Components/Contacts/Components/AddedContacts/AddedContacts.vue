@@ -5,7 +5,7 @@
     </div>
     <div class="added-participants__participants">
       <div
-        v-for="participant in conversationParticipants"
+        v-for="participant in addedConversationParticipants"
         :key="participant"
         class="added-participants__participants__contact"
       >
@@ -26,7 +26,7 @@
 <script>
 export default {
   props: {
-    conversationParticipants: {
+    addedConversationParticipants: {
       type: Array,
       required: true
     }

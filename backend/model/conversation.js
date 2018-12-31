@@ -13,8 +13,7 @@ const conversationSchema = new mongoose.Schema(
       ref: 'User'
     }],
     title: {
-      type: String,
-      required: true
+      type: String
     }
   },
   { timestamps: true }

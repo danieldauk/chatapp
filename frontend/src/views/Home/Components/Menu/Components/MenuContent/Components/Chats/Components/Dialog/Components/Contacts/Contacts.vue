@@ -8,13 +8,13 @@
     <app-search @input="searchTerm = $event" />
     <div class="contacts__contacts-container">
       <app-contact
-        v-for="contact in contacts"
-        v-if="currentSearchTerm.test(contact.username)"
-        :id="contact._id"
-        :key="contact._id"
+        v-for="contactInfo in contacts"
+        v-if="currentSearchTerm.test(contactInfo.contact.username)"
+        :id="contactInfo.contact._id"
+        :key="contactInfo.contact._id"
         class="contacts__contacts-container__contact"
         :conversation-participants="conversationParticipants"
-        @checkChange="onChangeHandler($event, contact._id)"
+        @checkChange="onChangeHandler($event, contactInfo.contact._id)"
       />
     </div>
   </div>

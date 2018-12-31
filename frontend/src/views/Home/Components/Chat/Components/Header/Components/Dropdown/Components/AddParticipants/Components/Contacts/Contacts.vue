@@ -1,20 +1,20 @@
 <template>
   <div class="contacts">
     <v-expansion-panel class="contacts__panel">
-      <v-expansion-panel-content :value="conversationParticipants.length !==0">
-        <app-added-contacts :conversation-participants="conversationParticipants" />
+      <v-expansion-panel-content :value="addedConversationParticipants.length !==0">
+        <app-added-contacts :addedConversationParticipants="addedConversationParticipants" />
       </v-expansion-panel-content>
     </v-expansion-panel>
     <app-search @input="searchTerm = $event" />
     <div class="contacts__contacts-container">
       <app-contact
-        v-for="contact in contacts"
-        v-if="currentSearchTerm.test(contact.username)"
-        :id="contact._id"
-        :key="contact._id"
+        v-for="contactInfo in contacts"
+        v-if="currentSearchTerm.test(contactInfo.contact.username)"
+        :id="contactInfo.contact._id"
+        :key="contactInfo.contact._id"
         class="contacts__contacts-container__contact"
-        :conversation-participants="conversationParticipants"
-        @checkChange="onChangeHandler($event, contact._id)"
+        :addedConversationParticipants="addedConversationParticipants"
+        @checkChange="onChangeHandler($event, contactInfo.contact._id)"
       />
     </div>
   </div>
@@ -32,7 +32,7 @@ export default {
     appSearch: Search
   },
   props: {
-    conversationParticipants: {
+    addedConversationParticipants: {
       type: Array,
       required: true
     }
@@ -44,12 +44,12 @@ export default {
   },
   computed: {
     contacts() {
-      return this.$store.state.contact.all.filter((contact) => {
+      return this.$store.state.contact.all.filter((contactInfo) => {
         const participantsArray = [];
         this.currentConversation.participants.forEach((participant) => {
           participantsArray.push(participant._id);
         });
-        return !participantsArray.includes(contact._id);
+        return !participantsArray.includes(contactInfo.contact._id);
       });
     },
     currentConversation() {
@@ -68,14 +68,14 @@ export default {
   methods: {
     onChangeHandler(isChecked, contactId) {
       if (!isChecked) {
-        const contactIndex = this.conversationParticipants.indexOf(contactId);
+        const contactIndex = this.addedConversationParticipants.indexOf(contactId);
         if (contactIndex === -1) {
           return;
         }
-        this.conversationParticipants.splice(contactIndex, 1);
+        this.addedConversationParticipants.splice(contactIndex, 1);
         return;
       }
-      this.conversationParticipants.push(contactId);
+      this.addedConversationParticipants.push(contactId);
     }
   }
 };

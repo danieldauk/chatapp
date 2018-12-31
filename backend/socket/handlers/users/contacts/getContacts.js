@@ -13,7 +13,7 @@ module.exports = async (socket, userId) => {
         contacts: 1
       }
     ).populate({
-      path: 'contacts',
+      path: 'contacts.contact',
       select: 'username avatar'
     });
     socket.emit(SocketEventsEnum.RESPONSE_CONTACTS, contacts);

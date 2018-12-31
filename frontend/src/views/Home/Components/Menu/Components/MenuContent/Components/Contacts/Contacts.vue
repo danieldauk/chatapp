@@ -1,10 +1,10 @@
 <template>
   <div class="contacts">
     <app-contact
-      v-for="contact in contacts"
-      v-if="currentSearchTerm.test(contact.username)"
-      :id="contact._id"
-      :key="contact._id"
+      v-for="contactInfo in contacts"
+      v-if="currentSearchTerm.test(contactInfo.contact.username)"
+      :id="contactInfo.contact._id"
+      :key="contactInfo.contact._id"
     />
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
   },
   computed: {
     contacts() {
-      return this.$store.state.contact.all.sort(contact => (this.$store.getters['person/isOnline'](contact._id) ? -1 : 1));
+      return this.$store.state.contact.all.sort(contactInfo => (this.$store.getters['person/isOnline'](contactInfo.contact._id) ? -1 : 1));
     },
     currentSearchTerm() {
       // TODO: add fuzzysort: https://github.com/farzher/fuzzysort
