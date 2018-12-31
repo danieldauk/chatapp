@@ -47,7 +47,7 @@ export default {
       return this.message.sender === this.$store.state.user.current._id;
     },
     avatar() {
-      return this.$store.getters['conversation/getParticipantAvatarLink'](this.message.sender) || this.$store.getters['person/getParticipantAvatarLink'](this.message.sender);
+      return this.$store.getters['conversation/getParticipantAvatarLink'](this.message.sender);
     },
     isDialogue() {
       return this.$store.getters['conversation/isDialogue'];

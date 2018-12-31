@@ -12,10 +12,19 @@ module.exports = async (socket, userId) => {
         _id: 0,
         contacts: 1
       }
-    ).populate({
-      path: 'contacts.contact',
-      select: 'username avatar'
-    });
+    ).populate([
+      {
+        path: 'contacts.contact',
+        select: 'username avatar'
+      },
+      {
+        path: 'contacts.conversation',
+        populate: {
+          path: 'participants',
+          select: 'username avatar'
+        }
+      }
+    ]);
     socket.emit(SocketEventsEnum.RESPONSE_CONTACTS, contacts);
   } catch (error) {
     // if error occurs during db querying - return error

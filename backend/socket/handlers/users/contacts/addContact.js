@@ -72,7 +72,7 @@ module.exports = async (socket, userId, contactId) => {
         $push: {
           contacts: {
             contact: newContact._id,
-            conversationId: conversation._id
+            conversation: conversation._id
           }
         }
       }
@@ -86,7 +86,7 @@ module.exports = async (socket, userId, contactId) => {
         $push: {
           contacts: {
             contact: userId,
-            conversationId: conversation._id
+            conversation: conversation._id
           }
         }
       }

@@ -24,6 +24,10 @@ export default {
     id: {
       type: String,
       required: true
+    },
+    conversation: {
+      type: Object,
+      required: true
     }
   },
   computed: {
@@ -39,16 +43,12 @@ export default {
   },
   methods: {
     async startConversation() {
-      if (this.$store.getters['conversation/isDialogue'] && this.$store.getters['conversation/doesParticipantExist'](this.id)) {
+      // check if conversation loaded is the same 
+      if (this.$store.getters['conversation/getCurrentId'] === this.conversation._id) {
         return;
       }
-      this.$store.dispatch('conversation/init', {
-        participants: [
-          this.id,
-          this.$store.state.user.current._id
-        ],
-        title: 'dialogue'
-      });
+      await this.$store.dispatch('conversation/setCurrent', this.conversation);
+      this.$store.dispatch('conversation/loadHistory', this.conversation._id);
     }
   }
 };

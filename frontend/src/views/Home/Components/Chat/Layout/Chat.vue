@@ -25,7 +25,7 @@
 
   }
   &__body {
-    height: calc(100vh - 120px);
+    height: calc(100% - 120px);
   }
   &__footer {
 

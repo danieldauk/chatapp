@@ -24,7 +24,10 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
       },
-      conversationId: mongoose.Schema.Types.ObjectId
+      conversation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Conversation'
+      }
     }
   ]
 });
