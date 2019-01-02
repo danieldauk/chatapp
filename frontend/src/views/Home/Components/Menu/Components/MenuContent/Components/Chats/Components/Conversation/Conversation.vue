@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="conversation"
-    @click="loadConversation"
-  >
+  <div class="conversation" @click="loadConversation">
     <div class="conversation__avatars">
       <img
         v-for="(participant, index) in shownParticipants"
@@ -15,12 +12,11 @@
         v-if="remainingParticipants > 0"
         :style="{left: `${maxAvatars * 20}px`}"
         class="conversation__avatars__remaining"
-      >
-        +{{ remainingParticipants }}
-      </div>
+      >+{{ remainingParticipants }}</div>
     </div>
-    <div class="conversation__title">
-      {{ conversation.title | truncateString(20) }}
+    <div class="conversation__info">
+      <div class="conversation__info__title">{{ conversation.title | truncateString(20) }}</div>
+      <div class="conversation__info__last-message">{{lastMessage | truncateString(20)}}</div>
     </div>
   </div>
 </template>
@@ -44,12 +40,15 @@ export default {
     },
     shownParticipants() {
       return this.conversation.participants.slice(0, this.maxAvatars + 1);
+    },
+    lastMessage() {
+      return this.$store.getters["message/getLast"](this.conversation._id);
     }
   },
   methods: {
     avatarPosition(index) {
       if (index === 0) {
-        return '0px';
+        return "0px";
       }
       return `${index * 20}px`;
     },
@@ -57,14 +56,14 @@ export default {
       return `${process.env.VUE_APP_BASE_URL}/${avatarFileName}`;
     },
     async loadConversation() {
-      if (this.$store.getters['conversation/getCurrentId'] === this.conversation._id) {
+      if (
+        this.$store.getters["conversation/getCurrentId"] ===
+        this.conversation._id
+      ) {
         return;
       }
-      await this.$store.dispatch(
-        'conversation/setCurrent',
-        this.conversation
-      );
-      this.$store.dispatch('conversation/loadHistory', this.conversation._id);
+      await this.$store.dispatch("conversation/setCurrent", this.conversation);
+      this.$store.dispatch("conversation/loadHistory", this.conversation._id);
     }
   }
 };
@@ -82,8 +81,18 @@ export default {
   &:hover {
     background: rgba(255, 255, 255, 0.05);
   }
-  &__title {
-    color: rgba($color-purple-light, 0.7);
+  &__info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 1.2;
+    &__title {
+      color: rgba($color-purple-light, 0.7);
+    }
+    &__last-message {
+      font-size: 13px;
+      color: $color-purple-medium;
+    }
   }
   &__avatars {
     display: flex;

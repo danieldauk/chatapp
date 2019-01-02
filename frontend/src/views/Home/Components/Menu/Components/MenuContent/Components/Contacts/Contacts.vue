@@ -5,7 +5,7 @@
       v-if="currentSearchTerm.test(contactInfo.contact.username)"
       :id="contactInfo.contact._id"
       :key="contactInfo.contact._id"
-      :conversation="contactInfo.conversation"
+      :conversationId="contactInfo.conversation"
     />
   </div>
 </template>

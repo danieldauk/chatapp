@@ -11,6 +11,10 @@ export default new AbstractStoreModule({
     getCurrentId(state) {
       return state.current ? state.current._id : null;
     },
+    getById: state => (id) => {
+      const foundConversation = state.all.find(conversation => conversation._id === id);
+      return foundConversation || null;
+    },
     getParticipantAvatarLink: state => (id) => {
       if (!state.current) {
         return null;

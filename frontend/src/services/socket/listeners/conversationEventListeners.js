@@ -3,10 +3,6 @@ import { SocketEventsEnum } from '@/utils/enumerators';
 import { sortConversations } from '@/utils/conversations';
 
 export default (socket) => {
-  socket.on(SocketEventsEnum.RESPONSE_CREATE_DIALOGUE, async (data) => {
-    await store.dispatch('conversation/setCurrent', data);
-    store.dispatch('conversation/loadHistory', store.getters['conversation/getCurrentId']);
-  });
   socket.on(SocketEventsEnum.RESPONSE_CREATE_CONVERSATION, async (conversation) => {
     await store.dispatch('conversation/setCurrent', conversation);
     await store.dispatch('conversation/loadHistory', store.getters['conversation/getCurrentId']);
@@ -39,6 +35,12 @@ export default (socket) => {
     await store.dispatch('conversation/loadAll');
   });
   socket.on(SocketEventsEnum.RESPONSE_CONVERSATIONS, (conversations) => {
-    store.dispatch('conversation/setAll', sortConversations(conversations));
+    const sortedConversations = sortConversations(conversations);
+    store.dispatch('conversation/setAll', sortedConversations);
+    const lastConversationMessages = sortedConversations.map(conversation => ({
+      content: conversation.lastConversationMessage,
+      conversationId: conversation._id
+    }));
+    store.dispatch('message/setAll', lastConversationMessages);
   });
 };

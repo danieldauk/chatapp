@@ -7,8 +7,12 @@ export default new AbstractStoreModule({
     unread: []
   },
   getters: {
-    getCurrentId(state) {
-      return state.current ? state.current._id : null;
+    getLast: state => (conversationId) => {
+      const foundMessage = state.all.find(message => message.conversationId === conversationId);
+      if (foundMessage) {
+        return foundMessage.content;
+      }
+      return null;
     }
   },
   actions: {
@@ -17,6 +21,15 @@ export default new AbstractStoreModule({
         content,
         conversationId
       });
+    },
+    setLast(thisModule, newMessage) {
+      const updatedMessages = thisModule.state.all.map((message) => {
+        if (message.conversationId === newMessage.conversationId) {
+          return newMessage;
+        }
+        return message;
+      });
+      thisModule.commit('setAll', updatedMessages);
     }
   }
 });

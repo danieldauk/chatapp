@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
   },
   contacts: [
     {
+      _id: false,
       contact: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'

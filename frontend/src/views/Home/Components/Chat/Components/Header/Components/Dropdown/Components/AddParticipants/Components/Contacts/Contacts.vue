@@ -2,7 +2,7 @@
   <div class="contacts">
     <v-expansion-panel class="contacts__panel">
       <v-expansion-panel-content :value="addedConversationParticipants.length !==0">
-        <app-added-contacts :addedConversationParticipants="addedConversationParticipants" />
+        <app-added-contacts :added-conversation-participants="addedConversationParticipants" />
       </v-expansion-panel-content>
     </v-expansion-panel>
     <app-search @input="searchTerm = $event" />
@@ -13,7 +13,7 @@
         :id="contactInfo.contact._id"
         :key="contactInfo.contact._id"
         class="contacts__contacts-container__contact"
-        :addedConversationParticipants="addedConversationParticipants"
+        :added-conversation-participants="addedConversationParticipants"
         @checkChange="onChangeHandler($event, contactInfo.contact._id)"
       />
     </div>

@@ -4,7 +4,7 @@ const { SocketEventsEnum } = require('../../../../utils/enumerators');
 
 module.exports = async (socket, userId) => {
   try {
-    const contacts = await User.findOne(
+    const contactsInfo = await User.findOne(
       {
         _id: userId
       },
@@ -12,20 +12,13 @@ module.exports = async (socket, userId) => {
         _id: 0,
         contacts: 1
       }
-    ).populate([
-      {
+    )
+      .populate({
         path: 'contacts.contact',
         select: 'username avatar'
-      },
-      {
-        path: 'contacts.conversation',
-        populate: {
-          path: 'participants',
-          select: 'username avatar'
-        }
-      }
-    ]);
-    socket.emit(SocketEventsEnum.RESPONSE_CONTACTS, contacts);
+      })
+      .lean();
+    socket.emit(SocketEventsEnum.RESPONSE_CONTACTS, contactsInfo);
   } catch (error) {
     // if error occurs during db querying - return error
     winston.error(error);

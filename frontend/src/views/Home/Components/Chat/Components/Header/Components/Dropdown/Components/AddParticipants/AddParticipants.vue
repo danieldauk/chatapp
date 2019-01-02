@@ -7,7 +7,7 @@
     @input="onInputHandler"
   >
     <div class="dialog__content">
-      <app-contacts :addedConversationParticipants="addedConversationParticipants" />
+      <app-contacts :added-conversation-participants="addedConversationParticipants" />
       <div class="dialog__content__error-message">
         {{ error }}
       </div>
