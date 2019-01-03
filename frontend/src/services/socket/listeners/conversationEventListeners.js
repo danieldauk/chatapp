@@ -37,10 +37,12 @@ export default (socket) => {
   socket.on(SocketEventsEnum.RESPONSE_CONVERSATIONS, (conversations) => {
     const sortedConversations = sortConversations(conversations);
     store.dispatch('conversation/setAll', sortedConversations);
-    const lastConversationMessages = sortedConversations.map(conversation => ({
-      content: conversation.lastConversationMessage,
-      conversationId: conversation._id
-    }));
+    const lastConversationMessages = [];
+    sortedConversations.forEach((conversation) => {
+      if (conversation.lastConversationMessage) {
+        lastConversationMessages.push(conversation.lastConversationMessage);
+      }
+    });
     store.dispatch('message/setAll', lastConversationMessages);
   });
 };

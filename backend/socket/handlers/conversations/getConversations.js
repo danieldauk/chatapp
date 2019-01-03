@@ -21,29 +21,41 @@ module.exports = async (socket, userId) => {
       ])
       .lean();
     // load last conversation message for each contact
-    /* eslint-disable */
-    for (const conversation of conversations) {
-      const lastConversationMessage = await Message.find(
+    const queries = [];
+    conversations.forEach((conversation) => {
+      const query = Message.findOne(
         {
           conversationId: conversation._id
         },
         {
           _id: 0,
-          content: 1
+          content: 1,
+          conversationId: 1
         }
       )
         .lean()
-        .limit(1)
         .sort({ createdAt: -1 });
-      if (lastConversationMessage[0]) {
-        conversation.lastConversationMessage =
-          lastConversationMessage[0].content;
-      } else {
-        conversation.lastConversationMessage = null;
-      }
-    }
-    /* eslint-enable */
-    socket.emit(SocketEventsEnum.RESPONSE_CONVERSATIONS, conversations);
+      // push promises to array
+      queries.push(query.exec());
+    });
+    // wait for all queries to resolve
+    const lastMessages = await Promise.all(queries);
+    // assign for each conversation last conversation message
+    const updatedConversations = conversations.map((conversation) => {
+      const foundLastConversationMessage = lastMessages.find((message) => {
+        if (message) {
+          return (
+            message.conversationId.toString() === conversation._id.toString()
+          );
+        }
+        return false;
+      });
+      return {
+        ...conversation,
+        lastConversationMessage: foundLastConversationMessage || null
+      };
+    });
+    socket.emit(SocketEventsEnum.RESPONSE_CONVERSATIONS, updatedConversations);
   } catch (error) {
     // if error occurs during db querying - return error
     winston.error(error);

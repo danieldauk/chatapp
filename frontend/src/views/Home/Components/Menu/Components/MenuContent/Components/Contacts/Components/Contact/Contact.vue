@@ -8,7 +8,7 @@
     </div>
     <div class="contact__info">
       <div class="contact__info__name">{{ name | truncateString(20) }}</div>
-      <div class="contact__info__last-message">{{ lastMessage | truncateString(20) }}</div>
+      <div class="contact__info__last-message">{{ lastMessage | truncateString(30) }}</div>
     </div>
   </div>
 </template>
