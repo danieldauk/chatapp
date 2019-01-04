@@ -15,7 +15,6 @@
       </div>
     </div>
     <app-dropdown
-      v-if="!isDialogue"
       class="chat-header__dropdown"
     />
   </div>
@@ -61,11 +60,6 @@ export default {
     },
     contactStatusText() {
       return this.isContactOnline ? 'online' : 'offline';
-    }
-  },
-  methods: {
-    leaveConversation() {
-      this.$store.dispatch('conversation/leave', this.currentConversation._id);
     }
   }
 };

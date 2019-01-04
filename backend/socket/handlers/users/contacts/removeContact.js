@@ -14,21 +14,26 @@ module.exports = async (socket, userId, contactId) => {
 
   try {
     // check if contact (user) with given id exists
-    const contactToBeRemoved = await User.findOne({
-      _id: contactId
-    });
+    const contactToBeRemoved = await User.findOne(
+      {
+        _id: contactId
+      },
+      { _id: 1 }
+    );
     if (!contactToBeRemoved) {
       socket.emit(SocketEventsEnum.ERROR, {
         error: 'User not found'
       });
       return;
     }
-
     // check if user does not exist inside contacts array
-    const contact = await User.findOne({
-      _id: userId,
-      contacts: contactToBeRemoved._id
-    });
+    const contact = await User.findOne(
+      {
+        _id: userId,
+        'contacts.contact': contactToBeRemoved._id
+      },
+      { _id: 1 }
+    );
     // if user does not exist - return error
     if (!contact) {
       socket.emit(SocketEventsEnum.ERROR, {
@@ -36,7 +41,6 @@ module.exports = async (socket, userId, contactId) => {
       });
       return;
     }
-
     // if user exists - remove user from user's contacts array
     await User.updateOne(
       {
@@ -44,7 +48,7 @@ module.exports = async (socket, userId, contactId) => {
       },
       {
         $pull: {
-          contacts: contactToBeRemoved._id
+          contacts: { contact: contactToBeRemoved._id }
         }
       }
     );
@@ -55,7 +59,7 @@ module.exports = async (socket, userId, contactId) => {
       },
       {
         $pull: {
-          contacts: userId
+          contacts: { contact: userId }
         }
       }
     );

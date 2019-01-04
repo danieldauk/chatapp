@@ -13,22 +13,32 @@
     </v-icon>
     <div class="dropdown__content">
       <span
+        v-if="!isDialogue"
         class="dropdown__content__button"
         @click="openAddParticipantDialog"
       >
         Add participants
       </span>
       <span
+        v-if="!isDialogue"
         class="dropdown__content__button"
         @click="isParticipantListShown = true"
       >
         Show participants
       </span>
       <span
+        v-if="!isDialogue"
         class="dropdown__content__button"
         @click="leaveConversation"
       >
         Leave conversation
+      </span>
+      <span
+        v-if="isDialogue"
+        class="dropdown__content__button"
+        @click="removeContact"
+      >
+        Remove contact
       </span>
     </div>
     <app-participant-list v-model="isParticipantListShown" />
@@ -53,6 +63,9 @@ export default {
   computed: {
     currentConversation() {
       return this.$store.state.conversation.current;
+    },
+    isDialogue() {
+      return this.$store.getters['conversation/isDialogue'];
     }
   },
   methods: {
@@ -61,6 +74,14 @@ export default {
     },
     openAddParticipantDialog() {
       this.$store.dispatch('UI/openAddParticipantDialog');
+    },
+    removeContact() {
+      console.log('userId', this.$store.getters['user/getCurrentId']);
+      const contactId = this.currentConversation.participants.find(participant => participant._id !== this.$store.getters['user/getCurrentId'])._id;
+      console.log('contactId', contactId);
+      this.$store.dispatch('conversation/clearHistory');
+      this.$store.dispatch('conversation/clearCurrent');
+      this.$store.dispatch('contact/remove', contactId);
     }
   }
 };
