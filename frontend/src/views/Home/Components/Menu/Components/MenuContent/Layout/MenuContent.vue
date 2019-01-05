@@ -23,7 +23,7 @@
 .menu-content {
   height: 100%;
   display: grid;
-  grid-template-rows: 60px 60px 60px minmax(300px, 1fr);
+  grid-template-rows: 60px 60px 60px minmax(270px, 1fr);
   &__header {
     display: flex;
     align-items: center;
