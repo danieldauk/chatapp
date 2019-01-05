@@ -1,5 +1,5 @@
 <template>
-  <div class="conversation" @click="loadConversation">
+  <div class="conversation" @click="onClickHandler">
     <div class="conversation__avatars">
       <img
         v-for="(participant, index) in shownParticipants"
@@ -18,6 +18,9 @@
       <div class="conversation__info__title">{{ conversation.title | truncateString(20) }}</div>
       <div class="conversation__info__last-message">{{lastMessage | truncateString(20)}}</div>
     </div>
+    <div 
+    v-if='unreadMessages'
+    class="conversation__unread-messages">{{unreadMessages}}</div>
   </div>
 </template>
 
@@ -43,6 +46,10 @@ export default {
     },
     lastMessage() {
       return this.$store.getters["message/getLast"](this.conversation._id);
+    },
+    unreadMessages() {
+      const unreadMessages = this.$store.getters["message/getUnreadCount"](this.conversation._id);
+      return unreadMessages > 99 ? '99' : unreadMessages;
     }
   },
   methods: {
@@ -54,6 +61,13 @@ export default {
     },
     avatarLink(avatarFileName) {
       return `${process.env.VUE_APP_BASE_URL}/${avatarFileName}`;
+    },
+    onClickHandler() {
+      this.$store.dispatch(
+        "message/clearUnreadConversationMessages",
+        this.conversation._id
+      );
+      this.loadConversation();
     },
     async loadConversation() {
       if (
@@ -72,7 +86,7 @@ export default {
 <style lang="scss" scoped>
 .conversation {
   display: grid;
-  grid-template-columns: 5fr 5fr;
+  grid-template-columns: 5fr 5fr 15px;
   height: 60px;
   align-items: center;
   padding: 10px 15px;
@@ -80,6 +94,18 @@ export default {
   width: 100%;
   &:hover {
     background: rgba(255, 255, 255, 0.05);
+  }
+  &__unread-messages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    color: $color-white;
+    background: $color-green;
+    height: 15px;
+    width: 15px;
+    font-size: 8px;
+    border-radius: 50%;
   }
   &__info {
     display: flex;

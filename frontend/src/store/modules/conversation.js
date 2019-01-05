@@ -4,6 +4,8 @@ import cloneDeep from 'lodash/cloneDeep';
 import { SocketEventsEnum } from '@/utils/enumerators';
 
 export default new AbstractStoreModule({
+  // TODO: update history when receiving message read
+  // (update readBy array with given userId)
   state: {
     history: []
   },
@@ -38,7 +40,7 @@ export default new AbstractStoreModule({
     },
     isDialogue(state) {
       if (state.current) {
-        return (state.current.participants.length === 2) && (state.current.removedParticipants.length === 0);
+        return state.current.participants.length === 2 && state.current.removedParticipants.length === 0;
       }
       return false;
     },

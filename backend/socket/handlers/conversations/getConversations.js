@@ -21,7 +21,7 @@ module.exports = async (socket, userId) => {
       ])
       .lean();
     // load last conversation message for each contact
-    const queries = [];
+    let queries = [];
     conversations.forEach((conversation) => {
       const query = Message.findOne(
         {
@@ -40,8 +40,31 @@ module.exports = async (socket, userId) => {
     });
     // wait for all queries to resolve
     const lastMessages = await Promise.all(queries);
-    // assign for each conversation last conversation message
+    // load unread messages count for each conversation
+    queries = [];
+    conversations.forEach((conversation) => {
+      const query = Message.find(
+        {
+          conversationId: conversation._id,
+          readBy: { $ne: userId },
+          sender: { $ne: userId }
+        },
+        {
+          _id: 0,
+          conversationId: 1
+        }
+      )
+        .lean();
+      // push promises to array
+      queries.push(query.exec());
+    });
+    // wait for all queries to resolve
+    const unreadMessagesArrays = await Promise.all(queries);
+    // flatten array
+    const unreadMessages = unreadMessagesArrays.reduce((result, unreadConversationMessages) => result.concat(unreadConversationMessages));
+    // assign for each conversation last conversation message and unread messages count
     const updatedConversations = conversations.map((conversation) => {
+      const unreadConversationMessages = unreadMessages.filter(unreadMessage => unreadMessage.conversationId.toString() === conversation._id.toString()).length;
       const foundLastConversationMessage = lastMessages.find((message) => {
         if (message) {
           return (
@@ -52,6 +75,7 @@ module.exports = async (socket, userId) => {
       });
       return {
         ...conversation,
+        unreadMessages: unreadConversationMessages,
         lastConversationMessage: foundLastConversationMessage || null
       };
     });

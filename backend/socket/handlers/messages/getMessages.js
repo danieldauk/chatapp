@@ -45,6 +45,26 @@ module.exports = async (socket, userId, conversationId) => {
     // if all checks are successful - return all messages linked to the conversation
     const messages = await Message.find({ conversationId });
     socket.emit(SocketEventsEnum.RESPONSE_MESSAGES, messages);
+    // update all unread messages readBy array with requesting user Id
+    await Message.updateMany({
+      conversationId,
+      readBy: { $ne: userId }
+    },
+    {
+      $push: { readBy: userId }
+    });
+    // TODO: emit event to all participants to update updatedMessages
+    conversation.participants.forEach((participantId) => {
+      const messagesData = {
+        conversationId,
+        userId
+      };
+      if (participantId.toString() !== userId) {
+        socket.to(participantId).emit(SocketEventsEnum.MESSAGES_READ, messagesData);
+      } else {
+        socket.emit(SocketEventsEnum.MESSAGES_READ, messagesData);
+      }
+    });
   } catch (error) {
     winston.error(error);
     socket.emit(SocketEventsEnum.ERROR, {

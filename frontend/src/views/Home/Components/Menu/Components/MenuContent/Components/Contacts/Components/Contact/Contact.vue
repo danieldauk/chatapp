@@ -1,5 +1,5 @@
 <template>
-  <div class="contact" @click="loadConversation">
+  <div class="contact" @click="onClickHandler">
     <div class="contact__avatar">
       <img class="contact__avatar__image" :src="imageLink">
       <div
@@ -10,6 +10,9 @@
       <div class="contact__info__name">{{ name | truncateString(20) }}</div>
       <div class="contact__info__last-message">{{ lastMessage | truncateString(30) }}</div>
     </div>
+    <div 
+    v-if='unreadMessages'
+    class="contact__unread-messages">{{unreadMessages}}</div>
   </div>
 </template>
 
@@ -37,9 +40,20 @@ export default {
     },
     lastMessage() {
       return this.$store.getters["message/getLast"](this.conversationId);
+    },
+    unreadMessages() {
+      const unreadMessages = this.$store.getters["message/getUnreadCount"](this.conversationId);
+      return unreadMessages > 99 ? '99' : unreadMessages;
     }
   },
   methods: {
+    onClickHandler() {
+      this.$store.dispatch(
+        "message/clearUnreadConversationMessages",
+        this.conversationId
+      );
+      this.loadConversation();
+    },
     async loadConversation() {
       // check if conversation loaded is the same
       if (
@@ -106,6 +120,18 @@ export default {
       border-radius: 50%;
       object-fit: cover;
     }
+  }
+  &__unread-messages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    color: $color-white;
+    background: $color-green;
+    height: 15px;
+    width: 15px;
+    font-size: 8px;
+    border-radius: 50%;
   }
 }
 </style>

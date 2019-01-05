@@ -13,6 +13,21 @@ export default new AbstractStoreModule({
         return foundMessage.content;
       }
       return null;
+    },
+    getUnreadCount: state => (conversationId) => {
+      const foundConversation = state.unread.find(conversation => conversation.conversationId === conversationId);
+      if (foundConversation) {
+        return foundConversation.unreadMessages || null;
+      }
+      return null;
+    }
+  },
+  mutations: {
+    setUnread(state, unreadMessages) {
+      state.unread = unreadMessages;
+    },
+    clearUndread(state) {
+      state.unread = [];
     }
   },
   actions: {
@@ -30,6 +45,41 @@ export default new AbstractStoreModule({
         return message;
       });
       thisModule.commit('setAll', updatedMessages);
+    },
+    setUnread(thisModule, unreadMessages) {
+      thisModule.commit('setUnread', unreadMessages);
+    },
+    setUnreadMessage(thisModule, message) {
+      if (message.conversationId === this.getters['conversation/getCurrentId']) {
+        return;
+      }
+      const unreadMessages = thisModule.state.unread;
+      const updatedUnreadMessages = unreadMessages.map((conversation) => {
+        if (conversation.conversationId === message.conversationId) {
+          return {
+            conversationId: message.conversationId,
+            unreadMessages: conversation.unreadMessages + 1
+          };
+        }
+        return conversation;
+      });
+      thisModule.commit('setUnread', updatedUnreadMessages);
+    },
+    clearUnreadConversationMessages(thisModule, conversationId) {
+      const unreadMessages = thisModule.state.unread;
+      const updatedUnreadMessages = unreadMessages.map((conversation) => {
+        if (conversation.conversationId === conversationId) {
+          return {
+            conversationId,
+            unreadMessages: 0
+          };
+        }
+        return conversation;
+      });
+      thisModule.commit('setUnread', updatedUnreadMessages);
+    },
+    clearUnread(thisModule) {
+      thisModule.commit('clearUnread');
     }
   }
 });

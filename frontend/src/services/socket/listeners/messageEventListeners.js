@@ -9,5 +9,6 @@ export default (socket) => {
   socket.on(SocketEventsEnum.RECEIVE_MESSAGE, (message) => {
     store.dispatch('conversation/addMessageToHistory', transformMessage(message));
     store.dispatch('message/setLast', message);
+    store.dispatch('message/setUnreadMessage', message);
   });
 };

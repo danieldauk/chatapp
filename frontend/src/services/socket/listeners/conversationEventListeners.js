@@ -38,11 +38,17 @@ export default (socket) => {
     const sortedConversations = sortConversations(conversations);
     store.dispatch('conversation/setAll', sortedConversations);
     const lastConversationMessages = [];
+    const unreadMessages = [];
     sortedConversations.forEach((conversation) => {
       if (conversation.lastConversationMessage) {
         lastConversationMessages.push(conversation.lastConversationMessage);
       }
+      unreadMessages.push({
+        conversationId: conversation._id,
+        unreadMessages: conversation.unreadMessages
+      });
     });
+    store.dispatch('message/setUnread', unreadMessages);
     store.dispatch('message/setAll', lastConversationMessages);
   });
 };
