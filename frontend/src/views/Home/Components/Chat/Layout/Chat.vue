@@ -26,6 +26,8 @@
     top: 0;
   }
   &__body {
+    display: grid;
+    grid-template-columns: 1fr repeat(12, minmax(30px, 70px)) 1fr;
     height: 100%;
     padding: 60px 0;
     overflow: hidden;

@@ -66,6 +66,7 @@ export default {
 
 <style lang="scss" scoped>
 .chat-body {
+  grid-column: 2 / 14;
   display: flex;
   height: 100%;
   overflow-y: auto;
