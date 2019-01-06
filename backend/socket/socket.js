@@ -16,6 +16,7 @@ const addParticipants = require('./handlers/conversations/addParticipants');
 // messages events handlers
 const getMessages = require('./handlers/messages/getMessages');
 const sendMessage = require('./handlers/messages/sendMessage');
+const setMessagesAsRead = require('./handlers/messages/setMessagesAsRead');
 
 module.exports = (io) => {
   // assign custom socket id (same as user id)
@@ -73,6 +74,9 @@ module.exports = (io) => {
     // MESSAGES events
     socket.on(SocketEventsEnum.REQUEST_MESSAGES, (conversationId) => {
       getMessages(socket, userId, conversationId);
+    });
+    socket.on(SocketEventsEnum.SET_MESSAGES_AS_READ, (conversationId) => {
+      setMessagesAsRead(socket, userId, conversationId);
     });
     socket.on(SocketEventsEnum.SEND_MESSAGE, (data) => {
       sendMessage(socket, userId, data);

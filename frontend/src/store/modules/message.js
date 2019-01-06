@@ -49,6 +49,9 @@ export default new AbstractStoreModule({
     setUnread(thisModule, unreadMessages) {
       thisModule.commit('setUnread', unreadMessages);
     },
+    markAsRead(thisModule, conversationId) {
+      socket.emit(SocketEventsEnum.SET_MESSAGES_AS_READ, conversationId);
+    },
     setUnreadMessage(thisModule, message) {
       if (message.conversationId === this.getters['conversation/getCurrentId']) {
         return;

@@ -42,9 +42,6 @@ module.exports = async (socket, userId, conversationId) => {
       });
       return;
     }
-    // if all checks are successful - return all messages linked to the conversation
-    const messages = await Message.find({ conversationId }).lean();
-    socket.emit(SocketEventsEnum.RESPONSE_MESSAGES, messages);
     // update all unread messages readBy array with requesting user Id
     await Message.updateMany({
       conversationId,
@@ -61,8 +58,6 @@ module.exports = async (socket, userId, conversationId) => {
       };
       if (participantId.toString() !== userId) {
         socket.to(participantId).emit(SocketEventsEnum.MESSAGES_READ, messagesData);
-      } else {
-        socket.emit(SocketEventsEnum.MESSAGES_READ, messagesData);
       }
     });
   } catch (error) {
