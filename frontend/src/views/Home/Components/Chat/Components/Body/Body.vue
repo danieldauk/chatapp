@@ -6,6 +6,12 @@
     class="chat-body__date" 
     :date="date"
     :unreadMessagesEntryPosition="unreadMessagesEntryPosition" />
+    <app-date 
+    v-for="date in history" 
+    :key="date.date" 
+    class="chat-body__date" 
+    :date="date"
+    :unreadMessagesEntryPosition="unreadMessagesEntryPosition" />
   </div>
 </template>
 
@@ -108,13 +114,13 @@ export default {
 
 <style lang="scss" scoped>
 .chat-body {
-  grid-column: 2 / 14;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr repeat(12, minmax(30px, 70px)) 1fr;
   height: 100%;
   overflow-y: auto;
-  flex-direction: column;
   padding: 0;
   &__date {
+    grid-column: 2 / 14;
     &:not(:first-child) {
       margin-top: 10px;
     }
