@@ -46,7 +46,8 @@ module.exports = async (socket, userId, { conversationId, content }) => {
     const message = new Message({
       sender: userId,
       content,
-      conversationId
+      conversationId,
+      readBy: [userId]
     });
     const result = await message.save();
     // send message to all conversation participants

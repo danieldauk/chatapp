@@ -6,12 +6,6 @@
     class="chat-body__date" 
     :date="date"
     :unreadMessagesEntryPosition="unreadMessagesEntryPosition" />
-    <app-date 
-    v-for="date in history" 
-    :key="date.date" 
-    class="chat-body__date" 
-    :date="date"
-    :unreadMessagesEntryPosition="unreadMessagesEntryPosition" />
   </div>
 </template>
 
