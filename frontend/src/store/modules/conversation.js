@@ -4,8 +4,6 @@ import cloneDeep from 'lodash/cloneDeep';
 import { SocketEventsEnum } from '@/utils/enumerators';
 
 export default new AbstractStoreModule({
-  // TODO: update history when receiving message read
-  // (update readBy array with given userId)
   state: {
     history: []
   },
@@ -83,6 +81,7 @@ export default new AbstractStoreModule({
       if (message.message.conversationId !== this.getters['conversation/getCurrentId']) {
         return;
       }
+      this.dispatch('message/markAsRead', this.getters['conversation/getCurrentId']);
       const newHistory = cloneDeep(thisModule.state.history);
       let wasMessageAdded = false;
       newHistory.forEach((date) => {
@@ -98,6 +97,29 @@ export default new AbstractStoreModule({
         });
       }
       thisModule.dispatch('setHistory', newHistory);
+    },
+    setReadBy(thisModule, { userId, conversationId }) {
+      if (thisModule.getters.getCurrentId !== conversationId) {
+        return;
+      }
+      const currentHistory = thisModule.state.history;
+      const updatedHistory = currentHistory.map((date) => {
+        const updatedMessages = date.messages.map((message) => {
+          if (!message.readBy.includes(userId)) {
+            return {
+              ...message,
+              readBy: message.readBy.concat([ userId ])
+            };
+          }
+          return message;
+        });
+        const updatedDate = {
+          date: date.date,
+          messages: updatedMessages
+        };
+        return updatedDate;
+      });
+      thisModule.commit('setHistory', updatedHistory);
     },
     leave(thisModule, conversationId) {
       socket.emit(SocketEventsEnum.REQUEST_LEAVE_CONVERSATION, conversationId);

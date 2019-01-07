@@ -1,6 +1,5 @@
 node_modules
 .env.production
-.env.development
 .env
 id_rsa
 id_rsa.pub

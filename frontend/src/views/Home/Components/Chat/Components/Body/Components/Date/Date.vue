@@ -14,21 +14,27 @@
           :message="message"
           :is-previous-message-own="index === 0 ? false : date.messages[index - 1].sender === message.sender"
         />
-        <app-conversation-entry v-else :entry="message.content"/>
+        <app-read-by-entry
+        :message="message"
+        v-if="isLastMessage(message._id)" />
+        <app-conversation-entry v-if="!message.sender" :entry="message.content"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import findIndex from 'lodash/findIndex';
 import Message from "./Components/Message/Message.vue";
 import ConversationEntry from "./Components/ConversationEntry/ConversationEntry.vue";
 import UnreadMessagesEntry from "./Components/UnreadMessagesEntry/UnreadMessagesEntry.vue";
+import ReadByEntry from "./Components/ReadByEntry/ReadByEntry.vue";
 
 export default {
   components: {
     appConversationEntry: ConversationEntry,
     appUnreadMessagesEntry: UnreadMessagesEntry,
+    appReadByEntry: ReadByEntry,
     appMessage: Message
   },
   props: {
@@ -38,6 +44,10 @@ export default {
     },
     unreadMessagesEntryPosition: {
       type: String,
+      required: true
+    },
+    isLastDate: {
+      type: Boolean,
       required: true
     }
   },
@@ -54,6 +64,18 @@ export default {
   watch: {
     history() {
       this.wasHistoryUpdated = true;
+    }
+  },
+  methods: {
+    isLastMessage(messageId) {
+      if (!this.isLastDate) {
+        return false;
+      }
+      if (this.date.messages.length === 0) {
+        return false;
+      }
+      const index = findIndex(this.date.messages, currentMessage => currentMessage._id === messageId);
+      return (this.date.messages.length -1) === index;
     }
   }
 };

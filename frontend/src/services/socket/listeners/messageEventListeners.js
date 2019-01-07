@@ -11,4 +11,7 @@ export default (socket) => {
     store.dispatch('message/setLast', message);
     store.dispatch('message/setUnreadMessage', message);
   });
+  socket.on(SocketEventsEnum.MESSAGES_READ, async (data) => {
+    store.dispatch('conversation/setReadBy', data);
+  });
 };

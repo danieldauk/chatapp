@@ -5,11 +5,13 @@
     :key="date.date" 
     class="chat-body__date" 
     :date="date"
+    :isLastDate="isLastDate(date.date)"
     :unreadMessagesEntryPosition="unreadMessagesEntryPosition" />
   </div>
 </template>
 
 <script>
+import findIndex from 'lodash/findIndex';
 import Date from "./Components/Date/Date.vue";
 
 export default {
@@ -100,6 +102,13 @@ export default {
       this.$refs.body.scroll({
         top: position
       });
+    },
+    isLastDate(date) {
+      if (this.history.length === 0) {
+        return false;
+      }
+      const index = findIndex(this.history, currentDate => currentDate.date === date);
+      return (this.history.length -1) === index;
     }
   }
 };

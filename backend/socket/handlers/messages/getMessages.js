@@ -53,16 +53,13 @@ module.exports = async (socket, userId, conversationId) => {
     {
       $push: { readBy: userId }
     });
-    // TODO: emit event to all participants to update updatedMessages
     conversation.participants.forEach((participantId) => {
-      const messagesData = {
+      const data = {
         conversationId,
         userId
       };
       if (participantId.toString() !== userId) {
-        socket.to(participantId).emit(SocketEventsEnum.MESSAGES_READ, messagesData);
-      } else {
-        socket.emit(SocketEventsEnum.MESSAGES_READ, messagesData);
+        socket.to(participantId).emit(SocketEventsEnum.MESSAGES_READ, data);
       }
     });
   } catch (error) {
