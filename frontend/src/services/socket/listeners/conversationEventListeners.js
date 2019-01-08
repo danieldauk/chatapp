@@ -43,9 +43,11 @@ export default (socket) => {
       if (conversation.lastConversationMessage) {
         lastConversationMessages.push(conversation.lastConversationMessage);
       }
+      const isDialogue = (conversation.participants.length === 2) && (conversation.removedParticipants.length === 0);
       unreadMessages.push({
         conversationId: conversation._id,
-        unreadMessages: conversation.unreadMessages
+        unreadMessages: conversation.unreadMessages,
+        isDialogue
       });
     });
     store.dispatch('message/setUnread', unreadMessages);

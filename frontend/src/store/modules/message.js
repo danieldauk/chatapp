@@ -20,6 +20,20 @@ export default new AbstractStoreModule({
         return foundConversation.unreadMessages || null;
       }
       return null;
+    },
+    getUnreadDialogueCount(state) {
+      if (state.unread.length === 0) {
+        return 0;
+      }
+      const unreadDialogues = state.unread.filter(conversation => (conversation.isDialogue && conversation.unreadMessages)).length;
+      return unreadDialogues;
+    },
+    getUnreadConversationsCount(state) {
+      if (state.unread.length === 0) {
+        return 0;
+      }
+      const unreadConversations = state.unread.filter(conversation => (!conversation.isDialogue && conversation.unreadMessages)).length;
+      return unreadConversations;
     }
   },
   mutations: {
@@ -60,7 +74,7 @@ export default new AbstractStoreModule({
       const updatedUnreadMessages = unreadMessages.map((conversation) => {
         if (conversation.conversationId === message.conversationId) {
           return {
-            conversationId: message.conversationId,
+            ...conversation,
             unreadMessages: conversation.unreadMessages + 1
           };
         }
@@ -73,7 +87,7 @@ export default new AbstractStoreModule({
       const updatedUnreadMessages = unreadMessages.map((conversation) => {
         if (conversation.conversationId === conversationId) {
           return {
-            conversationId,
+            ...conversation,
             unreadMessages: 0
           };
         }
