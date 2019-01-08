@@ -21,7 +21,7 @@ export default new AbstractStoreModule({
       }
       return null;
     },
-    getUnreadDialogueCount(state) {
+    getUnreadDialoguesCount(state) {
       if (state.unread.length === 0) {
         return 0;
       }

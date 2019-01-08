@@ -14,6 +14,9 @@
       <span class="tabs__tab__text">
         Contacts
       </span>
+      <div 
+      v-if="unreadDialogues"
+      class="tabs__tab__badge">{{unreadDialogues}}</div>
     </div>
     <div
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.CHATS}]"
@@ -25,6 +28,9 @@
       <span class="tabs__tab__text">
         Chats
       </span>
+      <div 
+      v-if="unreadChats"
+      class="tabs__tab__badge">{{unreadChats}}</div>
     </div>
     <div
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.PEOPLE}]"
@@ -62,6 +68,14 @@ export default {
         default:
           return '0%';
       }
+    },
+    unreadDialogues() {
+      const unreadDialogues = this.$store.getters['message/getUnreadDialoguesCount'];
+      return unreadDialogues > 9 ? '+9' : unreadDialogues;
+    },
+    unreadChats() {
+      const unreadChats = this.$store.getters['message/getUnreadConversationsCount'];
+      return unreadChats > 9 ? '+9' : unreadChats;
     }
   },
   methods: {
@@ -105,6 +119,7 @@ export default {
     opacity: 0.7;
     cursor: pointer;
     transition: 0.3s;
+    position: relative;
     &--active {
       opacity: 1;
     }
@@ -115,6 +130,20 @@ export default {
     &__text {
       color: $color-purple-light;
       font-size: 10px;
+    }
+    &__badge {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: $color-white;
+      font-size: 10px;
+      width: 13px;
+      height: 13px;
+      background: $color-green;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 32%;
     }
   }
 }
