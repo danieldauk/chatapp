@@ -13,10 +13,8 @@
           v-if="message.sender"
           :message="message"
           :is-previous-message-own="index === 0 ? false : date.messages[index - 1].sender === message.sender"
+          :isLastMessage="isLastMessage(message._id)"
         />
-        <app-read-by-entry
-        :message="message"
-        v-if="isLastMessage(message._id)" />
         <app-conversation-entry v-if="!message.sender" :entry="message.content"/>
       </div>
     </div>
@@ -28,13 +26,11 @@ import findIndex from 'lodash/findIndex';
 import Message from "./Components/Message/Message.vue";
 import ConversationEntry from "./Components/ConversationEntry/ConversationEntry.vue";
 import UnreadMessagesEntry from "./Components/UnreadMessagesEntry/UnreadMessagesEntry.vue";
-import ReadByEntry from "./Components/ReadByEntry/ReadByEntry.vue";
 
 export default {
   components: {
     appConversationEntry: ConversationEntry,
     appUnreadMessagesEntry: UnreadMessagesEntry,
-    appReadByEntry: ReadByEntry,
     appMessage: Message
   },
   props: {

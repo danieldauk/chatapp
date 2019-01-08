@@ -1,10 +1,7 @@
 <template>
-  <div :class="['message', {'message--own': isOwnMessage}]">
+  <div :class="['message', {'message--own': isOwnMessage}, {'message--is-last': isLastMessage}]">
     <div class="message__avatar">
-      <img
-        v-if="!isPreviousMessageOwn"
-        :src="avatar"
-      >
+      <img v-if="!isPreviousMessageOwn" :src="avatar">
     </div>
     <div class="message__container">
       <div
@@ -14,30 +11,38 @@
         <span
           v-if="!isDialogue && !isOwnMessage"
           class="message__container__info--name"
-        >
-          {{ participantName }},
-        </span>
-        <span class="message__container__info--time">
-          {{ time }}
-        </span>
+        >{{ participantName }},</span>
+        <span class="message__container__info--time">{{ time }}</span>
       </div>
       <div
         :class="['message__container__body', {'message__container__body--own': isOwnMessage},{'message__container__body--other': !isOwnMessage}, {'message__container__body--subsequent': isPreviousMessageOwn}]"
+      >{{ message.content }}</div>
+      <div
+        :class="['message__container__read-by', {'message__container__read-by--own': isOwnMessage}]"
       >
-        {{ message.content }}
+        <app-read-by-entry :message="message" v-if="isLastMessage"/>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import ReadByEntry from "./Components/ReadByEntry/ReadByEntry.vue";
+
 export default {
+  components: {
+    appReadByEntry: ReadByEntry
+  },
   props: {
     message: {
       type: Object,
       required: true
     },
     isPreviousMessageOwn: {
+      type: Boolean,
+      required: true
+    },
+    isLastMessage: {
       type: Boolean,
       required: true
     }
@@ -47,16 +52,20 @@ export default {
       return this.message.sender === this.$store.state.user.current._id;
     },
     avatar() {
-      return this.$store.getters['conversation/getParticipantAvatarLink'](this.message.sender);
+      return this.$store.getters["conversation/getParticipantAvatarLink"](
+        this.message.sender
+      );
     },
     isDialogue() {
-      return this.$store.getters['conversation/isDialogue'];
+      return this.$store.getters["conversation/isDialogue"];
     },
     participantName() {
-      return this.$store.getters['conversation/getParticipantName'](this.message.sender);
+      return this.$store.getters["conversation/getParticipantName"](
+        this.message.sender
+      );
     },
     time() {
-      return this.$options.filters.formatDate(this.message.createdAt, 'HH:mm');
+      return this.$options.filters.formatDate(this.message.createdAt, "HH:mm");
     }
   }
 };
@@ -69,6 +78,9 @@ export default {
   margin-top: 10px;
   &--own {
     flex-direction: row-reverse;
+  }
+  &--is-last {
+    margin-bottom: 15px;
   }
   &__avatar {
     display: flex;
@@ -87,6 +99,15 @@ export default {
     display: flex;
     flex-direction: column;
     max-width: 50%;
+    position: relative;
+    &__read-by {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      &--own {
+        right: 0;
+      }
+    }
     &__info {
       font-size: 10px;
       color: $color-silver;
