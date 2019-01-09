@@ -61,7 +61,10 @@ module.exports = async (socket, userId) => {
     // wait for all queries to resolve
     const unreadMessagesArrays = await Promise.all(queries);
     // flatten array
-    const unreadMessages = unreadMessagesArrays.reduce((result, unreadConversationMessages) => result.concat(unreadConversationMessages));
+    let unreadMessages = [];
+    if (unreadMessagesArrays.length !== 0) {
+      unreadMessages = unreadMessagesArrays.reduce((result, unreadConversationMessages) => result.concat(unreadConversationMessages));
+    }
     // assign for each conversation last conversation message and unread messages count
     const updatedConversations = conversations.map((conversation) => {
       const unreadConversationMessages = unreadMessages.filter(unreadMessage => unreadMessage.conversationId.toString() === conversation._id.toString()).length;
