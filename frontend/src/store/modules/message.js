@@ -52,12 +52,18 @@ export default new AbstractStoreModule({
       });
     },
     setLast(thisModule, newMessage) {
-      const updatedMessages = thisModule.state.all.map((message) => {
-        if (message.conversationId === newMessage.conversationId) {
-          return newMessage;
-        }
-        return message;
-      });
+      const isConversationNew = !thisModule.state.all.find(message => message.conversationId === newMessage.conversationId);
+      let updatedMessages = [ ...thisModule.state.all ];
+      if (isConversationNew) {
+        updatedMessages.push(newMessage);
+      } else {
+        updatedMessages = thisModule.state.all.map((message) => {
+          if (message.conversationId === newMessage.conversationId) {
+            return newMessage;
+          }
+          return message;
+        });
+      }
       thisModule.commit('setAll', updatedMessages);
     },
     setUnread(thisModule, unreadMessages) {
