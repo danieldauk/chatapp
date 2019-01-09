@@ -1,8 +1,5 @@
 <template>
-  <v-form
-    class="message-form"
-    @submit.prevent="submitForm"
-  >
+  <v-form class="message-form" @submit.prevent="submitForm">
     <v-text-field
       class="message-form__input"
       solo
@@ -11,6 +8,7 @@
       height="60"
       placeholder="Type something to send..."
       @input="setFormElementValue"
+      append-icon="insert_emoticon"
     />
   </v-form>
 </template>
@@ -27,16 +25,16 @@ export default {
       if (!this.message) {
         return;
       }
-      await this.$store.dispatch('message/send', {
+      await this.$store.dispatch("message/send", {
         content: this.message,
-        conversationId: this.$store.getters['conversation/getCurrentId']
+        conversationId: this.$store.getters["conversation/getCurrentId"]
       });
-      this.$store.dispatch('messageForm/reset');
+      this.$store.dispatch("messageForm/reset");
     },
     setFormElementValue(value) {
-      this.$store.dispatch('messageForm/setValue', {
+      this.$store.dispatch("messageForm/setValue", {
         value,
-        id: 'message'
+        id: "message"
       });
     }
   }
@@ -49,6 +47,18 @@ export default {
   &__input {
     /deep/ .v-input__slot {
       box-shadow: none !important;
+      .v-input__append-inner {
+        display: flex;
+        align-items: center;
+        padding-left: 12px;
+        margin-left: 12px;
+        height: 100%;
+        border-left: 1px solid rgba($color-silver, 0.2);
+        .v-icon {
+          color: $color-silver !important;
+          cursor: pointer;
+        }
+      }
       input {
         font-size: 15px;
         &::placeholder {
