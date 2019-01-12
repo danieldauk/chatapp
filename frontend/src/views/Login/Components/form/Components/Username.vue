@@ -3,6 +3,7 @@
     :value="username"
     :rules="validationRules"
     label="Username"
+    browser-autocomplete="new-password"
     :error-messages="error"
     validate-on-blur
     required

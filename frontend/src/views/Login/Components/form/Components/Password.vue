@@ -3,6 +3,7 @@
     :value="password"
     :type="isPasswordShown ? 'text' : 'password'"
     :append-icon="isPasswordShown ? 'visibility_off' : 'visibility'"
+    browser-autocomplete="new-password"
     :rules="validationRules"
     label="Password"
     :error-messages="error"
