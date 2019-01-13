@@ -72,7 +72,6 @@ export default {
       this.isEmojiPickerShown = false;
     },
     addEmoji(emoji) {
-      console.log(emoji);
       this.$refs.input.focus();
       const messageWithAddedEmoji = `${this.message}${emoji.native}`;
       this.setFormElementValue(messageWithAddedEmoji);

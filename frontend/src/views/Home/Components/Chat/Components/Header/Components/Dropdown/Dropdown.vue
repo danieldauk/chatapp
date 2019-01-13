@@ -76,9 +76,7 @@ export default {
       this.$store.dispatch('UI/openAddParticipantDialog');
     },
     removeContact() {
-      console.log('userId', this.$store.getters['user/getCurrentId']);
       const contactId = this.currentConversation.participants.find(participant => participant._id !== this.$store.getters['user/getCurrentId'])._id;
-      console.log('contactId', contactId);
       this.$store.dispatch('conversation/clearHistory');
       this.$store.dispatch('conversation/clearCurrent');
       this.$store.dispatch('contact/remove', contactId);
