@@ -1,15 +1,21 @@
 <template>
   <div class="read-by">
-    <div v-for="(participantId, index) in participantList" :key="participantId" class="read-by__avatar">
-      <img 
-      v-if="index < maxParticipantsAvatars"
-      class="read-by__avatar__image" 
-      :src="getAvatarLink(participantId)" 
-      :alt="getParticipantName(participantId)">
-      <div 
-      v-if="index === maxParticipantsAvatars"
-      class="read-by__avatar__remaining">
-      {{remainingParticipants}}
+    <div
+      v-for="(participantId, index) in participantList"
+      :key="participantId"
+      class="read-by__avatar"
+    >
+      <img
+        v-if="index < maxParticipantsAvatars"
+        class="read-by__avatar__image"
+        :src="getAvatarLink(participantId)"
+        :alt="getParticipantName(participantId)"
+      >
+      <div
+        v-if="index === maxParticipantsAvatars"
+        class="read-by__avatar__remaining"
+      >
+        {{ remainingParticipants }}
       </div>
     </div>
   </div>
@@ -17,22 +23,21 @@
 
 <script>
 export default {
-  data() {
-    return {
-      maxParticipantsAvatars: 5
-    }
-  },
   props: {
     message: {
       type: Object,
       required: true
     }
   },
+  data() {
+    return {
+      maxParticipantsAvatars: 5
+    };
+  },
   computed: {
     participantList() {
-      return this.message.readBy.filter(participantId => {
-        const isSelf =
-          participantId === this.$store.getters["user/getCurrentId"];
+      return this.message.readBy.filter((participantId) => {
+        const isSelf = participantId === this.$store.getters['user/getCurrentId'];
         const isSender = participantId === this.message.sender;
         if (isSelf || isSender) {
           return false;
@@ -48,7 +53,7 @@ export default {
   },
   methods: {
     getAvatarLink(participantId) {
-      return this.$store.getters["conversation/getParticipantAvatarLink"](
+      return this.$store.getters['conversation/getParticipantAvatarLink'](
         participantId
       );
     },
@@ -58,7 +63,6 @@ export default {
   }
 };
 </script>
-
 
 
 <style lang="scss" scoped>

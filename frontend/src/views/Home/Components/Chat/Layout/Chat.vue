@@ -1,13 +1,16 @@
 <template>
   <div class="chat">
     <div class="chat__header">
-      <slot name="header"/>
+      <slot name="header" />
     </div>
-    <div ref="body" class="chat__body">
-      <slot name="body"/>
+    <div
+      ref="body"
+      class="chat__body"
+    >
+      <slot name="body" />
     </div>
     <div class="chat__footer">
-      <slot name="footer"/>
+      <slot name="footer" />
     </div>
   </div>
 </template>

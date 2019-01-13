@@ -2957,6 +2957,13 @@ elliptic@^6.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
 
+emoji-mart-vue@^2.6.6:
+  version "2.6.6"
+  resolved "https://registry.yarnpkg.com/emoji-mart-vue/-/emoji-mart-vue-2.6.6.tgz#afd60da47ff0b59938b3d3cd90dacab6ab0f531e"
+  integrity sha512-844CI/Sa99G6goiZN6u+zT5XxB4wUhpYYTK8s3FrU2fl9y0ckbqe0uw7EuY0R53hb4bo9uJHVOPywE+C4vu4fg==
+  dependencies:
+    postcss-loader "^3.0.0"
+
 emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
@@ -8615,6 +8622,11 @@ vue-cli-plugin-vuetify@^0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/vue-cli-plugin-vuetify/-/vue-cli-plugin-vuetify-0.4.5.tgz#f85ee699fbff46131457a89220de95b8203f279a"
   integrity sha512-OXeKzTZY2Fp6FX0XuF8TosjzO1eCNzbafWierS33/zzKMgWOTdVF4dj/CUDIW7fav/6brBxebsu6RD4rnSF9qg==
+
+vue-click-outside@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/vue-click-outside/-/vue-click-outside-1.0.7.tgz#cdd2b1605e3c4944784e1794eae4a12a0f700bd6"
+  integrity sha1-zdKxYF48SUR4TheU6uShKg9wC9Y=
 
 vue-cropperjs@^3.0.0:
   version "3.0.0"

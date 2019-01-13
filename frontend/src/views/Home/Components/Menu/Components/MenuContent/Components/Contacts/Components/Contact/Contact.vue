@@ -1,18 +1,31 @@
 <template>
-  <div class="contact" @click="onClickHandler">
+  <div
+    class="contact"
+    @click="onClickHandler"
+  >
     <div class="contact__avatar">
-      <img class="contact__avatar__image" :src="imageLink">
+      <img
+        class="contact__avatar__image"
+        :src="imageLink"
+      >
       <div
         :class="['contact__avatar__online-indicator', {'contact__avatar__online-indicator--is-online': isOnline}]"
       />
     </div>
     <div class="contact__info">
-      <div class="contact__info__name">{{ name | truncateString(20) }}</div>
-      <div class="contact__info__last-message">{{ lastMessage | truncateString(30) }}</div>
+      <div class="contact__info__name">
+        {{ name | truncateString(20) }}
+      </div>
+      <div class="contact__info__last-message">
+        {{ lastMessage | truncateString(30) }}
+      </div>
     </div>
-    <div 
-    v-if='unreadMessages'
-    class="contact__unread-messages">{{unreadMessages}}</div>
+    <div
+      v-if="unreadMessages"
+      class="contact__unread-messages"
+    >
+      {{ unreadMessages }}
+    </div>
   </div>
 </template>
 
@@ -30,26 +43,26 @@ export default {
   },
   computed: {
     imageLink() {
-      return this.$store.getters["contact/getAvatarLink"](this.id);
+      return this.$store.getters['contact/getAvatarLink'](this.id);
     },
     name() {
-      return this.$store.getters["contact/getName"](this.id);
+      return this.$store.getters['contact/getName'](this.id);
     },
     isOnline() {
-      return this.$store.getters["person/isOnline"](this.id);
+      return this.$store.getters['person/isOnline'](this.id);
     },
     lastMessage() {
-      return this.$store.getters["message/getLast"](this.conversationId);
+      return this.$store.getters['message/getLast'](this.conversationId);
     },
     unreadMessages() {
-      const unreadMessages = this.$store.getters["message/getUnreadCount"](this.conversationId);
+      const unreadMessages = this.$store.getters['message/getUnreadCount'](this.conversationId);
       return unreadMessages > 99 ? '99' : unreadMessages;
     }
   },
   methods: {
     onClickHandler() {
       this.$store.dispatch(
-        "message/clearUnreadConversationMessages",
+        'message/clearUnreadConversationMessages',
         this.conversationId
       );
       this.loadConversation();
@@ -57,16 +70,16 @@ export default {
     async loadConversation() {
       // check if conversation loaded is the same
       if (
-        this.$store.getters["conversation/getCurrentId"] === this.conversationId
+        this.$store.getters['conversation/getCurrentId'] === this.conversationId
       ) {
         return;
       }
-      const conversation = await this.$store.getters["conversation/getById"](
+      const conversation = await this.$store.getters['conversation/getById'](
         this.conversationId
       );
       if (conversation) {
-        await this.$store.dispatch("conversation/setCurrent", conversation);
-        this.$store.dispatch("conversation/loadHistory", conversation._id);
+        await this.$store.dispatch('conversation/setCurrent', conversation);
+        this.$store.dispatch('conversation/loadHistory', conversation._id);
       }
     }
   }

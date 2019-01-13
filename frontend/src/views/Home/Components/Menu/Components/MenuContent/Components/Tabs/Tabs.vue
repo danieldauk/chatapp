@@ -14,9 +14,12 @@
       <span class="tabs__tab__text">
         Contacts
       </span>
-      <div 
-      v-if="unreadDialogues"
-      class="tabs__tab__badge">{{unreadDialogues}}</div>
+      <div
+        v-if="unreadDialogues"
+        class="tabs__tab__badge"
+      >
+        {{ unreadDialogues }}
+      </div>
     </div>
     <div
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.CHATS}]"
@@ -28,9 +31,12 @@
       <span class="tabs__tab__text">
         Chats
       </span>
-      <div 
-      v-if="unreadChats"
-      class="tabs__tab__badge">{{unreadChats}}</div>
+      <div
+        v-if="unreadChats"
+        class="tabs__tab__badge"
+      >
+        {{ unreadChats }}
+      </div>
     </div>
     <div
       :class="['tabs__tab', {'tabs__tab--active': activeMenuTab === tabEnum.PEOPLE}]"

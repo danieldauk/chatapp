@@ -1,8 +1,10 @@
 <template>
   <div class="unread-messages">
-    <div class="unread-messages__line"></div>
-    <div class="unread-messages__text">Unread messages</div>
-    <div class="unread-messages__line"></div>
+    <div class="unread-messages__line" />
+    <div class="unread-messages__text">
+      Unread messages
+    </div>
+    <div class="unread-messages__line" />
   </div>
 </template>
 
@@ -25,4 +27,3 @@
     }
   }
 </style>
-

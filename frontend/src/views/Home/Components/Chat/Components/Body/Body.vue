@@ -1,18 +1,22 @@
 <template>
-  <div ref="body" class="chat-body">
-    <app-date 
-    v-for="date in history" 
-    :key="date.date" 
-    class="chat-body__date" 
-    :date="date"
-    :isLastDate="isLastDate(date.date)"
-    :unreadMessagesEntryPosition="unreadMessagesEntryPosition" />
+  <div
+    ref="body"
+    class="chat-body"
+  >
+    <app-date
+      v-for="date in history"
+      :key="date.date"
+      class="chat-body__date"
+      :date="date"
+      :is-last-date="isLastDate(date.date)"
+      :unread-messages-entry-position="unreadMessagesEntryPosition"
+    />
   </div>
 </template>
 
 <script>
 import findIndex from 'lodash/findIndex';
-import Date from "./Components/Date/Date.vue";
+import Date from './Components/Date/Date.vue';
 
 export default {
   components: {
@@ -29,19 +33,19 @@ export default {
     },
     unreadMessagesEntryPosition() {
       let wasPositionFound = false;
-      let unreadMessagesEntryPosition = "";
+      let unreadMessagesEntryPosition = '';
       if (this.history.length !== 0) {
-        this.history.forEach(date => {
+        this.history.forEach((date) => {
           if (wasPositionFound) {
             return;
           }
-          date.messages.forEach(message => {
+          date.messages.forEach((message) => {
             if (wasPositionFound) {
               return;
             }
             if (!message.readBy.includes(this.$store.getters['user/getCurrentId'])) {
               wasPositionFound = true;
-              unreadMessagesEntryPosition = message._id
+              unreadMessagesEntryPosition = message._id;
             }
           });
         });
@@ -50,13 +54,13 @@ export default {
     }
   },
   mounted() {
-    this.unsubscribeFromAction = this.$store.subscribeAction(action => {
-      if (action.type === "conversation/setCurrent") {
+    this.unsubscribeFromAction = this.$store.subscribeAction((action) => {
+      if (action.type === 'conversation/setCurrent') {
         const currentConversationId = this.$store.getters[
-          "conversation/getCurrentId"
+          'conversation/getCurrentId'
         ];
         if (currentConversationId) {
-          this.$store.dispatch("message/markAsRead", currentConversationId);
+          this.$store.dispatch('message/markAsRead', currentConversationId);
         }
       }
     });
@@ -67,8 +71,7 @@ export default {
     const scrollHeight = element.scrollHeight;
     const clientHeight = element.clientHeight;
 
-    const lastDate =
-      this.history.length !== 0 ? this.history[this.history.length - 1] : null;
+    const lastDate = this.history.length !== 0 ? this.history[this.history.length - 1] : null;
     const lastMessage = lastDate
       ? lastDate.messages[lastDate.messages.length - 1]
       : null;
@@ -76,8 +79,8 @@ export default {
     // if user sent message
     // scroll to bottom of chat body
     if (
-      lastMessage &&
-      lastMessage.sender === this.$store.getters["user/getCurrentId"]
+      lastMessage
+      && lastMessage.sender === this.$store.getters['user/getCurrentId']
     ) {
       this.scrollTo(scrollHeight);
       return;
@@ -86,8 +89,8 @@ export default {
     // and scroll height is more than half of chat body height
     // dont scroll to bottom on new message event
     if (
-      scrollTop + clientHeight - scrollHeight <= -(clientHeight / 2) &&
-      scrollTop !== 0
+      scrollTop + clientHeight - scrollHeight <= -(clientHeight / 2)
+      && scrollTop !== 0
     ) {
       return;
     }
@@ -108,7 +111,7 @@ export default {
         return false;
       }
       const index = findIndex(this.history, currentDate => currentDate.date === date);
-      return (this.history.length -1) === index;
+      return (this.history.length - 1) === index;
     }
   }
 };
@@ -134,17 +137,6 @@ export default {
       padding-bottom: 20px;
     }
   }
-  &::-webkit-scrollbar-track-piece {
-    background: rgba(0, 0, 0, 0);
-  }
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-  &::-webkit-scrollbar-button {
-    display: none;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: $color-purple-medium;
-  }
+  @include custom-scrollbar;
 }
 </style>

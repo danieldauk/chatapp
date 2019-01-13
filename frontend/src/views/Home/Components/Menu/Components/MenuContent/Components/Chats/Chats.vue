@@ -21,9 +21,7 @@ export default {
   },
   computed: {
     conversations() {
-      return this.$store.state.conversation.all.filter(conversation => {
-        return (conversation.participants.length > 2) || (conversation.removedParticipants.length !== 0 &&conversation.participants.length >= 2);
-      });
+      return this.$store.state.conversation.all.filter(conversation => (conversation.participants.length > 2) || (conversation.removedParticipants.length !== 0 && conversation.participants.length >= 2));
     },
     currentSearchTerm() {
       // TODO: add fuzzysort: https://github.com/farzher/fuzzysort

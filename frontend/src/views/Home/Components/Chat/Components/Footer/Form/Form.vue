@@ -1,20 +1,47 @@
 <template>
-  <v-form class="message-form" @submit.prevent="submitForm">
+  <v-form
+    class="message-form"
+    @submit.prevent="submitForm"
+  >
     <v-text-field
+      ref="input"
       class="message-form__input"
       solo
       :value="message"
       hide-details
       height="60"
       placeholder="Type something to send..."
-      @input="setFormElementValue"
       append-icon="insert_emoticon"
+      :append-icon-cb="toggleEmojiPicker"
+      @keydown.enter="submitForm"
+      @input="setFormElementValue"
+    />
+    <app-emoji-picker
+      v-if="isEmojiPickerShown"
+      v-click-outside="closeEmojiPicker"
+      @click="$refs.input.$el.focus()"
+      @select="addEmoji"
     />
   </v-form>
 </template>
 
 <script>
+import ClickOutside from 'vue-click-outside';
+import replaceEmoticonsWithEmojies from '@/utils/replaceEmoticonsWithEmojies';
+import EmojiPicker from './Components/EmojiPicker.vue';
+
 export default {
+  components: {
+    appEmojiPicker: EmojiPicker
+  },
+  directives: {
+    ClickOutside
+  },
+  data() {
+    return {
+      isEmojiPickerShown: false
+    };
+  },
   computed: {
     message() {
       return this.$store.state.messageForm.data.message;
@@ -25,17 +52,30 @@ export default {
       if (!this.message) {
         return;
       }
-      await this.$store.dispatch("message/send", {
+      await this.$store.dispatch('message/send', {
         content: this.message,
-        conversationId: this.$store.getters["conversation/getCurrentId"]
+        conversationId: this.$store.getters['conversation/getCurrentId']
       });
-      this.$store.dispatch("messageForm/reset");
+      this.$store.dispatch('messageForm/reset');
     },
     setFormElementValue(value) {
-      this.$store.dispatch("messageForm/setValue", {
-        value,
-        id: "message"
+      const emojifiedMessage = replaceEmoticonsWithEmojies(value);
+      this.$store.dispatch('messageForm/setValue', {
+        value: emojifiedMessage,
+        id: 'message'
       });
+    },
+    toggleEmojiPicker() {
+      this.isEmojiPickerShown = !this.isEmojiPickerShown;
+    },
+    closeEmojiPicker() {
+      this.isEmojiPickerShown = false;
+    },
+    addEmoji(emoji) {
+      console.log(emoji);
+      this.$refs.input.focus();
+      const messageWithAddedEmoji = `${this.message}${emoji.native}`;
+      this.setFormElementValue(messageWithAddedEmoji);
     }
   }
 };
@@ -44,6 +84,7 @@ export default {
 
 <style lang="scss" scoped>
 .message-form {
+  position: relative;
   &__input {
     /deep/ .v-input__slot {
       box-shadow: none !important;
