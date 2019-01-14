@@ -105,6 +105,8 @@ export default {
     }
     &__last-message {
       font-size: 13px;
+      max-height: 1.1em;
+      overflow: hidden;
       color: $color-purple-medium;
     }
   }
