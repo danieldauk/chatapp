@@ -87,7 +87,7 @@ export default {
 }
 .emoji-picker {
   @include custom-scrollbar;
-  height: 210px;
+  height: 225px;
   width: 200px;
   overflow-y: auto;
   overflow-x: hidden;
