@@ -16,23 +16,19 @@
     />
     <app-emoji-picker
       class="message-form__emoji-picker"
-      @click.native="$refs.input.focus"
+
       @addEmoji="addEmoji"
     />
   </v-form>
 </template>
 
 <script>
-import ClickOutside from 'vue-click-outside';
 import replaceEmoticonsWithEmojies from '@/utils/emojies/replaceEmoticonsWithEmojies';
 import EmojiPicker from './Components/EmojiPicker.vue';
 
 export default {
   components: {
     appEmojiPicker: EmojiPicker
-  },
-  directives: {
-    ClickOutside
   },
   computed: {
     message() {

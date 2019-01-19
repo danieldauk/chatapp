@@ -1,5 +1,9 @@
 <template>
-  <emoji-picker @select="$emit('select', $event)">
+  <emoji-picker
+    v-click-outside="clearSearch"
+    :search="search"
+    @select="$emit('select', $event)"
+  >
     <v-icon
       slot="emoji-invoker"
       slot-scope="{ events }"
@@ -13,6 +17,18 @@
       class="emoji-picker-container"
     >
       <div class="emoji-picker">
+        <div class="emoji-picker__search">
+          <v-text-field
+            v-model="search"
+            solo
+            hide-details
+            placeholder="Search emojies"
+            class="emoji-picker__search__input"
+            prepend-icon="search"
+            clearable
+            type="text"
+          />
+        </div>
         <div
           v-for="(emojiGroup, category) in emojis"
           :key="category"
@@ -44,6 +60,16 @@ import EmojiPicker from 'vue-emoji-picker';
 export default {
   components: {
     EmojiPicker
+  },
+  data() {
+    return {
+      search: ''
+    };
+  },
+  methods: {
+    clearSearch() {
+      this.search = '';
+    }
   }
 };
 </script>
@@ -65,10 +91,57 @@ export default {
   width: 200px;
   overflow-y: auto;
   overflow-x: hidden;
+  &__search {
+    border-radius: 5px;
+    padding: 0 10px;
+    margin-right: 10px;
+    border: 1px solid rgba($color-silver, 0.6);
+    overflow: hidden;
+    margin-bottom: 5px;
+    &__input {
+      /deep/ .v-input__prepend-outer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 32px;
+        margin: 0;
+        margin-right: 10px;
+        .v-icon {
+          font-size: 20px;
+          color: $color-silver !important;
+        }
+      }
+      /deep/ .v-input__control {
+        min-height: 32px;
+      }
+      /deep/ .v-input__slot {
+        padding: 0;
+        box-shadow: none !important;
+        .v-input__append-inner {
+          display: flex;
+          align-items: center;
+          height: 100%;
+          .v-icon {
+            color: $color-silver !important;
+            cursor: pointer;
+            font-size: 16px;
+          }
+        }
+
+        input {
+          font-size: 15px;
+          &::placeholder {
+            color: $color-silver;
+          }
+        }
+      }
+    }
+  }
   &__category {
     width: 100%;
     &__header {
-      color: $color-purple-dark;
+      color: $color-purple-medium;
+      font-weight: 700;
     }
     &__emojies {
       width: 100%;
