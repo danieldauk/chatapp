@@ -129,7 +129,7 @@ export default {
     }
     &__body {
       box-shadow: 0px 2px 5px 1px rgba($color-purple-ultra-dark, 0.2);
-      line-height: 1;
+      line-height: 1.2;
       font-size: 13px;
       padding: 5px 15px;
       height: max-content;

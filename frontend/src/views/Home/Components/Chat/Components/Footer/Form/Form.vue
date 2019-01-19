@@ -11,23 +11,20 @@
       hide-details
       height="60"
       placeholder="Type something to send..."
-      append-icon="insert_emoticon"
-      :append-icon-cb="toggleEmojiPicker"
       @keydown.enter="submitForm"
       @input="setFormElementValue"
     />
     <app-emoji-picker
-      v-if="isEmojiPickerShown"
-      v-click-outside="closeEmojiPicker"
-      @click="$refs.input.$el.focus()"
-      @select="addEmoji"
+      class="message-form__emoji-picker"
+      @click.native="$refs.input.focus"
+      @addEmoji="addEmoji"
     />
   </v-form>
 </template>
 
 <script>
 import ClickOutside from 'vue-click-outside';
-import replaceEmoticonsWithEmojies from '@/utils/replaceEmoticonsWithEmojies';
+import replaceEmoticonsWithEmojies from '@/utils/emojies/replaceEmoticonsWithEmojies';
 import EmojiPicker from './Components/EmojiPicker.vue';
 
 export default {
@@ -36,11 +33,6 @@ export default {
   },
   directives: {
     ClickOutside
-  },
-  data() {
-    return {
-      isEmojiPickerShown: false
-    };
   },
   computed: {
     message() {
@@ -65,15 +57,9 @@ export default {
         id: 'message'
       });
     },
-    toggleEmojiPicker() {
-      this.isEmojiPickerShown = !this.isEmojiPickerShown;
-    },
-    closeEmojiPicker() {
-      this.isEmojiPickerShown = false;
-    },
     addEmoji(emoji) {
       this.$refs.input.focus();
-      const messageWithAddedEmoji = `${this.message}${emoji.native}`;
+      const messageWithAddedEmoji = `${this.message}${emoji}`;
       this.setFormElementValue(messageWithAddedEmoji);
     }
   }
@@ -84,6 +70,14 @@ export default {
 <style lang="scss" scoped>
 .message-form {
   position: relative;
+  display: flex;
+  align-items: center;
+  &__emoji-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 12px;
+  }
   &__input {
     /deep/ .v-input__slot {
       box-shadow: none !important;

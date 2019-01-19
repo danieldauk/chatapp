@@ -1,46 +1,94 @@
 <template>
-  <picker
-    class="picker"
-    :include="['people']"
-    :native="true"
-    :skin="1"
-    :per-line="8"
-    :emoji-size="16"
-    set="messenger"
-    :show-skin-tones="false"
-    :show-categories="false"
-    :show-preview="false"
-    :sheet-size="16"
-    @select="$emit('select', $event)"
-  />
+  <emoji-picker @select="$emit('select', $event)">
+    <v-icon
+      slot="emoji-invoker"
+      slot-scope="{ events }"
+      v-on="events"
+    >
+      insert_emoticon
+    </v-icon>
+    <div
+      slot="emoji-picker"
+      slot-scope="{ emojis }"
+      class="emoji-picker-container"
+    >
+      <div class="emoji-picker">
+        <div
+          v-for="(emojiGroup, category) in emojis"
+          :key="category"
+          class="emoji-picker__category"
+        >
+          <h5 class="emoji-picker__category__header">
+            {{ category }}
+          </h5>
+          <div class="emoji-picker__category__emojies">
+            <div
+              v-for="(emoji, emojiName) in emojiGroup"
+              :key="emojiName"
+              class="emoji-picker__category__emojies__emoji"
+              :title="emojiName"
+              @click="$emit('addEmoji', emoji)"
+            >
+              {{ emoji }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </emoji-picker>
 </template>
 
 <script>
-import { Picker } from 'emoji-mart-vue';
+import EmojiPicker from 'vue-emoji-picker';
 
 export default {
   components: {
-    Picker
+    EmojiPicker
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.picker {
+.emoji-picker-container {
   position: absolute;
-  bottom: 60px;
+  bottom: 61px;
   right: 0;
-  height: 200px !important;
-  /deep/ .emoji-mart-search {
-    input {
-      font-size: 14px;
+  background: white;
+  padding: 10px 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+.emoji-picker {
+  @include custom-scrollbar;
+  height: 210px;
+  width: 200px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &__category {
+    width: 100%;
+    &__header {
+      color: $color-purple-dark;
     }
-  }
-  /deep/ .emoji-mart-category-label {
-    font-size: 14px;
-  }
-  /deep/ .emoji-mart-scroll {
-    @include custom-scrollbar;
+    &__emojies {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      &__emoji {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 23px;
+        height: 23px;
+        cursor: pointer;
+        border-radius: 50%;
+        &:hover {
+          background: rgba($color-silver, 0.2);
+          transform: scale(1.3);
+          transition: 0.1s;
+        }
+      }
+    }
   }
 }
 </style>
