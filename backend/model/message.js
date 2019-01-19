@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
+const mongoosePaginate = require('mongoose-paginate-v2');
 Joi.objectId = require('joi-objectid')(Joi);
 
 const messageSchema = new mongoose.Schema(
@@ -32,6 +33,8 @@ const messageSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+messageSchema.plugin(mongoosePaginate);
 
 const Message = mongoose.model('Message', messageSchema);
 

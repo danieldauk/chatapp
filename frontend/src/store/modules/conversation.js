@@ -5,7 +5,11 @@ import { SocketEventsEnum } from '@/utils/enumerators';
 
 export default new AbstractStoreModule({
   state: {
-    history: []
+    history: [],
+    currentPage: null,
+    totalPages: null,
+    hasNextPage: false,
+    pageLimit: 100
   },
   getters: {
     getCurrentId(state) {
@@ -56,11 +60,20 @@ export default new AbstractStoreModule({
     },
     clearHistory(state) {
       state.history = [];
+    },
+    setPaginationInfo(state, { hasNextPage, currentPage, totalPages }) {
+      state.hasNextPage = hasNextPage;
+      state.currentPage = currentPage;
+      state.totalPages = totalPages;
     }
   },
   actions: {
     loadAll() {
       socket.emit(SocketEventsEnum.REQUEST_CONVERSATIONS);
+    },
+    async setCurrent(thisModule, current) {
+      await thisModule.dispatch('clearHistory');
+      thisModule.commit('setCurrent', current);
     },
     init(thisModule, participants) {
       socket.emit(SocketEventsEnum.REQUEST_CREATE_CONVERSATION, participants);
@@ -71,8 +84,22 @@ export default new AbstractStoreModule({
     setHistory(thisModule, history) {
       thisModule.commit('setHistory', history);
     },
-    loadHistory(thisModule, conversationdId) {
-      socket.emit(SocketEventsEnum.REQUEST_MESSAGES, conversationdId);
+    loadHistory(thisModule, conversationId) {
+      socket.emit(SocketEventsEnum.REQUEST_MESSAGES, {
+        conversationId,
+        page: 1,
+        pageLimit: thisModule.state.pageLimit
+      });
+    },
+    loadNextHistoryPage(thisModule, conversationId) {
+      if (!thisModule.state.hasNextPage) {
+        return;
+      }
+      socket.emit(SocketEventsEnum.REQUEST_MESSAGES, {
+        conversationId,
+        page: thisModule.state.currentPage + 1,
+        pageLimit: thisModule.state.pageLimit
+      });
     },
     clearHistory(thisModule) {
       thisModule.commit('clearHistory');
@@ -123,6 +150,9 @@ export default new AbstractStoreModule({
     },
     leave(thisModule, conversationId) {
       socket.emit(SocketEventsEnum.REQUEST_LEAVE_CONVERSATION, conversationId);
+    },
+    setPaginationInfo(thisModule, paginationInfo) {
+      thisModule.commit('setPaginationInfo', paginationInfo);
     }
   }
 });

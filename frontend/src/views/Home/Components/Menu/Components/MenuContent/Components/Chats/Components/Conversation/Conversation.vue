@@ -1,5 +1,8 @@
 <template>
-  <div class="conversation" @click="onClickHandler">
+  <div
+    class="conversation"
+    @click="onClickHandler"
+  >
     <div class="conversation__avatars">
       <img
         v-for="(participant, index) in shownParticipants"
@@ -12,13 +15,24 @@
         v-if="remainingParticipants > 0"
         :style="{left: `${maxAvatars * 20}px`}"
         class="conversation__avatars__remaining"
-      >+{{ remainingParticipants }}</div>
+      >
+        +{{ remainingParticipants }}
+      </div>
     </div>
     <div class="conversation__info">
-      <div class="conversation__info__title">{{ conversation.title | truncateString(20) }}</div>
-      <div class="conversation__info__last-message">{{ lastMessage | truncateString(20) }}</div>
+      <div class="conversation__info__title">
+        {{ conversation.title | truncateString(20) }}
+      </div>
+      <div class="conversation__info__last-message">
+        {{ lastMessage | truncateString(20) }}
+      </div>
     </div>
-    <div v-if="unreadMessages" class="conversation__unread-messages">{{ unreadMessages }}</div>
+    <div
+      v-if="unreadMessages"
+      class="conversation__unread-messages"
+    >
+      {{ unreadMessages }}
+    </div>
   </div>
 </template>
 
@@ -43,19 +57,19 @@ export default {
       return this.conversation.participants.slice(0, this.maxAvatars + 1);
     },
     lastMessage() {
-      return this.$store.getters["message/getLast"](this.conversation._id);
+      return this.$store.getters['message/getLast'](this.conversation._id);
     },
     unreadMessages() {
-      const unreadMessages = this.$store.getters["message/getUnreadCount"](
+      const unreadMessages = this.$store.getters['message/getUnreadCount'](
         this.conversation._id
       );
-      return unreadMessages > 99 ? "99" : unreadMessages;
+      return unreadMessages > 99 ? '99' : unreadMessages;
     }
   },
   methods: {
     avatarPosition(index) {
       if (index === 0) {
-        return "0px";
+        return '0px';
       }
       return `${index * 20}px`;
     },
@@ -64,20 +78,20 @@ export default {
     },
     onClickHandler() {
       this.$store.dispatch(
-        "message/clearUnreadConversationMessages",
+        'message/clearUnreadConversationMessages',
         this.conversation._id
       );
       this.loadConversation();
     },
     async loadConversation() {
       if (
-        this.$store.getters["conversation/getCurrentId"] ===
-        this.conversation._id
+        this.$store.getters['conversation/getCurrentId']
+        === this.conversation._id
       ) {
         return;
       }
-      await this.$store.dispatch("conversation/setCurrent", this.conversation);
-      this.$store.dispatch("conversation/loadHistory", this.conversation._id);
+      await this.$store.dispatch('conversation/setCurrent', this.conversation);
+      this.$store.dispatch('conversation/loadHistory', this.conversation._id);
     }
   }
 };

@@ -72,8 +72,8 @@ module.exports = (io) => {
       addParticipants(socket, userId, conversationData);
     });
     // MESSAGES events
-    socket.on(SocketEventsEnum.REQUEST_MESSAGES, (conversationId) => {
-      getMessages(socket, userId, conversationId);
+    socket.on(SocketEventsEnum.REQUEST_MESSAGES, ({ conversationId, pageLimit, page }) => {
+      getMessages(socket, userId, conversationId, pageLimit, page);
     });
     socket.on(SocketEventsEnum.SET_MESSAGES_AS_READ, (conversationId) => {
       setMessagesAsRead(socket, userId, conversationId);

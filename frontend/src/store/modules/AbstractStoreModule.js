@@ -111,8 +111,8 @@ export default class AbstractStoreModule {
       ...initialMutations
     };
     this.actions = {
-      ...actions,
-      ...initialActions
+      ...initialActions,
+      ...actions
     };
   }
 }

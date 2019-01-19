@@ -3,6 +3,9 @@
     ref="body"
     class="chat-body"
   >
+    <infinite-loading
+      class="chat-body__infinite-scrolling"
+    />
     <app-date
       v-for="date in history"
       :key="date.date"
@@ -17,10 +20,12 @@
 <script>
 import findIndex from 'lodash/findIndex';
 import Date from './Components/Date/Date.vue';
+import InfiniteLoading from './Components/InfiniteLoading/InfiniteLoading.vue';
 
 export default {
   components: {
-    appDate: Date
+    appDate: Date,
+    InfiniteLoading
   },
   data() {
     return {
@@ -43,7 +48,9 @@ export default {
             if (wasPositionFound) {
               return;
             }
-            if (!message.readBy.includes(this.$store.getters['user/getCurrentId'])) {
+            if (
+              !message.readBy.includes(this.$store.getters['user/getCurrentId'])
+            ) {
               wasPositionFound = true;
               unreadMessagesEntryPosition = message._id;
             }
@@ -63,6 +70,13 @@ export default {
           this.$store.dispatch('message/markAsRead', currentConversationId);
         }
       }
+      if (action.type === 'message/send') {
+        // if user sent message
+        // scroll to bottom of chat body
+        const element = this.$refs.body;
+        const scrollHeight = element.scrollHeight;
+        this.scrollTo(scrollHeight);
+      }
     });
   },
   updated() {
@@ -70,31 +84,14 @@ export default {
     const scrollTop = element.scrollTop;
     const scrollHeight = element.scrollHeight;
     const clientHeight = element.clientHeight;
-
-    const lastDate = this.history.length !== 0 ? this.history[this.history.length - 1] : null;
-    const lastMessage = lastDate
-      ? lastDate.messages[lastDate.messages.length - 1]
-      : null;
-
-    // if user sent message
-    // scroll to bottom of chat body
-    if (
-      lastMessage
-      && lastMessage.sender === this.$store.getters['user/getCurrentId']
-    ) {
-      this.scrollTo(scrollHeight);
-      return;
-    }
     // if user scrolled up to see conversation history
-    // and scroll height is more than half of chat body height
+    // and scroll height is more than chat body height
     // dont scroll to bottom on new message event
     if (
-      scrollTop + clientHeight - scrollHeight <= -(clientHeight / 2)
-      && scrollTop !== 0
+      (scrollTop + clientHeight - scrollHeight <= -clientHeight) && scrollHeight !== 0
     ) {
       return;
     }
-
     this.scrollTo(scrollHeight);
   },
   destroyed() {
@@ -110,8 +107,11 @@ export default {
       if (this.history.length === 0) {
         return false;
       }
-      const index = findIndex(this.history, currentDate => currentDate.date === date);
-      return (this.history.length - 1) === index;
+      const index = findIndex(
+        this.history,
+        currentDate => currentDate.date === date
+      );
+      return this.history.length - 1 === index;
     }
   }
 };
@@ -122,9 +122,15 @@ export default {
 .chat-body {
   display: grid;
   grid-template-columns: 1fr repeat(12, minmax(30px, 70px)) 1fr;
+  grid-template-rows: max-content max-content;
   height: 100%;
   overflow-y: auto;
+  overflow-anchor: none !important;
   padding: 0;
+  &__infinite-scrolling {
+    grid-column: 2 / 14;
+    height: max-content;
+  }
   &__date {
     grid-column: 2 / 14;
     &:not(:first-child) {

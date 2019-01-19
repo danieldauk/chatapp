@@ -4,7 +4,13 @@ const { Message } = require('../../../model/message');
 const validateObjectId = require('../../../utils/sharedJoiSchemas/validateObjectId');
 const { SocketEventsEnum } = require('../../../utils/enumerators');
 
-module.exports = async (socket, userId, conversationId) => {
+module.exports = async (
+  socket,
+  userId,
+  conversationId,
+  pageLimit = 100,
+  page = 1
+) => {
   // check if conversationId is valid id
   const validationResult = validateObjectId(conversationId);
   if (validationResult.error) {
@@ -43,16 +49,27 @@ module.exports = async (socket, userId, conversationId) => {
       return;
     }
     // if all checks are successful - return all messages linked to the conversation
-    const messages = await Message.find({ conversationId }).lean();
+    const messages = await Message.paginate(
+      { conversationId },
+      {
+        lean: true,
+        leanWithId: true,
+        page,
+        sort: { createdAt: -1 },
+        limit: pageLimit
+      }
+    );
     socket.emit(SocketEventsEnum.RESPONSE_MESSAGES, messages);
     // update all unread messages readBy array with requesting user Id
-    await Message.updateMany({
-      conversationId,
-      readBy: { $ne: userId }
-    },
-    {
-      $push: { readBy: userId }
-    });
+    await Message.updateMany(
+      {
+        conversationId,
+        readBy: { $ne: userId }
+      },
+      {
+        $push: { readBy: userId }
+      }
+    );
     conversation.participants.forEach((participantId) => {
       const data = {
         conversationId,
