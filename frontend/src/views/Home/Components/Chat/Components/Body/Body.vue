@@ -88,7 +88,7 @@ export default {
     // and scroll height is more than chat body height
     // dont scroll to bottom on new message event
     if (
-      (scrollTop + clientHeight - scrollHeight <= -clientHeight) && scrollHeight !== 0
+      (scrollTop + clientHeight - scrollHeight <= -clientHeight) && scrollTop !== 0
     ) {
       return;
     }
