@@ -72,23 +72,13 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-right: 12px;
+    padding:0 12px;
+    border-left: 1px solid rgba($color-silver, 0.2);
+    height: 60px;
   }
   &__input {
     /deep/ .v-input__slot {
       box-shadow: none !important;
-      .v-input__append-inner {
-        display: flex;
-        align-items: center;
-        padding-left: 12px;
-        margin-left: 12px;
-        height: 100%;
-        border-left: 1px solid rgba($color-silver, 0.2);
-        .v-icon {
-          color: $color-silver !important;
-          cursor: pointer;
-        }
-      }
       input {
         font-size: 15px;
         &::placeholder {
