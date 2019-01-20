@@ -38,6 +38,9 @@ export default {
   computed: {
     message() {
       return this.$store.state.messageForm.data.message;
+    },
+    conversationId() {
+      return this.$store.getters['conversation/getCurrentId'];
     }
   },
   methods: {
@@ -62,6 +65,14 @@ export default {
       this.$refs.input.focus();
       const messageWithAddedEmoji = `${this.message}${emoji}`;
       this.setFormElementValue(messageWithAddedEmoji);
+    }
+  },
+  watch: {
+    conversationId() {
+      this.$store.dispatch('messageForm/setValue', {
+        value: '',
+        id: 'message'
+      });
     }
   }
 };
