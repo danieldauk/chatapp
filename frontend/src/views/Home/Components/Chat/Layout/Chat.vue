@@ -39,4 +39,11 @@
     bottom: 0;
   }
 }
+
+@media(max-width: 665px) {
+  .chat {
+    height: calc(100% - 60px);
+    min-height: 390px;
+  }
+}
 </style>

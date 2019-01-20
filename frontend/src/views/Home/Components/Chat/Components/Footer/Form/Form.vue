@@ -1,8 +1,8 @@
 <template>
-  <v-form
-    class="message-form"
-    @submit.prevent="submitForm"
-  >
+  <v-form 
+  @keydown.enter="submitForm"
+  class="message-form" 
+  @submit.prevent="submitForm">
     <v-text-field
       ref="input"
       class="message-form__input"
@@ -11,20 +11,17 @@
       hide-details
       height="60"
       placeholder="Type something to send..."
-      @keydown.enter="submitForm"
       @input="setFormElementValue"
     />
-    <app-emoji-picker
-      class="message-form__emoji-picker"
-
-      @addEmoji="addEmoji"
-    />
+    <!-- button is needed to submit autofocused input -->
+    <button type='submit' style="display:none"/>
+    <app-emoji-picker class="message-form__emoji-picker" @addEmoji="addEmoji"/>
   </v-form>
 </template>
 
 <script>
-import replaceEmoticonsWithEmojies from '@/utils/emojies/replaceEmoticonsWithEmojies';
-import EmojiPicker from './Components/EmojiPicker.vue';
+import replaceEmoticonsWithEmojies from "@/utils/emojies/replaceEmoticonsWithEmojies";
+import EmojiPicker from "./Components/EmojiPicker.vue";
 
 export default {
   components: {
@@ -40,17 +37,17 @@ export default {
       if (!this.message) {
         return;
       }
-      await this.$store.dispatch('message/send', {
+      await this.$store.dispatch("message/send", {
         content: this.message,
-        conversationId: this.$store.getters['conversation/getCurrentId']
+        conversationId: this.$store.getters["conversation/getCurrentId"]
       });
-      this.$store.dispatch('messageForm/reset');
+      this.$store.dispatch("messageForm/reset");
     },
     setFormElementValue(value) {
       const emojifiedMessage = replaceEmoticonsWithEmojies(value);
-      this.$store.dispatch('messageForm/setValue', {
+      this.$store.dispatch("messageForm/setValue", {
         value: emojifiedMessage,
-        id: 'message'
+        id: "message"
       });
     },
     addEmoji(emoji) {
@@ -72,7 +69,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding:0 12px;
+    padding: 0 12px;
     border-left: 1px solid rgba($color-silver, 0.2);
     height: 60px;
   }
