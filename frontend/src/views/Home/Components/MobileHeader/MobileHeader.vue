@@ -6,11 +6,11 @@
     <div class="mobile-header__menu-activator">
       <button
         :class="['hamburger hamburger--collapse', {'is-active': isMenuOpen}]"
-        @click="toggleMenu"
         type="button"
+        @click="toggleMenu"
       >
         <span class="hamburger-box">
-          <span class="hamburger-inner"></span>
+          <span class="hamburger-inner" />
         </span>
       </button>
     </div>
@@ -27,10 +27,10 @@ export default {
   methods: {
     toggleMenu() {
       if (this.isMenuOpen) {
-        this.$store.dispatch("UI/closeMenu");
+        this.$store.dispatch('UI/closeMenu');
         return;
       }
-      this.$store.dispatch("UI/openMenu");
+      this.$store.dispatch('UI/openMenu');
     }
   }
 };

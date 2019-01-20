@@ -1,6 +1,9 @@
 <template>
   <div class="home">
-    <div v-if="$mq === 'sm'" class="home__header">
+    <div
+      v-if="$mq === 'sm'"
+      class="home__header"
+    >
       <slot name="header" />
     </div>
     <div class="home__menu">

@@ -1,8 +1,9 @@
 <template>
-  <v-form 
-  @keydown.enter="submitForm"
-  class="message-form" 
-  @submit.prevent="submitForm">
+  <v-form
+    class="message-form"
+    @keydown.enter="submitForm"
+    @submit.prevent="submitForm"
+  >
     <v-text-field
       ref="input"
       class="message-form__input"
@@ -14,16 +15,21 @@
       @input="setFormElementValue"
     />
     <!-- button is needed to submit autofocused input -->
-    <button type='submit' style="display:none"/>
-    <app-emoji-picker 
-    @click.native="$refs.input.focus()"
-    class="message-form__emoji-picker" @addEmoji="addEmoji"/>
+    <button
+      type="submit"
+      style="display:none"
+    />
+    <app-emoji-picker
+      class="message-form__emoji-picker"
+      @click.native="$refs.input.focus()"
+      @addEmoji="addEmoji"
+    />
   </v-form>
 </template>
 
 <script>
-import replaceEmoticonsWithEmojies from "@/utils/emojies/replaceEmoticonsWithEmojies";
-import EmojiPicker from "./Components/EmojiPicker.vue";
+import replaceEmoticonsWithEmojies from '@/utils/emojies/replaceEmoticonsWithEmojies';
+import EmojiPicker from './Components/EmojiPicker.vue';
 
 export default {
   components: {
@@ -39,17 +45,17 @@ export default {
       if (!this.message) {
         return;
       }
-      await this.$store.dispatch("message/send", {
+      await this.$store.dispatch('message/send', {
         content: this.message,
-        conversationId: this.$store.getters["conversation/getCurrentId"]
+        conversationId: this.$store.getters['conversation/getCurrentId']
       });
-      this.$store.dispatch("messageForm/reset");
+      this.$store.dispatch('messageForm/reset');
     },
     setFormElementValue(value) {
       const emojifiedMessage = replaceEmoticonsWithEmojies(value);
-      this.$store.dispatch("messageForm/setValue", {
+      this.$store.dispatch('messageForm/setValue', {
         value: emojifiedMessage,
-        id: "message"
+        id: 'message'
       });
     },
     addEmoji(emoji) {

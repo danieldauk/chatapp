@@ -3,18 +3,18 @@
     <v-navigation-drawer
       class="menu__drawer"
       :value="isMenuOpen"
-      @input="closeMenu($event)"
       hide-overlay
       :permanent="$mq === 'sm'? false : true"
       fixed
+      @input="closeMenu($event)"
     >
-      <app-menu-content/>
+      <app-menu-content />
     </v-navigation-drawer>
   </div>
 </template>
 
 <script>
-import MenuContent from "./Components/MenuContent/MenuContent.vue";
+import MenuContent from './Components/MenuContent/MenuContent.vue';
 
 export default {
   components: {
@@ -22,13 +22,13 @@ export default {
   },
   computed: {
     isMenuOpen() {
-      return this.$mq === "sm" ? this.$store.state.UI.isMenuOpen : true;
+      return this.$mq === 'sm' ? this.$store.state.UI.isMenuOpen : true;
     }
   },
   methods: {
     closeMenu(isMenuOpen) {
       if (!isMenuOpen) {
-        this.$store.dispatch("UI/closeMenu");
+        this.$store.dispatch('UI/closeMenu');
       }
     }
   }
