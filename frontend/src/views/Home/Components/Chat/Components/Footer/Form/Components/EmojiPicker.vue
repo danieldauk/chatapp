@@ -3,9 +3,10 @@
     <v-icon slot="emoji-invoker" slot-scope="{ events }" v-on="events">insert_emoticon</v-icon>
     <div slot="emoji-picker" slot-scope="{ emojis }" class="emoji-picker-container">
       <div class="emoji-picker">
-        <div class="emoji-picker__search">
+        <div 
+        class="emoji-picker__search">
           <v-text-field
-            :autofocus="false"
+          @click.native.stop
             :value="search"
             @input="search = $event.toLowerCase()"
             solo
@@ -14,6 +15,7 @@
             class="emoji-picker__search__input"
             prepend-icon="search"
             clearable
+            :clear-icon-cb="clearSearch"
             type="text"
             tabindex="-1"
           />
@@ -118,6 +120,7 @@ export default {
           text-transform: lowercase;
           &::placeholder {
             color: $color-silver;
+            text-transform: none;
           }
         }
       }

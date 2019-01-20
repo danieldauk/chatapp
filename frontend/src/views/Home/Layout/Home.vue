@@ -27,7 +27,7 @@
   .home {
     position: relative;
     grid-template-columns: auto;
-    grid-template-rows: 60px calc(100vh - 60px);
+    grid-template-rows: 60px calc(100vh - var(--vh-offset, 0px) - 60px);
     &__header {
       grid-row: 1 / 2;
     }

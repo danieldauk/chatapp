@@ -42,7 +42,7 @@
 
 @media(max-width: 665px) {
   .chat {
-    height: calc(100% - 60px);
+    height: 100%;
     min-height: 390px;
   }
 }

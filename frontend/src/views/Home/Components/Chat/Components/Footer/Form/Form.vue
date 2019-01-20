@@ -15,7 +15,9 @@
     />
     <!-- button is needed to submit autofocused input -->
     <button type='submit' style="display:none"/>
-    <app-emoji-picker class="message-form__emoji-picker" @addEmoji="addEmoji"/>
+    <app-emoji-picker 
+    @click.native="$refs.input.focus()"
+    class="message-form__emoji-picker" @addEmoji="addEmoji"/>
   </v-form>
 </template>
 
