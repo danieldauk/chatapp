@@ -5,8 +5,12 @@ import 'vuetify/src/stylus/app.styl';
 import {
   VApp, VMenu, VNavigationDrawer, VBtn, VForm, VTextField, VProgressCircular, Vdialog, VExpansionPanel, VStepper
 } from 'vuetify';
+import { Resize } from 'vuetify/lib/directives';
 
 Vue.use(Vuetify, {
+  directives: {
+    Resize
+  },
   components: {
     VApp,
     VMenu,

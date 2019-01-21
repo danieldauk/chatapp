@@ -15,7 +15,6 @@
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "socket.io-client": "^2.1.1",
-    "vh-check": "^2.0.5",
     "vue": "^2.5.17",
     "vue-click-outside": "^1.0.7",
     "vue-cropperjs": "^3.0.0",
