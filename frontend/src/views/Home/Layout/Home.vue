@@ -37,14 +37,12 @@ export default {
 
 @media (max-width: 665px) {
   .home {
+    overflow: hidden;
     position: relative;
     grid-template-columns: auto;
-    grid-template-rows: 60px calc(calc(var(--vh, 1vh) * 100) - 60px);
+    grid-template-rows: 60px minmax(450px, calc(calc(var(--vh, 1vh) * 100) - 60px));
     &__header {
       grid-row: 1 / 2;
-    }
-    &__menu {
-      position: absolute;
     }
     &__chat {
       grid-column: 1 / 2;

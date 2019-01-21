@@ -5,7 +5,7 @@
       :value="isMenuOpen"
       hide-overlay
       :permanent="$mq === 'sm'? false : true"
-      fixed
+      absolute
       @input="closeMenu($event)"
     >
       <app-menu-content />
@@ -47,9 +47,10 @@ export default {
 }
 @media (max-width: 665px) {
   .menu {
-    position: relative;
     &__drawer {
       top: 60px;
+      left: 0;
+      height: minmax(390px, calc(calc(var(--vh, 1vh) * 100) - 60px));
     }
   }
 }

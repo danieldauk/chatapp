@@ -50,4 +50,10 @@
     }
   }
 }
+
+@media(max-width: 665px) {
+  .menu-content {
+    grid-template-rows: 60px 60px 60px minmax(270px, calc(calc(var(--vh, 1vh) * 100) - 240px));
+  }
+}
 </style>
