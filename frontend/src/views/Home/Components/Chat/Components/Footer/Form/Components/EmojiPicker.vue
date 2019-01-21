@@ -1,25 +1,9 @@
 <template>
-  <emoji-picker
-    v-click-outside="clearSearch"
-    :search="search"
-    @select="$emit('select', $event)"
-  >
-    <v-icon
-      slot="emoji-invoker"
-      slot-scope="{ events }"
-      v-on="events"
-    >
-      insert_emoticon
-    </v-icon>
-    <div
-      slot="emoji-picker"
-      slot-scope="{ emojis }"
-      class="emoji-picker-container"
-    >
+  <emoji-picker v-click-outside="clearSearch" :search="search" @select="$emit('select', $event)">
+    <v-icon slot="emoji-invoker" slot-scope="{ events }" v-on="events">insert_emoticon</v-icon>
+    <div slot="emoji-picker" slot-scope="{ emojis }" class="emoji-picker-container">
       <div class="emoji-picker">
-        <div
-          class="emoji-picker__search"
-        >
+        <div class="emoji-picker__search">
           <v-text-field
             :value="search"
             solo
@@ -40,9 +24,7 @@
           :key="category"
           class="emoji-picker__category"
         >
-          <h5 class="emoji-picker__category__header">
-            {{ category }}
-          </h5>
+          <h5 class="emoji-picker__category__header">{{ category }}</h5>
           <div class="emoji-picker__category__emojies">
             <div
               v-for="(emoji, emojiName) in emojiGroup"
@@ -50,9 +32,7 @@
               class="emoji-picker__category__emojies__emoji"
               :title="emojiName"
               @click="$emit('addEmoji', emoji)"
-            >
-              {{ emoji }}
-            </div>
+            >{{ emoji }}</div>
           </div>
         </div>
       </div>
@@ -61,7 +41,7 @@
 </template>
 
 <script>
-import EmojiPicker from 'vue-emoji-picker';
+import EmojiPicker from "vue-emoji-picker";
 
 export default {
   components: {
@@ -69,12 +49,12 @@ export default {
   },
   data() {
     return {
-      search: ''
+      search: ""
     };
   },
   methods: {
     clearSearch() {
-      this.search = '';
+      this.search = "";
     }
   }
 };
@@ -163,6 +143,9 @@ export default {
         height: 23px;
         cursor: pointer;
         border-radius: 50%;
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
         &:hover {
           background: rgba($color-silver, 0.2);
           transform: scale(1.3);
