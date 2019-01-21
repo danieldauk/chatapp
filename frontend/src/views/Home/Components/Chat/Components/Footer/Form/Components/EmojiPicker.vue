@@ -1,7 +1,21 @@
 <template>
-  <emoji-picker v-click-outside="clearSearch" :search="search" @select="$emit('select', $event)">
-    <v-icon slot="emoji-invoker" slot-scope="{ events }" v-on="events">insert_emoticon</v-icon>
-    <div slot="emoji-picker" slot-scope="{ emojis }" class="emoji-picker-container">
+  <emoji-picker
+    v-click-outside="clearSearch"
+    :search="search"
+    @select="$emit('select', $event)"
+  >
+    <v-icon
+      slot="emoji-invoker"
+      slot-scope="{ events }"
+      v-on="events"
+    >
+      insert_emoticon
+    </v-icon>
+    <div
+      slot="emoji-picker"
+      slot-scope="{ emojis }"
+      class="emoji-picker-container"
+    >
       <div class="emoji-picker">
         <div class="emoji-picker__search">
           <v-text-field
@@ -14,8 +28,8 @@
             clearable
             :clear-icon-cb="clearSearch"
             type="text"
-            @click.native.stop
             tabindex="-1"
+            @click.native.stop
             @input="search = $event.toLowerCase()"
           />
         </div>
@@ -24,7 +38,9 @@
           :key="category"
           class="emoji-picker__category"
         >
-          <h5 class="emoji-picker__category__header">{{ category }}</h5>
+          <h5 class="emoji-picker__category__header">
+            {{ category }}
+          </h5>
           <div class="emoji-picker__category__emojies">
             <div
               v-for="(emoji, emojiName) in emojiGroup"
@@ -32,7 +48,9 @@
               class="emoji-picker__category__emojies__emoji"
               :title="emojiName"
               @click="$emit('addEmoji', emoji)"
-            >{{ emoji }}</div>
+            >
+              {{ emoji }}
+            </div>
           </div>
         </div>
       </div>
@@ -41,7 +59,7 @@
 </template>
 
 <script>
-import EmojiPicker from "vue-emoji-picker";
+import EmojiPicker from 'vue-emoji-picker';
 
 export default {
   components: {
@@ -49,12 +67,12 @@ export default {
   },
   data() {
     return {
-      search: ""
+      search: ''
     };
   },
   methods: {
     clearSearch() {
-      this.search = "";
+      this.search = '';
     }
   }
 };

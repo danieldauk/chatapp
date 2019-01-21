@@ -10,10 +10,15 @@
         @click="toggleMenu"
       >
         <span class="hamburger-box">
-          <span class="hamburger-inner"/>
+          <span class="hamburger-inner" />
         </span>
       </button>
-      <div v-if="unreadMessagesCount" class="mobile-header__menu-activator__badge">{{ unreadMessagesCount }}</div>
+      <div
+        v-if="unreadMessagesCount"
+        class="mobile-header__menu-activator__badge"
+      >
+        {{ unreadMessagesCount }}
+      </div>
     </div>
   </div>
 </template>
@@ -26,18 +31,18 @@ export default {
     },
     unreadMessagesCount() {
       return (
-        this.$store.getters["message/getUnreadDialoguesCount"] +
-        this.$store.getters["message/getUnreadConversationsCount"]
+        this.$store.getters['message/getUnreadDialoguesCount']
+        + this.$store.getters['message/getUnreadConversationsCount']
       );
     }
   },
   methods: {
     toggleMenu() {
       if (this.isMenuOpen) {
-        this.$store.dispatch("UI/closeMenu");
+        this.$store.dispatch('UI/closeMenu');
         return;
       }
-      this.$store.dispatch("UI/openMenu");
+      this.$store.dispatch('UI/openMenu');
     }
   }
 };

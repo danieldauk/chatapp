@@ -61,6 +61,9 @@ export default {
   },
   methods: {
     onClickHandler() {
+      if (this.$mq === 'sm') {
+        this.$store.dispatch('UI/closeMenu');
+      }
       this.$store.dispatch(
         'message/clearUnreadConversationMessages',
         this.conversationId

@@ -1,26 +1,35 @@
 <template>
-  <div v-resize="checkVH" class="home">
-    <div v-if="$mq === 'sm'" class="home__header">
-      <slot name="header"/>
+  <div
+    v-resize="checkVH"
+    class="home"
+  >
+    <div
+      v-if="$mq === 'sm'"
+      class="home__header"
+    >
+      <slot name="header" />
     </div>
     <div class="home__menu">
-      <slot class="home__menu__slot" name="menu"/>
+      <slot
+        class="home__menu__slot"
+        name="menu"
+      />
     </div>
     <div class="home__chat">
-      <slot name="chat"/>
+      <slot name="chat" />
     </div>
   </div>
 </template>
 
 <script>
-import throttle from "lodash/throttle";
+import throttle from 'lodash/throttle';
 
 export default {
   methods: {
     checkVH: throttle(() => {
       const innerHeight = window.innerHeight;
-      const vh = innerHeight * 0.01; 
-      document.documentElement.style.setProperty("--vh", `${vh}px`);
+      const vh = innerHeight * 0.01;
+      document.documentElement.style.setProperty('--vh', `${vh}px`);
     }, 100)
   }
 };

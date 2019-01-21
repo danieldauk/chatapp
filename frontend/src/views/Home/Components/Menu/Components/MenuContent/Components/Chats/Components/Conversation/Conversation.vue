@@ -77,6 +77,9 @@ export default {
       return `${process.env.VUE_APP_BASE_URL}/${avatarFileName}`;
     },
     onClickHandler() {
+      if (this.$mq === 'sm') {
+        this.$store.dispatch('UI/closeMenu');
+      }
       this.$store.dispatch(
         'message/clearUnreadConversationMessages',
         this.conversation._id

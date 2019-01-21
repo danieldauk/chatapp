@@ -43,6 +43,14 @@ export default {
       return this.$store.getters['conversation/getCurrentId'];
     }
   },
+  watch: {
+    conversationId() {
+      this.$store.dispatch('messageForm/setValue', {
+        value: '',
+        id: 'message'
+      });
+    }
+  },
   methods: {
     async submitForm() {
       if (!this.message) {
@@ -65,14 +73,6 @@ export default {
       this.$refs.input.focus();
       const messageWithAddedEmoji = `${this.message}${emoji}`;
       this.setFormElementValue(messageWithAddedEmoji);
-    }
-  },
-  watch: {
-    conversationId() {
-      this.$store.dispatch('messageForm/setValue', {
-        value: '',
-        id: 'message'
-      });
     }
   }
 };
