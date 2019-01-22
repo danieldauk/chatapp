@@ -4,12 +4,18 @@
       v-if="doesCurrentConversationExist"
       slot="header"
     />
-    <app-body v-if="doesCurrentConversationExist" slot="body" />
+    <app-body
+      v-if="doesCurrentConversationExist"
+      slot="body"
+    />
     <app-footer
       v-if="doesCurrentConversationExist"
       slot="footer"
     />
-    <app-placeholder v-else slot="body" />
+    <app-placeholder
+      v-else
+      slot="body"
+    />
   </app-chat>
 </template>
 

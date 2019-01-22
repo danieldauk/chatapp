@@ -1,6 +1,9 @@
 <template>
   <div class="chat-placeholder">
-    <img class="chat-placeholder__image" src="@/assets/logo-placeholder.svg" >
+    <img
+      class="chat-placeholder__image"
+      src="@/assets/logo-placeholder.svg"
+    >
   </div>
 </template>
 
@@ -11,11 +14,8 @@
     justify-content: center;
     align-items: center;
     &__image {
-        height: 50%;
-        width: 50%;
+        height: 40%;
+        width: 40%;
     }
   }
 </style>
-
-
-
