@@ -16,6 +16,7 @@
     &__image {
         height: 40%;
         width: 40%;
+        opacity: 0.4;
     }
   }
 </style>
