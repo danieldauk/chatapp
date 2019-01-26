@@ -117,10 +117,11 @@ export default {
       }
       if (typeof FileReader === 'function') {
         const reader = new FileReader();
-        reader.onload = (event) => {
-          this.imgSrc = event.target.result;
+        reader.onload = async (event) => {
+          const imgSrc = await this.resizeImage(event.target.result, file.type);
+          this.imgSrc = imgSrc;
           // rebuild cropperjs with the updated source
-          this.$refs.cropper.replace(event.target.result);
+          this.$refs.cropper.replace(imgSrc);
         };
         reader.readAsDataURL(file);
         this.localError = null;
@@ -137,9 +138,13 @@ export default {
     },
     getAvatarBlob() {
       return new Promise((resolve) => {
-        this.$refs.cropper.getCroppedCanvas().toBlob((blob) => {
-          resolve(blob);
-        }, 'image/jpeg', 0.1);
+        this.$refs.cropper.getCroppedCanvas().toBlob(
+          (blob) => {
+            resolve(blob);
+          },
+          'image/jpeg',
+          0.1
+        );
       });
     },
     async saveAvatar() {
@@ -159,6 +164,38 @@ export default {
     },
     goToNextStep() {
       this.$store.dispatch('UI/setCurrentSignUpStep', 3);
+    },
+    async resizeImage(image, fileType) {
+      const createImage = () => new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.src = image;
+      });
+      const img = await createImage();
+
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+
+      const MAX_WIDTH = 400;
+      const MAX_HEIGHT = 400;
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
+      } else if (height > MAX_HEIGHT) {
+        width *= MAX_HEIGHT / height;
+        height = MAX_HEIGHT;
+      }
+      canvas.width = width;
+      canvas.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
+      const dataurl = canvas.toDataURL(fileType);
+      return dataurl;
     }
   }
 };
