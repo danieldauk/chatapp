@@ -2,7 +2,7 @@ import Vue from 'vue';
 import 'vuetify/src/stylus/app.styl';
 
 import Vuetify, {
-  VApp, VMenu, VNavigationDrawer, VBtn, VForm, VTextField, VProgressCircular, Vdialog, VExpansionPanel, VStepper
+  VApp, VMenu, VNavigationDrawer, VBtn, VForm, VTextField, VProgressCircular, VDialog, VExpansionPanel, VStepper
 } from 'vuetify/lib';
 import { Resize } from 'vuetify/lib/directives';
 
@@ -18,7 +18,7 @@ Vue.use(Vuetify, {
     VBtn,
     VForm,
     VProgressCircular,
-    Vdialog,
+    VDialog,
     VExpansionPanel,
     VStepper
   },
