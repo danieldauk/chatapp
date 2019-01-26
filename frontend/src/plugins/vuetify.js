@@ -1,3 +1,4 @@
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 import Vue from 'vue';
 import 'vuetify/src/stylus/app.styl';
 

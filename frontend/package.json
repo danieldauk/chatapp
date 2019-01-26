@@ -12,6 +12,7 @@
     "escape-string-regexp": "^1.0.5",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.11",
+    "material-design-icons-iconfont": "^4.0.4",
     "moment": "^2.22.2",
     "socket.io-client": "^2.1.1",
     "vue": "^2.5.17",
