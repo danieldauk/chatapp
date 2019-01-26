@@ -1,10 +1,9 @@
 import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
 import 'vuetify/src/stylus/app.styl';
 
-import {
+import Vuetify, {
   VApp, VMenu, VNavigationDrawer, VBtn, VForm, VTextField, VProgressCircular, Vdialog, VExpansionPanel, VStepper
-} from 'vuetify';
+} from 'vuetify/lib';
 import { Resize } from 'vuetify/lib/directives';
 
 Vue.use(Vuetify, {
