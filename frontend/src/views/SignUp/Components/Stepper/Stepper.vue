@@ -78,6 +78,7 @@ export default {
       /deep/ .v-stepper__step__step {
         background-color: $color-purple-ultra-dark !important;
         color: $color-purple-light;
+        margin: 0;
       }
       &.v-stepper__step--complete {
         /deep/ .v-stepper__step__step {
