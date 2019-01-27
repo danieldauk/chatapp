@@ -10,6 +10,7 @@
     <app-username class="form__input" />
     <app-password class="form__input" />
     <app-repeated-password class="form__input" />
+    <app-form-error />
     <app-confirm class="form__button" />
     <div class="form__login">
       Already have an account?
@@ -27,6 +28,7 @@
 import Username from './Components/Username.vue';
 import Password from './Components/Password.vue';
 import RepeatedPassword from './Components/RepeatedPassword.vue';
+import FormError from './Components/FormError.vue';
 import Confirm from './Components/Confirm.vue';
 
 export default {
@@ -34,6 +36,7 @@ export default {
     appUsername: Username,
     appPassword: Password,
     appRepeatedPassword: RepeatedPassword,
+    appFormError: FormError,
     appConfirm: Confirm
   },
   destroyed() {

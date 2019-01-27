@@ -15,12 +15,12 @@ export default new AbstractStoreModule({
       } catch (error) {
         if (error.response) {
           await this.dispatch('signupForm/setError', {
-            id: error.response.data.input || 'password',
+            id: error.response.data.input || 'default',
             message: error.response.data.error
           });
         } else {
           await this.dispatch('signupForm/setError', {
-            id: 'password',
+            id: 'default',
             message: error.message
           });
         }
