@@ -32,12 +32,12 @@ export default new AbstractStoreModule({
         // if token validation failed set error accordingly
         if (!error.response) {
           await this.dispatch('loginForm/setError', {
-            id: 'password',
+            id: 'default',
             message: error.message
           });
         } else {
           await this.dispatch('loginForm/setError', {
-            id: error.response.data.input || 'password',
+            id: error.response.data.input || 'default',
             message: error.response.data.error
           });
         }

@@ -10,6 +10,7 @@
     >
       <app-username class="form__form__input" />
       <app-password class="form__form__input" />
+      <app-form-error />
       <app-confirm class="form__form__button" />
     </v-form>
     <div class="form__signup">
@@ -27,12 +28,14 @@
 <script>
 import Username from './Components/Username.vue';
 import Password from './Components/Password.vue';
+import FormError from './Components/FormError.vue';
 import Confirm from './Components/Confirm.vue';
 
 export default {
   components: {
     appUsername: Username,
     appPassword: Password,
+    appFormError: FormError,
     appConfirm: Confirm
   },
   destroyed() {
