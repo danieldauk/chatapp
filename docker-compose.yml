@@ -13,6 +13,8 @@ services:
       - backend
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
+    command: sh -c 'yarn && yarn serve'
   
   backend:
     build: ./backend

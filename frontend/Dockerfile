@@ -1,14 +1,15 @@
 FROM node:8.14.1-alpine
 
-ENV NODE_ENV development
+ENV NODE_ENV production
 
 WORKDIR /node/home/app
 COPY . .
 RUN npm i npm@latest yarn@latest -g 
-RUN yarn
+RUN NODE_ENV=development yarn
 ENV PATH /node/home/app/node_modules/.bin:$PATH
+RUN yarn global add pushstate-server 
 
-USER node
-EXPOSE 8080
+EXPOSE 80
 
-CMD ["yarn", "serve"]
+RUN yarn build
+CMD [ "pushstate-server", "./dist", "80" ]
