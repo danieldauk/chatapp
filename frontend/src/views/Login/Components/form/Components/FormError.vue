@@ -1,8 +1,18 @@
 <template>
   <div class="login-form-error">
-    <div v-if="isErrorShown" class="login-form-error__content">
-    <v-icon class="login-form-error__content__icon" color="error">error</v-icon>
-    <div class="login-form-error__content__text">{{text}}</div>
+    <div
+      v-if="isErrorShown"
+      class="login-form-error__content"
+    >
+      <v-icon
+        class="login-form-error__content__icon"
+        color="error"
+      >
+        error
+      </v-icon>
+      <div class="login-form-error__content__text">
+        {{ text }}
+      </div>
     </div>
   </div>
 </template>
@@ -17,7 +27,7 @@ export default {
       return !!this.text;
     }
   }
-}
+};
 </script>
 
 
