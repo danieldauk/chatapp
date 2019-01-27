@@ -17,7 +17,10 @@ services:
     command: sh -c 'yarn && yarn serve'
   
   backend:
-    build: ./backend
+    build: 
+      args:
+        - NODE_ENV=development
+      context: ./backend
     image: backend
     volumes:
       - ./backend:/node/home/app
@@ -28,6 +31,8 @@ services:
       - mongo_db
     environment:
       - CHOKIDAR_USEPOLLING=true
+      - NODE_ENV=development
+    command: sh -c 'nodemon app.js'
   
   mongo_db: 
     image: mongo:3.2.21-jessie
