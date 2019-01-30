@@ -65,6 +65,11 @@ export default new AbstractStoreModule({
       state.hasNextPage = hasNextPage;
       state.currentPage = currentPage;
       state.totalPages = totalPages;
+    },
+    clearPaginationInfo(state) {
+      state.hasNextPage = false;
+      state.currentPage = null;
+      state.totalPages = null;
     }
   },
   actions: {
@@ -153,6 +158,9 @@ export default new AbstractStoreModule({
     },
     setPaginationInfo(thisModule, paginationInfo) {
       thisModule.commit('setPaginationInfo', paginationInfo);
+    },
+    clearPaginationInfo(thisModule, paginationInfo) {
+      thisModule.commit('clearPaginationInfo');
     }
   }
 });

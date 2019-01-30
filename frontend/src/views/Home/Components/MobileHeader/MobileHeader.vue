@@ -1,7 +1,9 @@
 <template>
   <div class="mobile-header">
     <div class="mobile-header__logo">
-      <img src="@/assets/logo.svg">
+      <img 
+      @click="closeCurrentChat"
+      src="@/assets/logo.svg">
     </div>
     <div class="mobile-header__menu-activator">
       <button
@@ -43,6 +45,11 @@ export default {
         return;
       }
       this.$store.dispatch('UI/openMenu');
+    },
+    closeCurrentChat() {
+      this.$store.dispatch('conversation/clearCurrent');
+      this.$store.dispatch('conversation/clearHistory');
+      this.$store.dispatch('conversation/clearPaginationInfo');
     }
   }
 };
@@ -61,6 +68,7 @@ export default {
     img {
       height: 40px;
       display: block;
+      cursor: pointer;
     }
   }
   &__menu-activator {

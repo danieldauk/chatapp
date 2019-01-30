@@ -80,6 +80,9 @@ export default {
     });
   },
   updated() {
+    if (!this.$store.state.conversation.current) {
+      return;
+    }
     const element = this.$refs.body;
     const scrollTop = element.scrollTop;
     const scrollHeight = element.scrollHeight;
