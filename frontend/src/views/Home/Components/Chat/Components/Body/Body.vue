@@ -148,4 +148,10 @@ export default {
   }
   @include custom-scrollbar;
 }
+
+@media(max-width: 665px) {
+  .chat-body {
+    grid-template-columns: 5px repeat(12, 1fr) 5px;
+  }
+}
 </style>
