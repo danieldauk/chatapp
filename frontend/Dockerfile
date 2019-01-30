@@ -1,6 +1,6 @@
 FROM node:8.14.1-alpine
 
-ENV NODE_ENV production
+ENV NODE_ENV=production
 
 WORKDIR /node/home/app
 COPY . .
@@ -9,7 +9,8 @@ RUN NODE_ENV=development yarn
 ENV PATH /node/home/app/node_modules/.bin:$PATH
 RUN yarn global add pushstate-server 
 
-EXPOSE 80
+ENV PORT=80
+EXPOSE $PORT
 
 RUN yarn build
-CMD [ "pushstate-server", "./dist", "80" ]
+CMD pushstate-server ./dist $PORT 

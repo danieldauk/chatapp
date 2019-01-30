@@ -11,6 +11,7 @@ ENV PATH /node/home/app/node_modules/.bin:$PATH
 RUN yarn global add forever 
 
 USER node
-EXPOSE 3000
+ENV PORT=3000
+EXPOSE $PORT
 
-CMD ["forever", "start", "app.js"]
+CMD forever app.js
