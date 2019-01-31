@@ -13,11 +13,12 @@
       height="60"
       placeholder="Type something to send..."
       @input="setFormElementValue"
+      @keydown.enter="submitForm"
     />
-    <!-- button is needed to submit autofocused input -->
-    <button
+    <!-- input is needed to submit autofocused input -->
+    <input
       type="submit"
-      style="display:none"
+      style="visibility: hidden; position: absolute"
     />
     <app-emoji-picker
       class="message-form__emoji-picker"
