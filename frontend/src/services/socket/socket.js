@@ -23,7 +23,7 @@ export const initSocket = (token, userId) => new Promise((resolve, reject) => {
         userId
       }
     });
-    socket.on('connect', () => {
+    socket.once('connect', () => {
       socket
         .on('authenticated', () => {
           socketIO.socket = socket;
