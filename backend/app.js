@@ -4,6 +4,7 @@ const socketIO = require('socket.io');
 const helmet = require('helmet');
 const winston = require('winston');
 const cors = require('cors');
+const s3Proxy = require('s3-proxy');
 
 // routes
 const users = require('./routes/users');
@@ -18,7 +19,17 @@ const app = express();
 
 app.use(helmet());
 app.use(express.json());
-app.use(express.static('uploads'));
+if (process.env.NODE_ENV === 'development') {
+  app.use(express.static('uploads'));
+} else {
+  app.get('/*', s3Proxy({
+    bucket: process.env.AWS_BUCKET_NAME,
+    accessKeyId: process.env.AWS_ID,
+    secretAccessKey: process.env.AWS_KEY,
+    overrideCacheControl: 'max-age=2592000'
+  }));
+}
+
 app.use(cors());
 app.options('*', cors());
 

@@ -34,7 +34,8 @@ module.exports = async (req, res) => {
         _id: req.user._id
       }, {
         $set: {
-          avatar: req.file.filename
+          // production middleware is adding 'key' property, development - 'filename'
+          avatar: req.file.filename || req.file.key
         }
       });
       // if everything went fine - send success message
