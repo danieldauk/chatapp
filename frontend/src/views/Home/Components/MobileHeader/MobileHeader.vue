@@ -1,10 +1,7 @@
 <template>
   <div class="mobile-header">
     <div class="mobile-header__logo">
-      <img
-        src="@/assets/logo.svg"
-        @click="closeCurrentChat"
-      >
+      <img src="@/assets/logo.svg" @click="closeCurrentChat">
     </div>
     <div class="mobile-header__menu-activator">
       <button
@@ -13,20 +10,20 @@
         @click="toggleMenu"
       >
         <span class="hamburger-box">
-          <span class="hamburger-inner" />
+          <span class="hamburger-inner"/>
         </span>
       </button>
       <div
         v-if="unreadMessagesCount"
         class="mobile-header__menu-activator__badge"
-      >
-        {{ unreadMessagesCount }}
-      </div>
+      >{{ unreadMessagesCount }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import screenfull from "screenfull";
+
 export default {
   computed: {
     isMenuOpen() {
@@ -34,23 +31,27 @@ export default {
     },
     unreadMessagesCount() {
       return (
-        this.$store.getters['message/getUnreadDialoguesCount']
-        + this.$store.getters['message/getUnreadConversationsCount']
+        this.$store.getters["message/getUnreadDialoguesCount"] +
+        this.$store.getters["message/getUnreadConversationsCount"]
       );
     }
   },
   methods: {
     toggleMenu() {
       if (this.isMenuOpen) {
-        this.$store.dispatch('UI/closeMenu');
+        this.$store.dispatch("UI/closeMenu");
         return;
       }
-      this.$store.dispatch('UI/openMenu');
+      this.$store.dispatch("UI/openMenu");
     },
     closeCurrentChat() {
-      this.$store.dispatch('conversation/clearCurrent');
-      this.$store.dispatch('conversation/clearHistory');
-      this.$store.dispatch('conversation/clearPaginationInfo');
+      if (screenfull.enabled) {
+        screenfull.toggle();
+      } else {
+        this.$store.dispatch("conversation/clearCurrent");
+        this.$store.dispatch("conversation/clearHistory");
+        this.$store.dispatch("conversation/clearPaginationInfo");
+      }
     }
   }
 };
