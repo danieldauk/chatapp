@@ -66,4 +66,10 @@ export default {
     }
   }
 }
+
+@media (max-width: 665px) {
+  /deep/ .participant-list {
+    max-height: 380px;
+  }
+}
 </style>

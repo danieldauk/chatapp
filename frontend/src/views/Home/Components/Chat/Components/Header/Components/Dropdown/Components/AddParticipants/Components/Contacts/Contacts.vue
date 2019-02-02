@@ -113,4 +113,12 @@ export default {
     }
   }
 }
+
+@media (max-width: 665px) {
+  .contacts {
+    &__contacts-container {
+    max-height: 150px;
+    }
+  }
+}
 </style>

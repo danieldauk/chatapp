@@ -49,7 +49,7 @@ export default {
     overflow: hidden;
     position: relative;
     grid-template-columns: auto;
-    grid-template-rows: 60px minmax(450px, calc(calc(var(--vh, 1vh) * 100) - 60px));
+    grid-template-rows: 60px minmax(380px, calc(calc(var(--vh, 1vh) * 100) - 60px));
     &__header {
       grid-row: 1 / 2;
     }

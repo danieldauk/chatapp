@@ -120,4 +120,10 @@ export default {
     }
   }
 }
+
+@media (max-width: 665px) {
+  /deep/ .dialog {
+    max-height: 380px;
+  }
+}
 </style>

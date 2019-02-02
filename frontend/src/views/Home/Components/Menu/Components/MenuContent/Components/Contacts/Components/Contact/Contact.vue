@@ -1,6 +1,6 @@
 <template>
   <div
-    class="contact"
+    :class="['contact', {'contact--is-current': isCurrent}]"
     @click="onClickHandler"
   >
     <div class="contact__avatar">
@@ -44,6 +44,9 @@ export default {
   computed: {
     imageLink() {
       return this.$store.getters['contact/getAvatarLink'](this.id);
+    },
+    isCurrent() {
+      return this.$store.getters['conversation/getCurrentId'] === this.conversationId;
     },
     name() {
       return this.$store.getters['contact/getName'](this.id);
@@ -95,8 +98,11 @@ export default {
   align-items: center;
   padding: 10px 15px;
   cursor: pointer;
-  &:hover {
+  &:hover:not(&--is-current) {
     background: rgba(255, 255, 255, 0.05);
+  }
+  &--is-current {
+    background: $color-purple-ultra-dark;
   }
   &__info {
     display: flex;

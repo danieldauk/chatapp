@@ -19,7 +19,7 @@
     <input
       type="submit"
       style="visibility: hidden; position: absolute"
-    />
+    >
     <app-emoji-picker
       class="message-form__emoji-picker"
       @click.native="$refs.input.focus()"

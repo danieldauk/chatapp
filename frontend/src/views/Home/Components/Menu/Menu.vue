@@ -50,7 +50,7 @@ export default {
     &__drawer {
       top: 60px;
       left: 0;
-      height: minmax(390px, calc(calc(var(--vh, 1vh) * 100) - 60px));
+      height: minmax(320px, calc(calc(var(--vh, 1vh) * 100) - 60px));
     }
   }
 }

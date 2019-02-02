@@ -1,9 +1,10 @@
 <template>
   <div class="mobile-header">
     <div class="mobile-header__logo">
-      <img 
-      @click="closeCurrentChat"
-      src="@/assets/logo.svg">
+      <img
+        src="@/assets/logo.svg"
+        @click="closeCurrentChat"
+      >
     </div>
     <div class="mobile-header__menu-activator">
       <button

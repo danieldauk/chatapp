@@ -43,7 +43,7 @@
 @media(max-width: 665px) {
   .chat {
     height: 100%;
-    min-height: 390px;
+    min-height: 380px;
   }
 }
 </style>
