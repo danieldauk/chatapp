@@ -27,8 +27,6 @@
 </template>
 
 <script>
-import screenfull from 'screenfull';
-
 export default {
   computed: {
     isMenuOpen() {
@@ -50,13 +48,9 @@ export default {
       this.$store.dispatch('UI/openMenu');
     },
     closeCurrentChat() {
-      if (screenfull.enabled) {
-        screenfull.toggle();
-      } else {
-        this.$store.dispatch('conversation/clearCurrent');
-        this.$store.dispatch('conversation/clearHistory');
-        this.$store.dispatch('conversation/clearPaginationInfo');
-      }
+      this.$store.dispatch('conversation/clearCurrent');
+      this.$store.dispatch('conversation/clearHistory');
+      this.$store.dispatch('conversation/clearPaginationInfo');
     }
   }
 };
